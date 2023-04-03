@@ -53,7 +53,8 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
         backgroundColor: Colors.white, // 배경은 흰색
         leading: IconButton( // 좌측에 정렬 & 아이콘 버튼 위젯
           onPressed: (){ // 수행할 코드를 작성
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page())); // Calendar_Page로 이동
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page())); // Calendar_Page로 이동
+
           },
           icon: Icon(Icons.arrow_back, color: Colors.grey) // 아이콘은 뒤로가기 아이콘을 넣으며 색상은 회색
         ),
@@ -100,7 +101,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                           showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
-                                return Container( //상자 위젯
+                                return Container( // 상자 위젯
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10)

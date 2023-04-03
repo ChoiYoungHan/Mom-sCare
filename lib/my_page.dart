@@ -31,9 +31,8 @@ class _MyPageState extends State<MyPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text('마이페이지', style: TextStyle(color: Colors.black))
+        title: Text('마이페이지', style: TextStyle(color: Colors.grey))
       ),
-
       body: Column(
         children: [
           Expanded(

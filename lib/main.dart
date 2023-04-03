@@ -107,7 +107,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyPage()));
                 },
                 icon: Icon(Icons.list_alt_outlined) // 리스트 아이콘
               )
