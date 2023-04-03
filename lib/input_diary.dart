@@ -45,7 +45,6 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold( // 상 중 하로 나누는 위젯
@@ -101,7 +100,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                           showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
-                                return Container(
+                                return Container( // 상자 위젯
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10)
