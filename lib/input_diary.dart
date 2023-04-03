@@ -100,7 +100,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                           showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) {
-                                return Container( // 상자 위젯
+                                return Container( //상자 위젯
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10)
