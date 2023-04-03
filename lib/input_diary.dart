@@ -97,7 +97,57 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                       height: MediaQuery.of(context).size.width * 0.3, // 화면 가로 길이의 30%를 높이로 설정
                       child: ElevatedButton( // 버튼 위젯
                         onPressed: (){ // 동작을 위해 필요한 코드를 작성
-                          getImage(); // getImage() 메소드 호출
+                          // getImage(); // getImage() 메소드 호출
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    height: MediaQuery.of(context).size.height * 0.25,
+                                    child: Center(
+                                        child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              InkWell(
+                                                  onTap: (){
+
+                                                  },
+                                                  child: Padding(
+                                                      padding: EdgeInsets.all(10),
+                                                      child: Container(
+                                                          width: MediaQuery.of(context).size.width * 0.4,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              border: Border.all(color: Colors.grey, width: 2)
+                                                          )
+                                                      )
+                                                  )
+                                              ),
+                                              InkWell(
+                                                  onTap: (){
+
+                                                  },
+                                                  child: Padding(
+                                                      padding: EdgeInsets.all(10),
+                                                      child: Container(
+                                                          width: MediaQuery.of(context).size.width * 0.4,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(10),
+                                                              border: Border.all(color: Colors.grey, width: 2)
+                                                          )
+                                                      )
+                                                  )
+                                              )
+                                            ]
+                                        )
+                                    )
+                                );
+                              }
+                          );
                         },
                         child: Icon(Icons.add_box_outlined) // 아이콘 위젯
                       ),
