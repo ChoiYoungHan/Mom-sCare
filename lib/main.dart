@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 Debug 리본을 제거
+      debugShowCheckedModeBanner:  false, // 우측 상단에 출력되는 Debug 리본을 제거
       home: Calendar_Page()
     );
   }
