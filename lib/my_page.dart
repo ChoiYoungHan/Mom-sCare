@@ -1,5 +1,7 @@
+import 'package:care_application/baby_add.dart';
 import 'package:care_application/baby_info.dart';
 import 'package:care_application/home_page.dart';
+import 'package:care_application/login_page.dart';
 import 'package:care_application/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +78,9 @@ class _MyPageState extends State<MyPage> {
                     height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
                     padding: EdgeInsets.all(30), // 네 면의 여백을 30만큼 줌
                     child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
-                      onPressed: (){}, // 버튼을 눌렀을 때 실행될 함수 지정
+                      onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => baby_add())); // 홈페이지로 화면이동
+                      }, // 버튼을 눌렀을 때 실행될 함수 지정
                       child: Text('우리 아기 등록', style: TextStyle(color: Colors.black),)
                     )
                   )
@@ -116,7 +120,25 @@ class _MyPageState extends State<MyPage> {
               width: MediaQuery.of(context).size.width*0.5, // 위젯의 너비를 화면 너비의 절반으로 동일설정
               padding: EdgeInsets.all(40), // 네 면의 여백을 40만큼 줌
               child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
-                onPressed: (){}, // 버튼을 눌렀을 때 실행될 함수 지정
+                onPressed: (){
+                  showDialog( // 팝업 위젯
+                      context: context,
+                      barrierColor: Colors.grey.withOpacity(0.6),
+                      builder: (BuildContext context){
+                        return AlertDialog(
+                          title: Text(''), // 상단 여백
+                          content: Text('로그아웃 되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                          actions: [
+                            OutlinedButton(
+                            onPressed:(){
+                              Navigator.of(context).pop();
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page()));
+                            }, child: Text('확인'))
+                          ],
+                        );
+                      }
+                  );
+                }, // 버튼을 눌렀을 때 실행될 함수 지정
                 child: Text('로그아웃', style: TextStyle(color: Colors.black),)
               )
             )

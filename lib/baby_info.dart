@@ -114,7 +114,7 @@ class _BabyInfoState extends State<BabyInfo> {
                                   Expanded( // 상자 위젯
                                     child: Padding(
                                       padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                                      child: Image.asset(('baby.png')) // 버튼 왼쪽 이미지
+                                      child: Image.asset(('baby_babyInfo.png')) // 버튼 왼쪽 이미지
                                     )
                                    ,flex: 1,), // 영역비율 1 부여
                                   Expanded(
@@ -150,7 +150,7 @@ class _BabyInfoState extends State<BabyInfo> {
                                   Expanded( // 상자 위젯
                                     child: Padding(
                                         padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                                        child: Image.asset(('baby.png')) // 버튼 왼쪽 이미지
+                                        child: Image.asset(('due_babyInfo.png')) // 버튼 왼쪽 이미지
                                     )
                                     ,flex: 1,), // 영역비율 1 부여
                                   Expanded(
@@ -186,7 +186,7 @@ class _BabyInfoState extends State<BabyInfo> {
                                   Expanded( // 상자 위젯
                                     child: Padding(
                                         padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                                        child: Image.asset(('baby.png')) // 버튼 왼쪽 이미지
+                                        child: Image.asset(('mother_babyInfo.png')) // 버튼 왼쪽 이미지
                                     )
                                     ,flex: 1,), // 영역비율 1 부여
                                   Expanded(
@@ -222,7 +222,7 @@ class _BabyInfoState extends State<BabyInfo> {
                                   Expanded( // 상자 위젯
                                     child: Padding(
                                         padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                                        child: Image.asset(('baby.png')) // 버튼 왼쪽 이미지
+                                        child: Image.asset(('father_babyInfo.png')) // 버튼 왼쪽 이미지
                                     )
                                     ,flex: 1,), // 영역비율 1 부여
                                   Expanded(
