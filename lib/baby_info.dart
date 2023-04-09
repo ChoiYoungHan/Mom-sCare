@@ -88,12 +88,12 @@ class _BabyInfoState extends State<BabyInfo> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('아기 정보', style: TextStyle(color: Colors.black)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // Calendar_Page로 이동
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
       ),
       ),
       body: Column(
-        children: [ // 위젯이 차지할 영역 비율 2
+        children: [
           Expanded(
               child: Column( // 가로 위젯
                 children: [
@@ -248,7 +248,7 @@ class _BabyInfoState extends State<BabyInfo> {
               )
               ,flex: 10),// 위젯이 차지할 영역 비율 10
           Expanded(
-              child: Row(
+              child: Row( // 로우 위젯
                 children: [
                   Expanded(
                     child: Container(),flex: 1, // 좌측 여백을 위해 영역 비율 1 부여
@@ -270,8 +270,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                      OutlinedButton(
                                        onPressed: (){
                                          //데이터베이스에서 아이가 삭제될 코드 추가 예정
-                                         Navigator.of(context).pop();
-                                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage()));
+                                         Navigator.of(context).pop(); // 팝업 닫기
+                                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
                                        }, child: Text('확인'),
                                      )
                                    ],
