@@ -1,5 +1,6 @@
 import 'package:care_application/baby_add.dart';
 import 'package:care_application/baby_info.dart';
+import 'package:care_application/edit.dart';
 import 'package:care_application/home_page.dart';
 import 'package:care_application/login_page.dart';
 import 'package:care_application/main.dart';
@@ -96,7 +97,9 @@ class _MyPageState extends State<MyPage> {
                     height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
                     padding: EdgeInsets.all(30), // 네 면의 여백을 30만큼 줌
                     child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
-                      onPressed: (){}, // 버튼을 눌렀을 때 실행될 함수 지정
+                      onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit())); // 캘린더페이지로 화면 이동
+                      }, // 버튼을 눌렀을 때 실행될 함수 지정
                       child: Text('설정', style: TextStyle(color: Colors.black),)
                     )
                   )

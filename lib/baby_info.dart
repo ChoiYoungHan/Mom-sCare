@@ -26,10 +26,10 @@ class BabyInfo extends StatefulWidget {
 
 class _BabyInfoState extends State<BabyInfo> {
 
-  final List<String> babies = <String>['금쪽','태양','신달','해돋','선문','해달','딜리','스타','철수']; // 추후 받아올 아이 정보
-  final List<String> babies_birth = <String>['2024-01-01','2024-01-01','2024-01-01','2024-01-01','2024-01-01','2024-01-01','2024-01-01','2024-01-01','2024-01-01']; // 추후 받아올 출산 예정일 정보
-  final List<String> babies_mother = <String>['금쪽엄마','태양엄마','신달엄마','해돋엄마','선문엄마','해달엄마','딜리엄마','스타엄마','철수엄마']; // 추후 받아올 엄마 정보
-  final List<String> babies_father = <String>['금쪽아빠','태양아빠','신달아빠','해돋아빠','선문아빠','해달아빠','딜리아빠','스타아빠','철수아빠']; // 추후 받아올 아빠 정보
+  var babies='_';
+  var babies_birth='_';
+  var babies_mother='_';
+  var babies_father='_';
   TextEditingController input_babies = TextEditingController(); // 받아올 아이 이름
   TextEditingController input_babies_birth = TextEditingController(); // 받아올 출산 예정일
   TextEditingController input_babies_mother = TextEditingController(); // 받아올 엄마 이름
@@ -71,8 +71,25 @@ class _BabyInfoState extends State<BabyInfo> {
             OutlinedButton(
               onPressed: (){
                 // 값을 데이터베이스에 넣는 부분 추가예정
-                value.clear(); // 다시 버튼을 눌렀을 때 값 비워두기
-                Navigator.of(context).pop(); // 팝업 닫기
+                if(value == input_babies)
+                  setState(() {
+                    babies=value.text;
+                  });
+                else if(value == input_babies_birth)
+                  setState(() {
+                    babies_birth=value.text;
+                  });
+                else if(value == input_babies_mother)
+                  setState(() {
+                    babies_mother=value.text;
+                  });
+                else if(value == input_babies_father)
+                setState(() {
+                  babies_father=value.text;
+                });
+                Navigator.of(context).pop();
+                value.clear();// 다시 버튼을 눌렀을 때 값 비워두기
+                //Navigator.of(context).pop(); // 팝업 닫기
               },
               child: Text('확인',style: TextStyle(color: Color(0xFF835529),backgroundColor: Color(0xFFFFE7BA)),)
             )
@@ -126,8 +143,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                   Expanded(
                                     child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
                                         fit: BoxFit.scaleDown, // 작아지게
-                                        child :Text('${babies[1]}',style: TextStyle(color: Colors.black),)) // 설정된 아기의 정보 (데이터베이스 연동 후 수정 예정)
-                                    ,flex: 1,), // 영역 비율 1 부여
+                                        child :Text('${babies}',style: TextStyle(color: Colors.black),)) // 설정된 아기의 정보 (데이터베이스 연동 후 수정 예정)
+                                    ,flex: 2,), // 영역 비율 2 부여
                                   Expanded(
                                     child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                                   )
@@ -162,8 +179,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                   Expanded(
                                     child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
                                       fit: BoxFit.scaleDown, // 작아지게
-                                      child :Text('${babies_birth[1]}',style: TextStyle(color: Colors.black),)) // 설정된 출산 예정일의 정보 (데이터베이스 연동 후 수정 예정)
-                                    ,flex: 1,), // 영역 비율 1 부여
+                                      child :Text('${babies_birth}',style: TextStyle(color: Colors.black),)) // 설정된 출산 예정일의 정보 (데이터베이스 연동 후 수정 예정)
+                                    ,flex: 2,), // 영역 비율 2 부여
                                   Expanded(
                                       child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                                   )
@@ -198,8 +215,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                   Expanded(
                                     child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
                                         fit: BoxFit.scaleDown, // 작아지게
-                                        child :Text('${babies_mother[1]}',style: TextStyle(color: Colors.black),)) // 설정된 엄마의 정보 (데이터베이스 연동 후 수정 예정)
-                                    ,flex: 1,), // 영역 비율 1 부여
+                                        child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)) // 설정된 엄마의 정보 (데이터베이스 연동 후 수정 예정)
+                                    ,flex: 2,), // 영역 비율 2 부여
                                   Expanded(
                                       child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                                   )
@@ -215,7 +232,9 @@ class _BabyInfoState extends State<BabyInfo> {
                           padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                           child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                               onPressed: (){
-                                popup('아빠 이름', input_babies_father);
+                                setState(() {
+                                  popup('아빠 이름', input_babies_father);
+                                });
                               }, // 버튼을 눌렀을 때 실행될 함수 지정
                               child: Row(
                                 children: [
@@ -234,8 +253,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                   Expanded(
                                     child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
                                         fit: BoxFit.scaleDown, // 작아지게
-                                        child :Text('${babies_father[1]}',style: TextStyle(color: Colors.black),)) // 설정된 아빠의 정보 (데이터베이스 연동 후 수정 예정)
-                                    ,flex: 1,), // 영역 비율 1 부여
+                                        child :Text('${babies_father}',style: TextStyle(color: Colors.black),)) // 설정된 아빠의 정보 (데이터베이스 연동 후 수정 예정)
+                                    ,flex: 2,), // 영역 비율 2 부여
                                   Expanded(
                                       child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                                   )
