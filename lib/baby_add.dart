@@ -268,7 +268,8 @@ class _BabyAddState extends State<BabyAdd> {
               height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
               width: MediaQuery.of(context).size.width*0.4,
               padding: EdgeInsets.fromLTRB(0, 70, 0, 70), // 상하80 여백을 줌
-              child: (babies != '_' && babies_birth != '_' && babies_mother != '_' && babies_father != '_') ? OutlinedButton(
+              child: (babies != '_' && babies_birth != '_' && babies_mother != '_' && babies_father != '_') ? 
+              OutlinedButton(
                 onPressed: () {
                   showDialog( // 팝업 위젯
                       context: context,
@@ -290,7 +291,28 @@ class _BabyAddState extends State<BabyAdd> {
                       }
                   );
                 }, child: Text('확인', style: TextStyle(color: Colors.black),),
-              ):null,
+              ):
+              OutlinedButton(
+                onPressed: (){
+                  showDialog(
+                    context: context,
+                    barrierColor: Colors.grey.withOpacity(0.6),
+                    builder: (BuildContext context){
+                      return AlertDialog(
+                        title: Text(''),
+                        content: Text('정보를 전부 입력해 주세요',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                        actions: [
+                          OutlinedButton(
+                            onPressed: (){
+                              Navigator.of(context).pop();
+                            }, child: Text('확인')
+                          )
+                        ],
+                      );
+                    }
+                  );
+                }, child: Text('확인', style: TextStyle(color: Colors.black),),
+              ),
             ),
           flex: 4,),
           Expanded(
