@@ -300,12 +300,12 @@ class _BabyAddState extends State<BabyAdd> {
                     builder: (BuildContext context){
                       return AlertDialog(
                         title: Text(''),
-                        content: Text('정보를 전부 입력해 주세요',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                        content: Text('등록 정보를 전부 입력해 주세요',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
                         actions: [
                           OutlinedButton(
                             onPressed: (){
                               Navigator.of(context).pop();
-                            }, child: Text('확인')
+                            }, child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
                           )
                         ],
                       );

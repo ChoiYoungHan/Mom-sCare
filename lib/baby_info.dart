@@ -284,14 +284,37 @@ class _BabyInfoState extends State<BabyInfo> {
                                builder: (BuildContext context){
                                  return  AlertDialog(
                                    title: Text(''), // 상단 여백
-                                   content: Text('아이가 삭제되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                   content: Text('정말로 삭제하시겠습니까?',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
                                    actions: [
                                      OutlinedButton(
                                        onPressed: (){
-                                         //데이터베이스에서 아이가 삭제될 코드 추가 예정
                                          Navigator.of(context).pop(); // 팝업 닫기
-                                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
-                                       }, child: Text('확인'),
+                                       }, child: Text('아니오',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                     ),
+                                     OutlinedButton(
+                                       onPressed: (){
+                                         //데이터베이스에서 아이가 삭제될 코드 추가 예정
+                                         Navigator.of(context).pop();
+
+                                         showDialog(
+                                           context: context,
+                                           barrierColor: Colors.grey.withOpacity(0.6),
+                                           builder: (BuildContext context){
+                                             return AlertDialog(
+                                               title: Text(''),
+                                               content: Text('아이가 삭제되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                               actions: [
+                                                 OutlinedButton(
+                                                   onPressed: (){
+                                                     Navigator.of(context).pop();
+                                                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
+                                                   },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
+                                                 )
+                                               ],
+                                             );
+                                           }
+                                         );
+                                       }, child: Text('네',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
                                      )
                                    ],
                                  );
