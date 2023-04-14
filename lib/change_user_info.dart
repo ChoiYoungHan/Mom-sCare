@@ -1,3 +1,4 @@
+import 'package:care_application/change_pw.dart';
 import 'package:care_application/edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
               child: OutlinedButton(
                 onPressed: (){
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangePw())); // 설정 페이지로 이동
                 },
                 child: Row(
                   children: [
@@ -59,7 +60,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                       child: Container(),flex: 1, // 아이콘과 텍스트 사이 여백 1부여
                     ),
                     Expanded(
-                        child:Text('개인정보 변경',style: TextStyle(color: Colors.black),)
+                        child:Text('비밀정보 변경',style: TextStyle(color: Colors.black),)
                     ,flex: 5,),
                     Expanded(
                       child: Container(),flex: 2, // 중간 여백 비율2 부여
