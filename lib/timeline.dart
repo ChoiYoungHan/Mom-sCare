@@ -22,7 +22,7 @@ class TimeLine extends StatefulWidget {
 
 class _TimeLineState extends State<TimeLine> {
 
-  List<String> image = ['assets/baby.png', 'assets/camera.png', 'assets/gallery.png', 'assets/newborn.png', 'assets/week_baby.png'];
+  List<String> image = ['http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2', 'http://182.219.226.49/image/592dbee4b3756290a8d8b03d3145d521', 'http://182.219.226.49/image/6dcc93eccdd45171cc7422f739abb019', 'http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2', 'http://182.219.226.49/image/01aa326e7ca3b8255436018ba42fcbf2'];
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class _TimeLineState extends State<TimeLine> {
                                                     decoration: BoxDecoration( // 상자 위젯 디자인
                                                         border: Border.all(color: Colors.grey, width: 1)
                                                     ),
-                                                    child: Image.asset(image[index], fit: BoxFit.cover) // 배열의 크기만큼
+                                                    child: Image.network(image[index], fit: BoxFit.cover) // 배열의 크기만큼
                                                 );
                                               }
                                           )
