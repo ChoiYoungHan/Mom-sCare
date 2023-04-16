@@ -1,4 +1,5 @@
 import 'package:care_application/main.dart';
+import 'package:care_application/my_page.dart';
 import 'package:care_application/week_info.dart';
 import 'package:flutter/material.dart';
 
@@ -185,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   IconButton(
                       onPressed: (){
-
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage()));
                       },
                       icon: Icon(Icons.list_alt_outlined)
                   )

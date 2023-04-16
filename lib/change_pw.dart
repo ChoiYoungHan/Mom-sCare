@@ -25,7 +25,7 @@ class ChangePw extends StatefulWidget {
 
 class _ChangePwState extends State<ChangePw> {
 
-  TextEditingController PW1 = TextEditingController(); // 비밀번호 입력 컨트롤로
+  TextEditingController PW1 = TextEditingController(); // 비밀번호 입력 컨트롤러
   TextEditingController PW2 = TextEditingController();
   TextEditingController PW3 = TextEditingController();
   var Pw1; // 비밀번호
@@ -38,7 +38,7 @@ class _ChangePwState extends State<ChangePw> {
       appBar: AppBar(
         automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-        title: Text('개인정보 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
+        title: Text('비밀번호 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
         leading: IconButton(onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 개인정보 변경 페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
@@ -54,7 +54,7 @@ class _ChangePwState extends State<ChangePw> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 40, 600, 0),
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: Text('현재 비밀번호', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
                   )
                 ),
@@ -84,7 +84,7 @@ class _ChangePwState extends State<ChangePw> {
               children: [
                 Expanded(
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 40, 600, 0),
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Text('비밀번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
                     )
                 ),
@@ -114,7 +114,7 @@ class _ChangePwState extends State<ChangePw> {
               children: [
                 Expanded(
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 40, 600, 0),
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Text('비밀번호 재입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
                     )
                 ),
@@ -140,13 +140,16 @@ class _ChangePwState extends State<ChangePw> {
             child: Container(),flex: 2,
           ),
           Expanded(
-            child: Container(
-              height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
-              width: MediaQuery.of(context).size.width*0.4,
-              child: OutlinedButton(
-                onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 개인정보 변경 페이지로 이동
-                },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Container(
+                height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
+                width: MediaQuery.of(context).size.width*0.4,
+                child: OutlinedButton(
+                  onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 개인정보 변경 페이지로 이동
+                  },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
+                ),
               ),
             ),
           flex: 2,),
