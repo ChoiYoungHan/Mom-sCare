@@ -44,12 +44,12 @@ class _ChangePhoneState extends State<ChangePhone> {
           Expanded(
             child: Container(),flex: 4,
           ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Expanded(
-              child: Text('전화번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
+          Expanded(
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0,5,0,0),
+                child: Text('전화번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
+              ),
             flex: 2,),
-          ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.fromLTRB(100,0,100,0),
@@ -77,8 +77,8 @@ class _ChangePhoneState extends State<ChangePhone> {
                   },child: Text('확인', style: TextStyle(color: Colors.black,),),
                 ),
               ),
-            ),flex: 2,
-          ),
+            ),
+            flex: 2,),
           Expanded(
             child: Container(),flex: 2,
           ),

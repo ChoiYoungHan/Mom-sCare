@@ -1,5 +1,6 @@
 import 'package:care_application/change_user_info.dart';
 import 'package:care_application/my_page.dart';
+import 'package:care_application/question.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -81,7 +82,9 @@ class _EditState extends State<Edit> {
                 width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
                 padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                 child: OutlinedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question())); // 문의하기 페이지로 이동
+                    },
                     child: Row(
                       children: [
                         Expanded( // 상자 위젯
