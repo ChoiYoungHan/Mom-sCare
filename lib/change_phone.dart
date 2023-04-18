@@ -24,8 +24,8 @@ class ChangePhone extends StatefulWidget {
 
 class _ChangePhoneState extends State<ChangePhone> {
 
-  TextEditingController PH = TextEditingController(); // 전화번호 입력 컨트로러
-  var Ph;
+  TextEditingController PH = TextEditingController(); // 전화번호 입력 컨트롤러
+  var Ph; // 추후 데이터베이스에서 받아올 값
 
   @override
   Widget build(BuildContext context) {
@@ -42,32 +42,32 @@ class _ChangePhoneState extends State<ChangePhone> {
       body: Column(
         children: [
           Expanded(
-            child: Container(),flex: 4,
+            child: Container(),flex: 4, // 상단 여백 4 부여
           ),
           Expanded(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(0,5,0,0),
+                padding: EdgeInsets.fromLTRB(0,65,0,0),
                 child: Text('전화번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
               ),
-            flex: 2,),
+            flex: 2,), // 영역비율 2 부여
           Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(100,0,100,0),
+              padding: EdgeInsets.fromLTRB(100,0,100,0), //텍스트 필드의 상하 여백 100 부여
               child: TextField(
                 controller: PH,
-                textAlign: TextAlign.right,
+                textAlign: TextAlign.right, // 오른쪽 정렬
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(
+                    border: OutlineInputBorder( // 테두리 선
                         borderSide: BorderSide(color: Colors.black)
                     )
                 ),
               ),
             ),
-            flex: 2,),
+            flex: 2,), // 영역 비율 2 부여
           Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 40, 0, 40),
+              padding: EdgeInsets.fromLTRB(0, 40, 0, 40), // 커튼의 상하 여백 40 부여
               child: Container(
                 height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
                 width: MediaQuery.of(context).size.width*0.4, // 위젯의 너비를 화면 너비*0.4로 설정
@@ -78,9 +78,9 @@ class _ChangePhoneState extends State<ChangePhone> {
                 ),
               ),
             ),
-            flex: 2,),
+            flex: 3,), // 영역 비율 3 부여
           Expanded(
-            child: Container(),flex: 2,
+            child: Container(),flex: 4, // 하단 여백 4 부여
           ),
         ],
       ),

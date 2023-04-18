@@ -1,4 +1,5 @@
 import 'package:care_application/edit.dart';
+import 'package:care_application/question_records.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,12 @@ class Question extends StatefulWidget {
 
 class _QuestionState extends State<Question> {
 
-  final List<String> question = <String>['제목','번호','입력','공간']; // 추후 받을 문의목록 대체
+  final List<String> question = <String>['제목','번호','입력','공간'];
+
+  late bool _isHovering=true;
+  late bool _isHover=true;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,28 +45,28 @@ class _QuestionState extends State<Question> {
       body: Column(
         children: [
           Expanded(
-            child: Container(),flex: 1,
+            child: Container(),flex: 1, // 상단 여백 1 부여
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: question.length,
+            child: ListView.builder( // 리스트 뷰
+              itemCount: question.length, // 받아올 문의사항 길이
               itemBuilder: (context, index){
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(50,0,50,0),
+                  padding: const EdgeInsets.fromLTRB(50,0,50,0), // 문의 버튼 상하단 여백 50 부여
                   child: Container(
-                    width: 120,
-                    height: 50,
+                    width: 120, // 너비 120
+                    height: 50, // 높이 50
                     child: OutlinedButton(
                       onPressed: (){}, // 문의 내용으로 갈 버튼
-                      child: Text('${question[index]}',style: TextStyle(color: Colors.black),),
+                      child: Text('${question[index]}',style: TextStyle(color: Colors.black),), // 문의 내용이 적힌 버튼
                     ),
                   ),
                 );
               },
             ),
-          flex: 15,),
+          flex: 15,), // 영역 비율 15 부여
           Expanded(
-            child: Container(),flex: 1,
+            child: Container(),flex: 1, // 하단 여백 1 부여
           ),
         ],
       ),
@@ -69,14 +75,48 @@ class _QuestionState extends State<Question> {
           Positioned(
             bottom: 20,
             right: 20,
-            child: FloatingActionButton(
-              onPressed: (){
-                // 문의 추가 페이지로 이동
-              },child: Icon(Icons.add,color: Colors.white,),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              onEnter: (_) {
+                setState(() {
+                  _isHovering = false;
+                });
+              },
+              onExit: (_) {
+                setState(() {
+                  _isHovering = true;
+                });
+              },
+
+              child: InkWell(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuestionRecords())); // 문의내역 페이지로 이동
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (!_isHovering)
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0,0,0,10),
+                        child: Text('문의 추가',style: TextStyle(color: Colors.black,fontSize: 14,fontWeight: FontWeight.bold,),
+                        ),
+                      ),
+                    Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: _isHovering ? Colors.black : Colors.black54
+                      ),
+                      child: Icon(Icons.add,color: Colors.white,size: 50,),
+                    ),
+                  ],
+                ),
+              )
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }
