@@ -43,6 +43,7 @@ class _BabyAddState extends State<BabyAdd> {
           title: Text(edit_value,style: TextStyle(color: Color(0xFF835529)),),backgroundColor: Color(0xFFFFE7BA),
           content: TextField(
             controller: edit,
+            maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
             textAlign: TextAlign.right,
             style: TextStyle(color:  Color(0xFF835529)),
             decoration: InputDecoration(

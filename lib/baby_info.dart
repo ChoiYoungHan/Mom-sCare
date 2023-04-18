@@ -45,6 +45,7 @@ class _BabyInfoState extends State<BabyInfo> {
           title: Text(edit_value,style: TextStyle(color: Color(0xFF835529)),),backgroundColor: Color(0xFFFFE7BA),
           content: TextField( // 텍스트 필드 위젯
             controller: value, // 컨트롤되는 변수
+            maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
             textAlign: TextAlign.right, // 텍스트 우측 정렬
             style: TextStyle(color: Color(0xFF835529)),
             decoration: InputDecoration( // 텍스트 필드 디자인
