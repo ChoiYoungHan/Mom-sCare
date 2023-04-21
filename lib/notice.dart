@@ -1,5 +1,6 @@
 import 'package:care_application/edit.dart';
 import 'package:care_application/my_page.dart';
+import 'package:care_application/notice_records.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,7 @@ class _NoticeState extends State<Notice> {
                     height: 50,
                     child: OutlinedButton(
                       onPressed: (){
-                        // 공지내용으로 이동
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeRecords())); // 공지내용으로 이동
                       },
                       child: Text('${notice[index]}',style: TextStyle(color: Colors.black),), // 공지 내용이 적힌 버튼),
                     ),
