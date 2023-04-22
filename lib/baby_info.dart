@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:care_application/home_page.dart';
 import 'package:care_application/main.dart';
 import 'package:care_application/my_page.dart';
@@ -26,6 +28,7 @@ class BabyInfo extends StatefulWidget {
 
 class _BabyInfoState extends State<BabyInfo> {
 
+  var num;
   var babies='_';
   var babies_birth='_';
   var babies_mother='_';
@@ -35,6 +38,22 @@ class _BabyInfoState extends State<BabyInfo> {
   TextEditingController input_babies_mother = TextEditingController(); // 받아올 엄마 이름
   TextEditingController input_babies_father = TextEditingController(); // 받아올 아빠 이름
   //해당 텍스트 들은 전역변수로 설정하게 될 수 있음
+
+  Future baby_modify() async{
+    final uri = Uri.parse('http://182.219.226.49/moms/baby/---');
+    final header = {'Content-Type': 'application/json'};
+
+    final baby_num = num; // 아기번호 값도 받아와야함
+
+    final body = jsonEncode({'clientNum': baby_num });
+    final response = await http.post(uri, headers: header, body: body);
+
+    if(response.statusCode == 200){
+      return 0;
+    }else{
+
+    }
+  }
 
   Future popup(String edit_value, TextEditingController value){
     return showDialog(

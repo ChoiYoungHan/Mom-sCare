@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:care_application/edit.dart';
 import 'package:care_application/question_add.dart';
 import 'package:care_application/question_records.dart';
@@ -24,6 +26,41 @@ class Question extends StatefulWidget {
 }
 
 class _QuestionState extends State<Question> {
+  /*
+  Future inquire_print() async{ // 문의사항들 출력
+    final uri = Uri.parse('http://182.219.226.49/moms/baby/inqure');
+    final header = {'Content-Type': 'application/json'};
+
+    final baby_name = babies;
+    final baby_birth = babies_birth;
+    final baby_mom = babies_mother;
+    final baby_dad = babies_father;
+
+    final body = jsonEncode({'babyName': baby_name, 'expectedDate': baby_birth, 'dadName': baby_dad, 'momName': baby_mom, 'clientNum': 1 });
+    final response = await http.post(uri, headers: header, body: body);
+
+    if(response.statusCode == 200){
+      return 0;
+    } else{
+      print(response.statusCode.toString());
+    }
+  }
+*/
+  Future inquire() async{ // 문의사항 버튼 눌렀을 때
+    final uri = Uri.parse('http://182.219.226.49/moms/baby/inqure');
+    final header = {'Content-Type': 'application/json'};
+
+    final num='1'; // 출력데이터 받아와야함
+
+    final body = jsonEncode({'clientNum': num});
+    final response = await http.post(uri, headers: header, body: body);
+
+    if(response.statusCode == 200){
+      return 0;
+    } else{
+      print(response.statusCode.toString());
+    }
+  }
 
   final List<String> question = <String>['제목','번호','입력','공간'];
 

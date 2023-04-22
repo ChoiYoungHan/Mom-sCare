@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:care_application/question.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,24 @@ class QuestionAdd extends StatefulWidget {
 class _QuestionAddState extends State<QuestionAdd> {
   TextEditingController title = TextEditingController(); // 제목
   TextEditingController contents = TextEditingController(); // 내용
+
+  Future inquire_add() async{ // 문의사항 버튼 눌렀을 때
+    final uri = Uri.parse('http://182.219.226.49/moms/baby/inqure');
+    final header = {'Content-Type': 'application/json'};
+
+    final content=contents.text;
+    final title_ = title.text;
+    final num='1'; // 필요한가?
+
+    final body = jsonEncode({'content': content, 'clientNum': num});
+    final response = await http.post(uri, headers: header, body: body);
+
+    if(response.statusCode == 200){
+      return 0;
+    } else{
+      print(response.statusCode.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
