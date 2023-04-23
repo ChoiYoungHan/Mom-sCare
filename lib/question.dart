@@ -63,6 +63,7 @@ class _QuestionState extends State<Question> {
   }
 
   final List<String> question = <String>['제목','번호','입력','공간'];
+  final List<String> question_date = <String>['0401','0402','0403','0404'];
 
   late bool _isHovering=true;
   late bool _isHover=true;
@@ -78,7 +79,7 @@ class _QuestionState extends State<Question> {
           leading: IconButton(onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit())); // 개인정보 변경 페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
-          )
+          ),
       ),
       body: Column(
         children: [
@@ -98,7 +99,19 @@ class _QuestionState extends State<Question> {
                       onPressed: (){
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuestionRecords())); // 문의내역 페이지로 이동
                       }, // 문의 내용으로 갈 버튼
-                      child: Text('${question[index]}',style: TextStyle(color: Colors.black),), // 문의 내용이 적힌 버튼
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text('${question[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
+                          flex: 1,),
+                          Expanded(
+                            child: Container(),flex: 2,
+                          ),
+                          Expanded(
+                            child: Text('${question_date[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
+                          flex: 1,),
+                        ],
+                      )
                     ),
                   ),
                 );

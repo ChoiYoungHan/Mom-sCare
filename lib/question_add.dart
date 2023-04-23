@@ -55,7 +55,13 @@ class _QuestionAddState extends State<QuestionAdd> {
           leading: IconButton(onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question())); // 개인정보 변경 페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
-          )
+          ),
+        actions: [
+          TextButton(
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question()));
+              }, child: Text('보내기', style: TextStyle(color: Colors.black, fontSize: 20),))
+        ],
       ),
       body: Column(
         children: [
@@ -107,7 +113,7 @@ class _QuestionAddState extends State<QuestionAdd> {
                 )
             )
             ,flex: 5,),// 여백 5 부여
-          Expanded(
+          /*Expanded(
             child: Container(
               width: MediaQuery.of(context).size.width*0.4,
               child: Padding(
@@ -120,7 +126,7 @@ class _QuestionAddState extends State<QuestionAdd> {
                 ),
               ),
             ),flex: 3,
-          ),
+          ),*/
           Expanded(child: Container(),flex: 3,)
         ],
       ),

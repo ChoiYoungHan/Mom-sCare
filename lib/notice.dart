@@ -26,6 +26,8 @@ class Notice extends StatefulWidget {
 class _NoticeState extends State<Notice> {
 
   final List<String> notice = <String>['제목','번호','입력','공간'];
+  final List<String> notice_num = <String>['1','2','3','4'];
+  final List<String> notice_date = <String>['0501','0502','0503','0504'];
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,22 @@ class _NoticeState extends State<Notice> {
                       onPressed: (){
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeRecords())); // 공지내용으로 이동
                       },
-                      child: Text('${notice[index]}',style: TextStyle(color: Colors.black),), // 공지 내용이 적힌 버튼),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text('${notice_num[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
+                            flex: 1,),
+                          Expanded(
+                            child: Text('${notice[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
+                            flex: 3,),
+                          Expanded(
+                            child: Container(),flex: 2,
+                          ),
+                          Expanded(
+                            child: Text('${notice_date[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
+                            flex: 1,),
+                        ],
+                      )
                     ),
                   ),
                 );
