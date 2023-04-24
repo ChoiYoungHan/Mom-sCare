@@ -28,20 +28,21 @@ class _QuestionAddState extends State<QuestionAdd> {
   TextEditingController contents = TextEditingController(); // 내용
 
   Future inquire_add() async{ // 문의사항 버튼 눌렀을 때
-    final uri = Uri.parse('http://182.219.226.49/moms/baby/inqure');
+    final uri = Uri.parse('http://182.219.226.49/moms/inquire-request');
     final header = {'Content-Type': 'application/json'};
 
     final content=contents.text;
+    print(content+'1');
     final title_ = title.text;
-    final num='1'; // 필요한가?
-
-    final body = jsonEncode({'content': content, 'clientNum': num});
+    final clientNum='1'; //
+    // 제목 추가 필요
+    final body = jsonEncode({'content': content, 'clientNum': '64'});
     final response = await http.post(uri, headers: header, body: body);
-
+    print(response.statusCode);
     if(response.statusCode == 200){
-      return 0;
+
     } else{
-      print(response.statusCode.toString());
+
     }
   }
 
@@ -59,6 +60,7 @@ class _QuestionAddState extends State<QuestionAdd> {
         actions: [
           TextButton(
               onPressed: (){
+                inquire_add();
                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question()));
               }, child: Text('보내기', style: TextStyle(color: Colors.black, fontSize: 20),))
         ],

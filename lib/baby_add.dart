@@ -34,22 +34,17 @@ class _BabyAddState extends State<BabyAdd> {
   TextEditingController input_babies_birth = TextEditingController(); // 받아올 출산 예정일
   TextEditingController input_babies_mother = TextEditingController(); // 받아올 엄마 이름
   TextEditingController input_babies_father = TextEditingController(); // 받아올 아빠 이름
-  bool isfull=false;
+
   
   Future baby_add() async{
     final uri = Uri.parse('http://182.219.226.49/moms/baby/register');
     final headers = {'Content-Type': 'application/json'};
 
-
-    final baby_name = input_babies.text;
-    final baby_birth = input_babies_birth.text;
-    final baby_mom = input_babies_mother.text;
-    final baby_dad = input_babies_father.text;
-
-    final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': 64 });
+    final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': '64'});
     final response = await http.post(uri, headers: headers, body: body);
+
     if(response.statusCode == 200){
-      isfull=true;
+
     } else{
 
     }
@@ -115,7 +110,6 @@ class _BabyAddState extends State<BabyAdd> {
                  });
                  // 데이터베이스에 저장할 코드 작성 예정
                }
-               baby_add();
                Navigator.of(context).pop();
              },
                 child: Text('확인',style: TextStyle(color: Color(0xFF835529),backgroundColor: Color(0xFFFFE7BA)),)
@@ -157,7 +151,7 @@ class _BabyAddState extends State<BabyAdd> {
                     Expanded( // 상자 위젯
                       child: Padding(
                           padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                          child: Image.asset(('baby_babyInfo.png')) // 버튼 왼쪽 이미지
+                          child: Image.asset(('assets/baby_babyInfo.png')) // 버튼 왼쪽 이미지
                       )
                       ,flex: 1,), // 영역비율 1 부여
                     Expanded(
@@ -193,7 +187,7 @@ class _BabyAddState extends State<BabyAdd> {
                         Expanded( // 상자 위젯
                           child: Padding(
                               padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                              child: Image.asset(('due_babyInfo.png')) // 버튼 왼쪽 이미지
+                              child: Image.asset(('assets/due_babyInfo.png')) // 버튼 왼쪽 이미지
                           )
                           ,flex: 1,), // 영역비율 1 부여
                         Expanded(
@@ -229,7 +223,7 @@ class _BabyAddState extends State<BabyAdd> {
                         Expanded( // 상자 위젯
                           child: Padding(
                               padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                              child: Image.asset(('mother_babyInfo.png')) // 버튼 왼쪽 이미지
+                              child: Image.asset(('assets/mother_babyInfo.png')) // 버튼 왼쪽 이미지
                           )
                           ,flex: 1,), // 영역비율 1 부여
                         Expanded(
@@ -265,7 +259,7 @@ class _BabyAddState extends State<BabyAdd> {
                         Expanded( // 상자 위젯
                           child: Padding(
                               padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                              child: Image.asset(('father_babyInfo.png')) // 버튼 왼쪽 이미지
+                              child: Image.asset(('assets/father_babyInfo.png')) // 버튼 왼쪽 이미지
                           )
                           ,flex: 1,), // 영역비율 1 부여
                         Expanded(
@@ -291,9 +285,8 @@ class _BabyAddState extends State<BabyAdd> {
             child: Container(
               height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
               width: MediaQuery.of(context).size.width*0.4,
-              padding: EdgeInsets.fromLTRB(0, 70, 0, 70), // 상하80 여백을 줌
-              //child: (babies != '_' && babies_birth != '_' && babies_mother != '_' && babies_father != '_') ?
-              child: isfull ?
+              padding: EdgeInsets.fromLTRB(0, 50, 0, 30), // 상하80 여백을 줌
+              child: (babies != '_' && babies_birth != '_' && babies_mother != '_' && babies_father != '_') ?
               OutlinedButton(
                 onPressed: () {
                   showDialog( // 팝업 위젯
@@ -306,7 +299,7 @@ class _BabyAddState extends State<BabyAdd> {
                           actions: [
                             OutlinedButton(
                               onPressed: (){
-                                //데이터베이스에서 아이정보가 저장될 코드 추가 예정
+                                baby_add(); // 아이 추가
                                 Navigator.of(context).pop(); // 팝업 닫기
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
                               }, child: Text('확인'),
