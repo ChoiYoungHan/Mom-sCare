@@ -23,7 +23,7 @@ class ChatBot extends StatefulWidget {
 }
 
 class _ChatBotState extends State<ChatBot> {
-
+  bool isuser = false;
   final List<String> chat = <String>['1','2','3','4','5'];
 
   @override
@@ -34,10 +34,13 @@ class _ChatBotState extends State<ChatBot> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('ChatBot', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
         actions: [
-          OutlinedButton(
-              onPressed: (){
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: OutlinedButton(
+                onPressed: (){
 
-              }, child: Text('채팅내역', style: TextStyle(color: Colors.black, fontSize: 20),))
+                }, child: Text('채팅내역', style: TextStyle(color: Colors.black, fontSize: 20),)),
+          )
         ],
       ),
       body: Column(
@@ -46,13 +49,34 @@ class _ChatBotState extends State<ChatBot> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
-                reverse: true,
+                //reverse: false,
                 itemCount: chat.length,
                 itemBuilder: (context, index){
-                  return Container(
-                    width: 80,
-                    height: 130,
-                    child: Text('${chat[index]}'),
+                  return Row(
+                    mainAxisAlignment: isuser ? MainAxisAlignment.start : MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: isuser ? Colors.green[100] : Colors.grey[300],
+                          borderRadius: BorderRadius.circular(8)
+                        ),child: Text('${chat[index]}',style: TextStyle(color: Colors.black),)
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            '${chat[index]}',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 4.0),
+                          Text(
+                            '${chat[index]}'
+                          ),
+                        ],
+                      ),
+                    ],
                   );
                 },
               ),
@@ -71,7 +95,13 @@ class _ChatBotState extends State<ChatBot> {
                 flex: 8,),
                 Expanded(
                   child: IconButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      setState(() {
+                        isuser=true;
+                        chat.add('new message');
+                        print(isuser);
+                      });
+                    },
                    icon: Icon(Icons.arrow_back),),
                 )
               ],
