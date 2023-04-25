@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:care_application/chatBot.dart';
 import 'package:care_application/home_page.dart';
 import 'package:care_application/input_diary.dart';
 import 'package:care_application/my_page.dart';
@@ -209,7 +210,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
                       ),
                       IconButton( // 아이콘 버튼 위젯
                           onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatBot()));
                           },
                           icon: Icon(Icons.chat_outlined) // 채팅 아이콘
                       ),

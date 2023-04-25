@@ -1,5 +1,6 @@
 import 'package:care_application/baby_add.dart';
 import 'package:care_application/baby_info.dart';
+import 'package:care_application/chatBot.dart';
 import 'package:care_application/edit.dart';
 import 'package:care_application/home_page.dart';
 import 'package:care_application/login_page.dart';
@@ -170,7 +171,7 @@ class _MyPageState extends State<MyPage> {
             ),
             IconButton( // 아이콘 버튼 위젯
               onPressed: (){
-
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatBot()));
               },
               icon: Icon(Icons.chat_outlined),
             ),
