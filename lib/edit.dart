@@ -56,7 +56,7 @@ class _EditState extends State<Edit> {
                         Expanded( // 상자 위젯
                           child: Padding(
                               padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                              child: Image.asset(('edit.png')) // 버튼 왼쪽 이미지
+                              child: Image.asset(('assets/edit.png')) // 버튼 왼쪽 이미지
                           )
                           ,flex: 2,), // 영역비율 2 부여
                         Expanded(
@@ -90,7 +90,7 @@ class _EditState extends State<Edit> {
                         Expanded( // 상자 위젯
                           child: Padding(
                               padding: EdgeInsets.all(10), // 모든 여백 5 부여
-                              child: Image.asset(('question-mark.png')) // 버튼 왼쪽 이미지
+                              child: Image.asset(('assets/question-mark.png')) // 버튼 왼쪽 이미지
                           )
                           ,flex: 2,), // 영역비율 2 부여
                         Expanded(
@@ -122,7 +122,7 @@ class _EditState extends State<Edit> {
                         Expanded( // 상자 위젯
                           child: Padding(
                               padding: EdgeInsets.all(15), // 모든 여백 15 부여
-                              child: Image.asset(('x.png')) // 버튼 왼쪽 이미지
+                              child: Image.asset(('assets/x.png')) // 버튼 왼쪽 이미지
                           )
                           ,flex: 2,), // 영역비율 2 부여
                         Expanded(

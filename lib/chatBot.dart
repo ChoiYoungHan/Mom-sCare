@@ -9,8 +9,8 @@ class chatBot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ChatBot()
+        debugShowCheckedModeBanner: false,
+        home: ChatBot()
     );
   }
 }
@@ -29,86 +29,86 @@ class _ChatBotState extends State<ChatBot> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-        backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-        title: Text('ChatBot', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: OutlinedButton(
-                onPressed: (){
-
-                }, child: Text('채팅내역', style: TextStyle(color: Colors.black, fontSize: 20),)),
-          )
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
+        appBar: AppBar(
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+          backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
+          title: Text('ChatBot', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
+          actions: [
+            Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                //reverse: false,
-                itemCount: chat.length,
-                itemBuilder: (context, index){
-                  return Row(
-                    mainAxisAlignment: isuser ? MainAxisAlignment.start : MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: isuser ? Colors.green[100] : Colors.grey[300],
-                          borderRadius: BorderRadius.circular(8)
-                        ),child: Text('${chat[index]}',style: TextStyle(color: Colors.black),)
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '${chat[index]}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 4.0),
-                          Text(
-                            '${chat[index]}'
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          flex: 9,),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: TextField(
+              child: OutlinedButton(
+                  onPressed: (){
 
+                  }, child: Text('채팅내역', style: TextStyle(color: Colors.black, fontSize: 20),)),
+            )
+          ],
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  //reverse: false,
+                  itemCount: chat.length,
+                  itemBuilder: (context, index){
+                    return Row(
+                      mainAxisAlignment: isuser ? MainAxisAlignment.start : MainAxisAlignment.end,
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                                color: isuser ? Colors.green[100] : Colors.grey[300],
+                                borderRadius: BorderRadius.circular(8)
+                            ),child: Text('${chat[index]}',style: TextStyle(color: Colors.black),)
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              '${chat[index]}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 4.0),
+                            Text(
+                                '${chat[index]}'
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              flex: 9,),
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: TextField(
+
+                      ),
                     ),
-                  ),
-                flex: 8,),
-                Expanded(
-                  child: IconButton(
-                    onPressed: (){
-                      setState(() {
-                        isuser=true;
-                        chat.add('new message');
-                        print(isuser);
-                      });
-                    },
-                   icon: Icon(Icons.arrow_back),),
-                )
-              ],
-            ),
-          flex: 1,)
-        ],
-      ),
+                    flex: 8,),
+                  Expanded(
+                    child: IconButton(
+                      onPressed: (){
+                        setState(() {
+                          isuser=true;
+                          chat.add('new message');
+                          print(isuser);
+                        });
+                      },
+                      icon: Icon(Icons.arrow_back),),
+                  )
+                ],
+              ),
+              flex: 1,)
+          ],
+        ),
         bottomNavigationBar: BottomAppBar( // 하단 바
             height: 60, // 높이 60
             child: Row( // 가로 정렬
@@ -118,7 +118,7 @@ class _ChatBotState extends State<ChatBot> {
                       onPressed: (){
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
                       },
-                      icon: Icon(Icons.home_outlined, color: Colors.blue)
+                      icon: Icon(Icons.home_outlined)
                   ),
                   IconButton(
                       onPressed: (){
@@ -130,7 +130,7 @@ class _ChatBotState extends State<ChatBot> {
                       onPressed: (){
 
                       },
-                      icon: Icon(Icons.chat_outlined)
+                      icon: Icon(Icons.chat_outlined, color: Colors.blue)
                   ),
                   IconButton(
                       onPressed: (){

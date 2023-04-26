@@ -10,8 +10,8 @@ class question_add extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: QuestionAdd()
+        debugShowCheckedModeBanner: false,
+        home: QuestionAdd()
     );
   }
 }
@@ -32,11 +32,10 @@ class _QuestionAddState extends State<QuestionAdd> {
     final header = {'Content-Type': 'application/json'};
 
     final content=contents.text;
-    print(content+'1');
     final title_ = title.text;
     final clientNum='1'; //
     // 제목 추가 필요
-    final body = jsonEncode({'content': content, 'clientNum': '64'});
+    final body = jsonEncode({'title': title_,'content': content, 'clientNum': '64'});
     final response = await http.post(uri, headers: header, body: body);
     print(response.statusCode);
     if(response.statusCode == 200){
@@ -50,13 +49,13 @@ class _QuestionAddState extends State<QuestionAdd> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-          backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-          title: Text('문의하기', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
-          leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question())); // 개인정보 변경 페이지로 이동
-          }, icon: Icon(Icons.arrow_back, color: Colors.black,),
-          ),
+        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+        backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
+        title: Text('문의하기', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
+        leading: IconButton(onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question())); // 개인정보 변경 페이지로 이동
+        }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+        ),
         actions: [
           TextButton(
               onPressed: (){
@@ -71,14 +70,14 @@ class _QuestionAddState extends State<QuestionAdd> {
             child: Container(),flex: 3, // 상단 여백 1 부여
           ),
           Expanded(
-            child: Row(
-              children: [
-                Expanded(child: Container(),flex: 2,),
-                Expanded(
-                  child: Text('제목',style: TextStyle(color: Colors.black, fontSize: 30,fontWeight: FontWeight.bold),),
-                flex: 11,)
-              ],
-            )
+              child: Row(
+                children: [
+                  Expanded(child: Container(),flex: 2,),
+                  Expanded(
+                    child: Text('제목',style: TextStyle(color: Colors.black, fontSize: 30,fontWeight: FontWeight.bold),),
+                    flex: 11,)
+                ],
+              )
           ),
           Expanded(
             child: Container(
@@ -89,17 +88,17 @@ class _QuestionAddState extends State<QuestionAdd> {
                 textAlign: TextAlign.left,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)
-                  ),
-                  hintText: ('제목을 입력하세요')
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)
+                    ),
+                    hintText: ('제목을 입력하세요')
                 ),
               ),
             ),
             flex: 2,), // 여백 1 부여
           Expanded(
             child: SizedBox(
-              width: MediaQuery.of(context).size.width*0.7,
+                width: MediaQuery.of(context).size.width*0.7,
                 height: MediaQuery.of(context).size.height*0.7,
                 child: TextField(
                   controller: contents,

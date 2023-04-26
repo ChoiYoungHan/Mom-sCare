@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:care_application/edit.dart';
 import 'package:care_application/my_page.dart';
 import 'package:care_application/notice_records.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class notice extends StatelessWidget {
@@ -29,8 +32,22 @@ class _NoticeState extends State<Notice> {
   final List<String> notice_num = <String>['1','2','3','4'];
   final List<String> notice_date = <String>['0501','0502','0503','0504'];
 
+  Future<void> notice_() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/notice');
+    final headers = {'Content-Type': 'application/json'};
+    final response = await http.post(uri, headers: headers);
+
+    if(response.statusCode == 200){
+      var jsonData = jsonDecode(response.body);
+      print(jsonData);
+    }else{
+      print(response.statusCode.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    notice_();
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
@@ -56,31 +73,31 @@ class _NoticeState extends State<Notice> {
                     width: 120,
                     height: 50,
                     child: OutlinedButton(
-                      onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeRecords())); // 공지내용으로 이동
-                      },
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text('${notice_num[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
-                            flex: 1,),
-                          Expanded(
-                            child: Text('${notice[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
-                            flex: 3,),
-                          Expanded(
-                            child: Container(),flex: 2,
-                          ),
-                          Expanded(
-                            child: Text('${notice_date[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
-                            flex: 1,),
-                        ],
-                      )
+                        onPressed: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeRecords())); // 공지내용으로 이동
+                        },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text('${notice_num[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
+                              flex: 1,),
+                            Expanded(
+                              child: Text('${notice[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
+                              flex: 3,),
+                            Expanded(
+                              child: Container(),flex: 2,
+                            ),
+                            Expanded(
+                              child: Text('${notice_date[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
+                              flex: 1,),
+                          ],
+                        )
                     ),
                   ),
                 );
               },
             ),
-          flex: 15,),
+            flex: 15,),
           Expanded(
             child: Container(),flex: 1, // 하단 여백 1 부여
           ),
