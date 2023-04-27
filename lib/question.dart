@@ -27,18 +27,20 @@ class Question extends StatefulWidget {
 
 class _QuestionState extends State<Question> {
 
+  late bool _isHovering=true;
+
   Future<List<dynamic>> inquire() async{ // 문의사항 버튼 눌렀을 때
     final uri = Uri.parse('http://182.219.226.49/moms/inquire');
     final header = {'Content-Type': 'application/json'};
 
-    final clientnum='1'; //
+    final clientnum='1'; // 나중에 회원번호 받아와야함
 
     final body = jsonEncode({'clientNum': '64'});
     final response = await http.post(uri, headers: header, body: body);
 
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
-      print(jsonData);
+      print(jsonData); // 받아온 값 로그찍기
       return jsonData;
     } else{
       print(response.statusCode.toString());
@@ -47,16 +49,8 @@ class _QuestionState extends State<Question> {
 
   }
 
-  final List<String> question = <String>['제목','번호','입력','공간'];
-  final List<String> question_date = <String>['0401','0402','0403','0404'];
-
-  late bool _isHovering=true;
-  late bool _isHover=true;
-
-
   @override
   Widget build(BuildContext context) {
-    inquire();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // 뒤로가기 버튼 제거

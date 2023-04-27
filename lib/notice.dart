@@ -28,20 +28,18 @@ class Notice extends StatefulWidget {
 
 class _NoticeState extends State<Notice> {
 
-  final List<String> notice = <String>['제목','번호','입력','공간'];
-  final List<String> notice_num = <String>['1','2','3','4'];
-  final List<String> notice_date = <String>['0501','0502','0503','0504'];
-
-  Future<void> notice_() async {
+  Future<List<dynamic>> notice_() async {
     final uri = Uri.parse('http://182.219.226.49/moms/notice');
     final headers = {'Content-Type': 'application/json'};
     final response = await http.post(uri, headers: headers);
 
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
-      print(jsonData);
+      print(jsonData); // 받아온 값 로그찍기
+      return jsonData;
     }else{
       print(response.statusCode.toString());
+      throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
     }
   }
 
@@ -64,37 +62,47 @@ class _NoticeState extends State<Notice> {
             child: Container(),flex: 1, // 상단 여백 1 부여
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: notice.length,
-              itemBuilder: (context, index){
-                return Padding(
-                  padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                  child: Container(
-                    width: 120,
-                    height: 50,
-                    child: OutlinedButton(
-                        onPressed: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeRecords())); // 공지내용으로 이동
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text('${notice_num[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
-                              flex: 1,),
-                            Expanded(
-                              child: Text('${notice[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
-                              flex: 3,),
-                            Expanded(
-                              child: Container(),flex: 2,
-                            ),
-                            Expanded(
-                              child: Text('${notice_date[index]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
-                              flex: 1,),
-                          ],
-                        )
-                    ),
-                  ),
-                );
+            child: FutureBuilder<List<dynamic>>(
+              future: notice_(),
+              builder: (context, snapshot){
+                if(snapshot.hasData){
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index){
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                        child: Container(
+                          width: 120,
+                          height: 50,
+                          child: OutlinedButton(
+                              onPressed: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeRecords())); // 공지내용으로 이동
+                              },
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text('${snapshot.data![index]['NOTICENO']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
+                                    flex: 1,),
+                                  Expanded(
+                                    child: Text('${snapshot.data![index]['CONTENT']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
+                                    flex: 3,),
+                                  Expanded(
+                                    child: Container(),flex: 2,
+                                  ),
+                                  Expanded(
+                                    child: Text('${snapshot.data![index]['CONTENT_DATE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
+                                    flex: 1,),
+                                ],
+                              )
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else if(snapshot.hasError){
+
+                }
+                return const CircularProgressIndicator();
               },
             ),
             flex: 15,),

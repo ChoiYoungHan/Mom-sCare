@@ -114,20 +114,6 @@ class _QuestionAddState extends State<QuestionAdd> {
                 )
             )
             ,flex: 5,),// 여백 5 부여
-          /*Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.width*0.4,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(0,40,0,40),
-                child: OutlinedButton(
-                  onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question()));
-                  },
-                  child: Text('보내기',style: TextStyle(color: Colors.black),),
-                ),
-              ),
-            ),flex: 3,
-          ),*/
           Expanded(child: Container(),flex: 3,)
         ],
       ),
