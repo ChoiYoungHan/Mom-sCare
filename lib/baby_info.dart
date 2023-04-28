@@ -59,6 +59,21 @@ class _BabyInfoState extends State<BabyInfo> {
     }
   }
 
+  Future baby_delete() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/baby/delete');
+    final header = {'Content-Type': 'application/json'};
+
+    final body = jsonEncode({'babyName': babies,'clientNum': '64'});
+    final response = await http.post(uri, headers: header, body: body);
+
+    if(response.statusCode == 200){
+      print('성공');
+      return 1;
+    }else{
+      return 0;
+    }
+  }
+
   Future popup(String edit_value, TextEditingController value){
     return showDialog(
         context: context,
@@ -316,10 +331,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                             }, child: Text('아니오',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
                                           ),
                                           OutlinedButton(
-                                            onPressed: (){
-                                              //데이터베이스에서 아이가 삭제될 코드 추가 예정
-                                              Navigator.of(context).pop();
-
+                                            onPressed: () async{
+                                              await baby_delete()==1?
                                               showDialog(
                                                   context: context,
                                                   barrierColor: Colors.grey.withOpacity(0.6),
@@ -332,6 +345,23 @@ class _BabyInfoState extends State<BabyInfo> {
                                                             onPressed: (){
                                                               Navigator.of(context).pop();
                                                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
+                                                            },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
+                                                        )
+                                                      ],
+                                                    );
+                                                  }
+                                              ):
+                                              showDialog(
+                                                  context: context,
+                                                  barrierColor: Colors.grey.withOpacity(0.6),
+                                                  builder: (BuildContext context){
+                                                    return AlertDialog(
+                                                      title: Text(''),
+                                                      content: Text('오류 발생',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                                      actions: [
+                                                        OutlinedButton(
+                                                            onPressed: (){
+                                                              Navigator.of(context).pop();
                                                             },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
                                                         )
                                                       ],

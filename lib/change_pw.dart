@@ -1,3 +1,4 @@
+import 'package:care_application/change_pw_certification.dart';
 import 'package:care_application/change_user_info.dart';
 import 'package:care_application/edit.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,7 +41,7 @@ class _ChangePwState extends State<ChangePw> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('비밀번호 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
         leading: IconButton(onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 개인정보 변경 페이지로 이동
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangePwCertification())); // 개인정보 변경 페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
         )
       ),
