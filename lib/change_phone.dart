@@ -29,7 +29,7 @@ class _ChangePhoneState extends State<ChangePhone> {
   TextEditingController PH = TextEditingController(); // 전화번호 입력 컨트롤러
   var Ph; // 추후 데이터베이스에서 받아올 값
 
-  Future change_ph() async {
+  Future change_ph() async { // 전화번호 변경 DB 연동 함수
     final uri = Uri.parse('http://182.219.226.49/moms/change-phone');
     final header = {'Content-Type': 'application/json'};
 
