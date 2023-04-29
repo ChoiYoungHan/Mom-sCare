@@ -1,23 +1,26 @@
-import 'package:care_application/chatBot.dart';
 import 'package:care_application/main.dart';
-import 'package:care_application/my_page.dart';
 import 'package:care_application/week_info.dart';
 import 'package:flutter/material.dart';
 
 class Home_Page extends StatelessWidget {
-  const Home_Page({Key? key}) : super(key: key);
+  const Home_Page({Key? key, required this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false, // 우측 상단의 debug 리본 제거
-      home: HomePage()
+        debugShowCheckedModeBanner: false, // 우측 상단의 debug 리본 제거
+        home: HomePage(UserNum: userNum)
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -26,7 +29,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   int exist = 1;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold( // 상 중 하를 나누는 위젯
@@ -175,19 +177,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
                       },
                       icon: Icon(Icons.event_note_outlined)
                   ),
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatBot()));
+
                       },
                       icon: Icon(Icons.chat_outlined)
                   ),
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage()));
+
                       },
                       icon: Icon(Icons.list_alt_outlined)
                   )
