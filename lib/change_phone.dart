@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:care_application/change_user_info.dart';
 import 'package:care_application/edit.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,6 +28,23 @@ class _ChangePhoneState extends State<ChangePhone> {
 
   TextEditingController PH = TextEditingController(); // 전화번호 입력 컨트롤러
   var Ph; // 추후 데이터베이스에서 받아올 값
+
+  Future change_ph() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/change-phone');
+    final header = {'Content-Type': 'application/json'};
+
+    final phone_num = PH.text;
+
+    final body = jsonEncode({'phone': phone_num,'clientNum': '64'});
+    final response = await http.post(uri, headers: header, body: body);
+
+    if(response.statusCode == 200){
+      print('성공');
+      return 1;
+    }else{
+      return 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +91,44 @@ class _ChangePhoneState extends State<ChangePhone> {
                 height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
                 width: MediaQuery.of(context).size.width*0.4, // 위젯의 너비를 화면 너비*0.4로 설정
                 child: OutlinedButton(
-                  onPressed: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 개인정보 변경 페이지로 이동
+                  onPressed: () async {
+                    await change_ph()==1?
+                    showDialog( // 팝업 위젯
+                        context: context,
+                        barrierColor: Colors.grey.withOpacity(0.6),
+                        builder: (BuildContext context){
+                          return  AlertDialog(
+                            title: Text(''), // 상단 여백
+                            content: Text('핸드폰 번호가 변경되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                            actions: [
+                              OutlinedButton(
+                                onPressed: (){
+                                  Navigator.of(context).pop(); // 팝업 닫기
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 마이페이지로 이동
+                                }, child: Text('확인', style: TextStyle(color: Colors.black),),
+                              )
+                            ],
+                          );
+                        }
+                    ):
+                    showDialog( // 팝업 위젯
+                        context: context,
+                        barrierColor: Colors.grey.withOpacity(0.6),
+                        builder: (BuildContext context){
+                          return  AlertDialog(
+                            title: Text(''), // 상단 여백
+                            content: Text('오류 발생',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                            actions: [
+                              OutlinedButton(
+                                onPressed: (){
+                                  Navigator.of(context).pop(); // 팝업 닫기
+                                }, child: Text('확인', style: TextStyle(color: Colors.black),),
+                              )
+                            ],
+                          );
+                        }
+                    );
+                    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 개인정보 변경 페이지로 이동
                   },child: Text('확인', style: TextStyle(color: Colors.black,),),
                 ),
               ),
