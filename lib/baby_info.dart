@@ -8,19 +8,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class baby_info extends StatelessWidget {
-  const baby_info({Key? key}) : super(key: key);
+  const baby_info({Key? key, this.userNum, this.babyNum}) : super(key: key);
+
+  final userNum;
+  final babyNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: BabyInfo()
+        home: BabyInfo(UserNum: userNum, BabyNum: babyNum)
     );
   }
 }
 
 class BabyInfo extends StatefulWidget {
-  const BabyInfo({Key? key}) : super(key: key);
+  const BabyInfo({Key? key, this.UserNum, this.BabyNum}) : super(key: key);
+
+  final UserNum;
+  final BabyNum;
 
   @override
   State<BabyInfo> createState() => _BabyInfoState();
@@ -46,7 +52,8 @@ class _BabyInfoState extends State<BabyInfo> {
     print(babies_birth);
     print(babies_mother);
     print(babies_father);
-    final baby_num = num; // 아기번호 값도 받아와야함
+    final baby_num = widget.BabyNum; // 아기번호
+    final user_num = widget.UserNum; // 유저번호
 
     final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': '64', 'babyNo': '1'});
     final response = await http.post(uri, headers: header, body: body);

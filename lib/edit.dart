@@ -1,4 +1,5 @@
 import 'package:care_application/change_user_info.dart';
+import 'package:care_application/delete_user.dart';
 import 'package:care_application/my_page.dart';
 import 'package:care_application/question.dart';
 import 'package:flutter/cupertino.dart';

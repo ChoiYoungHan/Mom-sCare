@@ -4,19 +4,23 @@ import 'package:care_application/my_page.dart';
 import 'package:flutter/material.dart';
 
 class chatBot extends StatelessWidget {
-  const chatBot({Key? key}) : super(key: key);
+  const chatBot({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ChatBot()
+        home: ChatBot(UserNum: userNum)
     );
   }
 }
 
 class ChatBot extends StatefulWidget {
-  const ChatBot({Key? key}) : super(key: key);
+  const ChatBot({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<ChatBot> createState() => _ChatBotState();
@@ -116,13 +120,13 @@ class _ChatBotState extends State<ChatBot> {
                 children: [
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(UserNum: widget.UserNum)));
                       },
                       icon: Icon(Icons.home_outlined)
                   ),
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
                       },
                       icon: Icon(Icons.event_note_outlined)
                   ),
