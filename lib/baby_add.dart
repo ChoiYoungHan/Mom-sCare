@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class baby_add extends StatelessWidget {
-  const baby_add({Key? key, this.UserNum}) : super(key: key);
+  const baby_add({Key? key, this.userNum}) : super(key: key);
 
-  final UserNum;
+  final userNum;
   
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: BabyAdd()
+        home: BabyAdd(UserNum: userNum,)
     );
   }
 }
@@ -43,13 +43,17 @@ class _BabyAddState extends State<BabyAdd> {
   Future baby_add() async{
     final uri = Uri.parse('http://182.219.226.49/moms/baby/register');
     final headers = {'Content-Type': 'application/json'};
+
+    final user_num = widget.UserNum; // 유저번호
+
     final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': '64'});
     // body의 clientNum 에 UserNum 사용해야함
     final response = await http.post(uri, headers: headers, body: body);
     if(response.statusCode == 200){
       print('성공');
+      return 1;
     } else{
-
+      return 0;
     }
   }
 

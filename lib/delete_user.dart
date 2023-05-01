@@ -7,19 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class delete_user extends StatelessWidget {
-  const delete_user({Key? key}) : super(key: key);
+  const delete_user({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DeleteUser()
+      home: DeleteUser(UserNum: userNum)
     );
   }
 }
 
 class DeleteUser extends StatefulWidget {
-  const DeleteUser({Key? key}) : super(key: key);
+  const DeleteUser({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<DeleteUser> createState() => _DeleteUserState();
@@ -33,7 +37,7 @@ class _DeleteUserState extends State<DeleteUser> {
     final uri = Uri.parse('http://182.219.226.49/moms/register/delete');
     final header = {'Content-Type': 'application/json'};
 
-    final client_num = '1'; // 아기번호 값도 받아와야함
+    final client_num = widget.UserNum; // 아기번호 값도 받아와야함
     final pw = password.text;
 
     final body = jsonEncode({'clientNum': '64', 'pw': pw});

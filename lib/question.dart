@@ -7,19 +7,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class question extends StatelessWidget {
-  const question({Key? key}) : super(key: key);
+  const question({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Question()
+        home: Question(UserNum: userNum,)
     );
   }
 }
 
 class Question extends StatefulWidget {
-  const Question({Key? key}) : super(key: key);
+  const Question({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<Question> createState() => _QuestionState();
@@ -33,7 +37,7 @@ class _QuestionState extends State<Question> {
     final uri = Uri.parse('http://182.219.226.49/moms/inquire');
     final header = {'Content-Type': 'application/json'};
 
-    final clientnum='1'; // 나중에 회원번호 받아와야함
+    final clientnum=widget.UserNum;
 
     final body = jsonEncode({'clientNum': '64'});
     final response = await http.post(uri, headers: header, body: body);

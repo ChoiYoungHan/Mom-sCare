@@ -1,23 +1,28 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
 import 'package:care_application/question.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class question_add extends StatelessWidget {
-  const question_add({Key? key}) : super(key: key);
+  const question_add({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: QuestionAdd()
+        home: QuestionAdd(UserNum: userNum,)
     );
   }
 }
 
 class QuestionAdd extends StatefulWidget {
-  const QuestionAdd({Key? key}) : super(key: key);
+  const QuestionAdd({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<QuestionAdd> createState() => _QuestionAddState();
@@ -33,8 +38,8 @@ class _QuestionAddState extends State<QuestionAdd> {
 
     final content=contents.text;
     final title_ = title.text;
-    final clientNum='1'; //
-    // 제목 추가 필요
+    final clientNum=widget.UserNum;
+
     final body = jsonEncode({'title': title_,'content': content, 'clientNum': '64'});
     final response = await http.post(uri, headers: header, body: body);
     print(response.statusCode);

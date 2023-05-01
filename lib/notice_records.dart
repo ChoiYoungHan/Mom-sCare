@@ -1,21 +1,28 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:care_application/notice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class notice_records extends StatelessWidget {
-  const notice_records({Key? key}) : super(key: key);
+  const notice_records({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NoticeRecords(),
+      home: NoticeRecords(UserNum: userNum,),
     );
   }
 }
 
 class NoticeRecords extends StatefulWidget {
-  const NoticeRecords({Key? key}) : super(key: key);
+  const NoticeRecords({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<NoticeRecords> createState() => _NoticeRecordsState();
@@ -25,6 +32,21 @@ class _NoticeRecordsState extends State<NoticeRecords> {
   var Notice_ = "공지 내용";
   var Notice_Title = "제목";
   var date_ = "날짜";
+
+  Future<List<dynamic>> notice_() async { // 공지사항 -> 위젯에 표시해주기
+    final uri = Uri.parse('http://182.219.226.49/moms/notice');
+    final headers = {'Content-Type': 'application/json'};
+    final response = await http.post(uri, headers: headers);
+
+    if(response.statusCode == 200){
+      var jsonData = jsonDecode(response.body);
+      print(jsonData); // 받아온 값 로그찍기
+      return jsonData;
+    }else{
+      print(response.statusCode.toString());
+      throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

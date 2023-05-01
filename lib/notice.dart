@@ -8,19 +8,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class notice extends StatelessWidget {
-  const notice({Key? key}) : super(key: key);
+  const notice({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Notice(),
+      home: Notice(UserNum: userNum,),
     );
   }
 }
 
 class Notice extends StatefulWidget {
-  const Notice({Key? key}) : super(key: key);
+  const Notice({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<Notice> createState() => _NoticeState();

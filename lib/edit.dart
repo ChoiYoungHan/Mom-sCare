@@ -7,19 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class edit extends StatelessWidget {
-  const edit({Key? key}) : super(key: key);
+  const edit({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Edit()
+        home: Edit(UserNum: userNum,)
     );
   }
 }
 
 class Edit extends StatefulWidget {
-  const Edit({Key? key}) : super(key: key);
+  const Edit({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<Edit> createState() => _EditState();

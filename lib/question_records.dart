@@ -1,22 +1,29 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:care_application/edit.dart';
 import 'package:care_application/question.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class question_records extends StatelessWidget {
-  const question_records({Key? key}) : super(key: key);
+  const question_records({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: QuestionRecords()
+      home: QuestionRecords(UserNum: userNum,)
     );
   }
 }
 
 class QuestionRecords extends StatefulWidget {
-  const QuestionRecords({Key? key}) : super(key: key);
+  const QuestionRecords({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<QuestionRecords> createState() => _QuestionRecordsState();
@@ -27,6 +34,24 @@ class _QuestionRecordsState extends State<QuestionRecords> {
   var Answer='답변 내용'; // 답변 내용
   var Question_Title='제목';
   var date_='날짜';
+
+  Future<List<dynamic>> inquire_() async{ // 문의사항 -> 위젯에 표시해줘야함
+    final uri = Uri.parse('http://182.219.226.49/moms/inquire');
+    final header = {'Content-Type': 'application/json'};
+
+    final clientNum=widget.UserNum;
+
+    final body = jsonEncode({'clientNum': '64'});
+    final response = await http.post(uri, headers: header, body: body);
+
+    if(response.statusCode == 200){
+      var jsonData = jsonDecode(response.body);
+      return jsonData;
+    } else{
+      print(response.statusCode.toString());
+      throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

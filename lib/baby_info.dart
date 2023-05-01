@@ -48,10 +48,7 @@ class _BabyInfoState extends State<BabyInfo> {
   Future baby_modify() async{
     final uri = Uri.parse('http://182.219.226.49/moms/baby/modify');
     final header = {'Content-Type': 'application/json'};
-    print(babies);
-    print(babies_birth);
-    print(babies_mother);
-    print(babies_father);
+
     final baby_num = widget.BabyNum; // 아기번호
     final user_num = widget.UserNum; // 유저번호
 
@@ -69,6 +66,8 @@ class _BabyInfoState extends State<BabyInfo> {
   Future baby_delete() async {
     final uri = Uri.parse('http://182.219.226.49/moms/baby/delete');
     final header = {'Content-Type': 'application/json'};
+
+    final user_num = widget.UserNum; // 유저번호
 
     final body = jsonEncode({'babyName': babies,'clientNum': '64'});
     final response = await http.post(uri, headers: header, body: body);

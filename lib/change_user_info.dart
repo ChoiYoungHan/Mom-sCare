@@ -6,18 +6,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class change_user_info extends StatelessWidget {
-  const change_user_info({Key? key}) : super(key: key);
+  const change_user_info({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ChangeUserInfo()
+        home: ChangeUserInfo(UserNum: userNum)
     );
   }
 }
 
 class ChangeUserInfo extends StatefulWidget {
-  const ChangeUserInfo({Key? key}) : super(key: key);
+  const ChangeUserInfo({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<ChangeUserInfo> createState() => _ChangeUserInfoState();

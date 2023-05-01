@@ -6,19 +6,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class change_phone extends StatelessWidget {
-  const change_phone({Key? key}) : super(key: key);
+  const change_phone({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ChangePhone()
+        home: ChangePhone(UserNum: userNum)
     );
   }
 }
 
 class ChangePhone extends StatefulWidget {
-  const ChangePhone({Key? key}) : super(key: key);
+  const ChangePhone({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<ChangePhone> createState() => _ChangePhoneState();
@@ -34,6 +38,7 @@ class _ChangePhoneState extends State<ChangePhone> {
     final header = {'Content-Type': 'application/json'};
 
     final phone_num = PH.text;
+    final userNum = widget.UserNum;
 
     final body = jsonEncode({'phone': phone_num,'clientNum': '64'});
     final response = await http.post(uri, headers: header, body: body);

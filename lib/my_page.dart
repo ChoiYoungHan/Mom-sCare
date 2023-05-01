@@ -42,11 +42,11 @@ class _MyPageState extends State<MyPage> {
   Future<List<dynamic>> babies_() async {
     final uri = Uri.parse('http://182.219.226.49/moms/baby');
     final headers = {'Content-Type': 'application/json'};
-    final response = await http.post(uri, headers: headers);
 
-    final clientnum = widget.UserNum; // 나중에 회원번호 받아와야함
+    final clientnum = widget.UserNum;
 
     final body = jsonEncode({'clientNum': '64'});
+    final response = await http.post(uri, headers: headers, body: body);
 
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);

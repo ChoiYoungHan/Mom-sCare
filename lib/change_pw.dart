@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:care_application/change_pw_certification.dart';
 import 'package:care_application/change_user_info.dart';
 import 'package:care_application/edit.dart';
@@ -6,19 +9,23 @@ import 'package:flutter/material.dart';
 
 
 class change_pw extends StatelessWidget {
-  const change_pw({Key? key}) : super(key: key);
+  const change_pw({Key? key, this.userNum}) : super(key: key);
+
+  final userNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ChangePw()
+        home: ChangePw(UserNum: userNum)
     );
   }
 }
 
 class ChangePw extends StatefulWidget {
-  const ChangePw({Key? key}) : super(key: key);
+  const ChangePw({Key? key, this.UserNum}) : super(key: key);
+
+  final UserNum;
 
   @override
   State<ChangePw> createState() => _ChangePwState();
@@ -32,6 +39,22 @@ class _ChangePwState extends State<ChangePw> {
   var Pw1; // 비밀번호
   var Pw2;
   var Pw3;
+
+  Future change_password() async{
+    final uri = Uri.parse('http://182.219.226.49/'); // 링크 받아와야함
+    final headers = {'Content-Type': 'application/json'};
+
+    final user_num = widget.UserNum; // 유저번호
+
+    final body = jsonEncode({'clientNum': '64'}); // 입력값 받아와야함
+    final response = await http.post(uri, headers: headers, body: body);
+    if(response.statusCode == 200){
+      print('성공');
+      return 1;
+    } else{
+      return 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
