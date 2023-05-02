@@ -12,6 +12,7 @@ class baby_add extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: BabyAdd(UserNum: userNum,)
@@ -46,7 +47,7 @@ class _BabyAddState extends State<BabyAdd> {
 
     final user_num = widget.UserNum; // 유저번호
 
-    final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': '64'});
+    final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': user_num});
     // body의 clientNum 에 UserNum 사용해야함
     final response = await http.post(uri, headers: headers, body: body);
     if(response.statusCode == 200){

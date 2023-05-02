@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:care_application/notice.dart';
 import 'package:http/http.dart' as http;
 import 'package:care_application/edit.dart';
 import 'package:care_application/question_add.dart';
@@ -13,6 +14,7 @@ class question extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Question(UserNum: userNum,)
@@ -30,7 +32,7 @@ class Question extends StatefulWidget {
 }
 
 class _QuestionState extends State<Question> {
-
+  var noticeNum;
   late bool _isHovering=true;
 
   Future<List<dynamic>> inquire() async{ // 문의사항 버튼 눌렀을 때
@@ -38,8 +40,8 @@ class _QuestionState extends State<Question> {
     final header = {'Content-Type': 'application/json'};
 
     final clientnum=widget.UserNum;
-
-    final body = jsonEncode({'clientNum': '64'});
+    print(clientnum);
+    final body = jsonEncode({'clientNum': clientnum});
     final response = await http.post(uri, headers: header, body: body);
 
     if(response.statusCode == 200){
@@ -85,19 +87,26 @@ class _QuestionState extends State<Question> {
                           height: 50, // 높이 50
                           child: OutlinedButton(
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_records(userNum: widget.UserNum))); // 문의내역 페이지로 이동
+                                setState(() {
+                                  noticeNum=snapshot.data![index]['INQUIRENO'];
+                                  print(noticeNum);
+                                });
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_records(userNum: widget.UserNum, noticeNum: noticeNum,))); // 문의내역 페이지로 이동
                               }, // 문의 내용으로 갈 버튼
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: Text('${snapshot.data![index]['TITLE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
-                                    flex: 1,),
+                                    child: Text("${index+1}",style: TextStyle(color: Colors.black),),
+                                  flex: 1,),
                                   Expanded(
-                                    child: Container(),flex: 2,
+                                    child: SizedBox(child: Text('${snapshot.data![index]['TITLE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left)), // 문의 내용이 적힌 버튼,
+                                    flex: 2,),
+                                  Expanded(
+                                    child: Container(),flex: 4,
                                   ),
                                   Expanded(
                                     child: Text('${snapshot.data![index]['INQUIRE_DATE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
-                                    flex: 1,),
+                                    flex: 4,),
                                 ],
                               )
                           ),
@@ -106,9 +115,9 @@ class _QuestionState extends State<Question> {
                     },
                   );
                 }else if(snapshot.hasError){
-
+                  return Text('문의 없음');
                 }
-                return const CircularProgressIndicator();
+                return Center(child: const CircularProgressIndicator(),);
               },
             ),
             flex: 15,), // 영역 비율 15 부여

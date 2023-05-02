@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:care_application/notice.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:care_application/edit.dart';
@@ -7,22 +8,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class question_records extends StatelessWidget {
-  const question_records({Key? key,required this.userNum}) : super(key: key);
+  const question_records({Key? key,required this.userNum, required this.noticeNum}) : super(key: key);
 
   final userNum;
+  final noticeNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: QuestionRecords(UserNum: userNum,)
+      home: QuestionRecords(UserNum: userNum,NoticeNum: noticeNum,)
     );
   }
 }
 
 class QuestionRecords extends StatefulWidget {
-  const QuestionRecords({Key? key, this.UserNum}) : super(key: key);
-
+  const QuestionRecords({Key? key, this.UserNum, this.NoticeNum}) : super(key: key);
+  final NoticeNum;
   final UserNum;
 
   @override
@@ -30,31 +32,40 @@ class QuestionRecords extends StatefulWidget {
 }
 
 class _QuestionRecordsState extends State<QuestionRecords> {
-  var Question_='질문 내용'; // 질문 내용
-  var Answer='답변 내용'; // 답변 내용
-  var Question_Title='제목';
-  var date_='날짜';
+  var Question_; // 질문 내용
+  var Answer; // 답변 내용
+  var Question_Title;
+  var date_;
 
-  Future<List<dynamic>> inquire_() async{ // 문의사항 -> 위젯에 표시해줘야함
-    final uri = Uri.parse('http://182.219.226.49/moms/inquire');
+  Future inquire_() async{ // 문의사항 -> 위젯에 표시해줘야함
+    final uri = Uri.parse('http://182.219.226.49/moms/inquire-info');
     final header = {'Content-Type': 'application/json'};
-
+    
     final clientNum=widget.UserNum;
-
-    final body = jsonEncode({'clientNum': '64'});
+    final noticeNum=widget.NoticeNum;
+    
+    final body = jsonEncode({'clientNum': clientNum, 'inquireNo': noticeNum});
     final response = await http.post(uri, headers: header, body: body);
 
+    final Data=jsonDecode(response.body);
+    Question_Title = Data['TITLE'];
+    date_ = Data['INQUIRE_DATE'];
+    Question_ = Data['CONTENT'];
+    Answer = Data['REPLY'];
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
-      return jsonData;
+      print(jsonData);
+      return 1;
     } else{
       print(response.statusCode.toString());
+      return 0;
       throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    inquire_();
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거

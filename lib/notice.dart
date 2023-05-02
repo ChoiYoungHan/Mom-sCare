@@ -106,7 +106,7 @@ class _NoticeState extends State<Notice> {
                 } else if(snapshot.hasError){
 
                 }
-                return const CircularProgressIndicator();
+                return Center(child: const CircularProgressIndicator(),);
               },
             ),
             flex: 15,),

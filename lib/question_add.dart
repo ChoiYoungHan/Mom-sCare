@@ -40,7 +40,7 @@ class _QuestionAddState extends State<QuestionAdd> {
     final title_ = title.text;
     final clientNum=widget.UserNum;
 
-    final body = jsonEncode({'title': title_,'content': content, 'clientNum': '64'});
+    final body = jsonEncode({'title': title_,'content': content, 'clientNum': clientNum});
     final response = await http.post(uri, headers: header, body: body);
     print(response.statusCode);
     if(response.statusCode == 200){

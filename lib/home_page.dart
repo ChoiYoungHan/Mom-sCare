@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:care_application/chatBot.dart';
 import 'package:care_application/main.dart';
+import 'package:care_application/my_page.dart';
 import 'package:care_application/week_info.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -234,13 +236,13 @@ class _HomePageState extends State<HomePage> {
                         ),
                         IconButton(
                             onPressed: (){
-
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
                             },
                             icon: Icon(Icons.chat_outlined)
                         ),
                         IconButton(
                             onPressed: (){
-
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum)));
                             },
                             icon: Icon(Icons.list_alt_outlined)
                         )

@@ -97,7 +97,8 @@ class _MyPageState extends State<MyPage> {
                                       child: Container(),flex: 2,
                                     ),
                                     Expanded(
-                                      child: Text('${snapshot.data![index]['BABYNAME']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
+                                      child: Container(),
+                                      //child: Text('${snapshot.data![index]['babyName']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
                                       flex: 1,),
                                   ],
                                 )
@@ -109,7 +110,7 @@ class _MyPageState extends State<MyPage> {
                   }else if(snapshot.hasError){
                     return Text('아이를 등록해주세요',style: TextStyle(color: Colors.black),);
                   }
-                  return const CircularProgressIndicator();
+                  return Center(child: const CircularProgressIndicator(color: Colors.grey,),);
                 },
               )
             /*child: ListView.builder(
