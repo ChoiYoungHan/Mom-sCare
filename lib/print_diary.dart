@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:care_application/imageScreen.dart';
 import 'package:care_application/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -65,11 +66,9 @@ class _printdiary_PageState extends State<printdiary_Page> {
 
         _controller.text = _content;
 
-
         imageList.clear();
         imageList.addAll(utf8.decode(jsonData['imageURL'].runes.toList()).split('/'));
         imageList.removeLast();
-
 
         print(imageList);
 
@@ -80,9 +79,39 @@ class _printdiary_PageState extends State<printdiary_Page> {
     } else {
 
     }
-
     return response;
+  }
 
+  Future<void> deleteDiary() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/diary/delete');
+    final headers = {'Content-Type' : 'application/json'};
+
+    final clientNum = widget.UserNum;
+    final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
+
+    final body = jsonEncode({'clientNum': clientNum, 'diary_date': Date});
+    final response = await http.post(uri, headers: headers, body: body);
+
+    if(response.statusCode == 200){
+      showDialog(
+          context: context,
+          builder: (BuildContext context){
+            return AlertDialog(
+                title: Center(child: FittedBox(child: Text('삭제가 완료되었습니다.', style: TextStyle(color: Colors.grey)))),
+                actions: [
+                  TextButton(
+                      onPressed: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum)));
+                      },
+                      child: Text('확인')
+                  )
+                ]
+            );
+          }
+      );
+    } else {
+
+    }
   }
 
   @override
@@ -104,11 +133,33 @@ class _printdiary_PageState extends State<printdiary_Page> {
               '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일', style: TextStyle(color: Colors.grey) // 받아온 날짜 출력 & 글자 색은 회색
           ),
           actions: [
-            TextButton(
+            IconButton(
                 onPressed: (){
-
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context){
+                        return AlertDialog(
+                            title: Center(child: FittedBox(child: Text('일기를 삭제하시겠습니까?', style: TextStyle(color: Colors.grey)))),
+                            actions: [
+                              TextButton(
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('취소')
+                              ),
+                              TextButton(
+                                  onPressed: (){
+                                    deleteDiary();
+                                  },
+                                  child: Text('확인')
+                              )
+                            ]
+                        );
+                      }
+                  );
                 },
-                child: Text('수정', style: TextStyle(color: Colors.orange)))
+                icon: Icon(Icons.delete_forever_outlined, color: Colors.orange)
+            )
           ]
       ),
       body: SafeArea(
@@ -141,11 +192,16 @@ class _printdiary_PageState extends State<printdiary_Page> {
                                   scrollDirection: Axis.horizontal,
                                   itemCount: imageList.length,
                                   itemBuilder: (context, index){
-                                    return Container(
-                                        margin: EdgeInsets.all(3),
-                                        width: MediaQuery.of(context).size.width * 0.3,
-                                        height: MediaQuery.of(context).size.width * 0.3,
-                                        child: Image.network('http://182.219.226.49/image/' + imageList[index], fit: BoxFit.cover)
+                                    return GestureDetector(
+                                      onTap: (){
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: imageList, Index: index)));
+                                      },
+                                      child: Container(
+                                          margin: EdgeInsets.all(3),
+                                          width: MediaQuery.of(context).size.width * 0.3,
+                                          height: MediaQuery.of(context).size.width * 0.3,
+                                          child: Image.network('http://182.219.226.49/image/' + imageList[index], fit: BoxFit.cover)
+                                      ),
                                     );
                                   }
                               )

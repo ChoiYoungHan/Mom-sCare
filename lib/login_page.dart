@@ -36,6 +36,16 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController inputPW = TextEditingController();
 
   Future<void> sendData() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+          return Center(
+              child: CircularProgressIndicator()
+          );
+        }
+    );
+
     final uri = Uri.parse('http://182.219.226.49/moms/login');
     final headers = {'Content-Type': 'application/json'};
     final id = inputID.text;
@@ -50,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
       if(jsonData['success'] == true){
         String UserNum = jsonData['cnum'].toString();
         print(UserNum);
-
+        Navigator.of(context, rootNavigator: true).pop();
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(userNum: UserNum)));
       } else {
         Popup(context, '회원정보가 일치하지 않습니다.');

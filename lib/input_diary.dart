@@ -269,11 +269,40 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
                                       scrollDirection: Axis.horizontal, // 리스트뷰를 가로로 함
                                       itemCount: imageList.length, // imageList의 길이만큼 item을 생성
                                       itemBuilder: (context, index){
-                                        return Container( // 상자 위젯
-                                            margin: EdgeInsets.all(3), // 네 면의 여백을 3만큼 줌
-                                            width: MediaQuery.of(context).size.width * 0.3, // 화면 가로 길이의 30%를 너비로 설정
-                                            height: MediaQuery.of(context).size.width * 0.3, // 화면 가로 길이의 30%를 높이로 설정
-                                            child: Image.file(File(imageList[index].path), fit: BoxFit.cover) // 갤러리에서 가져온 이미지를 출력한다. 이미지는 꽉 채움
+                                        return GestureDetector(
+                                          onLongPress: (){
+                                            showDialog(
+                                                context: context,
+                                                builder: (BuildContext context){
+                                                  return AlertDialog(
+                                                      title: Text('해당 사진을 삭제하시겠습니까?', style: TextStyle(color: Colors.grey)),
+                                                      actions: [
+                                                        TextButton(
+                                                            onPressed: (){
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                            child: Text('취소')
+                                                        ),
+                                                        TextButton(
+                                                            onPressed: (){
+                                                              Navigator.of(context).pop();
+                                                              setState(() {
+                                                                imageList.removeAt(index);
+                                                              });
+                                                            },
+                                                            child: Text('확인')
+                                                        )
+                                                      ]
+                                                  );
+                                                }
+                                            );
+                                          },
+                                          child: Container( // 상자 위젯
+                                              margin: EdgeInsets.all(3), // 네 면의 여백을 3만큼 줌
+                                              width: MediaQuery.of(context).size.width * 0.3, // 화면 가로 길이의 30%를 너비로 설정
+                                              height: MediaQuery.of(context).size.width * 0.3, // 화면 가로 길이의 30%를 높이로 설정
+                                              child: Image.file(File(imageList[index].path), fit: BoxFit.cover) // 갤러리에서 가져온 이미지를 출력한다. 이미지는 꽉 채움
+                                          ),
                                         );
                                       })
                               )

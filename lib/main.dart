@@ -141,6 +141,9 @@ class _Calendar_PageState extends State<Calendar_Page> {
     final body = jsonEncode({'clientNum': ClientNum, 'diary_date': diary_date});
     final response = await http.post(uri, headers: headers, body: body);
 
+    print(widget.UserNum);
+    print(str);
+
     print('clientNum:'+ ClientNum + 'diary_date:'+ diary_date);
 
     if(response.statusCode == 200){
@@ -148,10 +151,8 @@ class _Calendar_PageState extends State<Calendar_Page> {
       var jsonData = jsonDecode(response.body);
 
       if(jsonData['success'] == true){
-
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => print_diary(selectedDate: selectedDate, userNum: widget.UserNum)));
       } else if(jsonData['success'] == false) {
-
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate, userNum: widget.UserNum)));
       }
 
@@ -203,8 +204,6 @@ class _Calendar_PageState extends State<Calendar_Page> {
                         str = selectedDate.toString().substring(0, selectedDate.toString().indexOf(' '));
 
                         receiveData();
-
-
                       } else {
                         beforeselectedDate = selectedDay;
                       }
