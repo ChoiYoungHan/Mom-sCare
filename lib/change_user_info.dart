@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class change_user_info extends StatelessWidget {
-  const change_user_info({Key? key, this.userNum}) : super(key: key);
+  const change_user_info({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
 
@@ -37,7 +37,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('개인정보 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 회색으로 설정
         leading: IconButton(onPressed: () {
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit())); // 설정 페이지로 이동
+         Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,))); // 설정 페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
         )
       ),
@@ -53,7 +53,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangePwCertification())); // 비밀번호 설정 페이지로 이동
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_pw_certification(userNum: widget.UserNum))); // 비밀번호 설정 페이지로 이동
                 },
                 child: Row(
                   children: [
@@ -90,7 +90,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangePhone())); // 비밀번호 설정 페이지로 이동
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_phone(userNum: widget.UserNum,))); // 비밀번호 설정 페이지로 이동
                 },
                 child: Row(
                   children: [
@@ -127,7 +127,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
               padding: EdgeInsets.fromLTRB(0, 20, 0, 20), // 상하20 여백을 줌
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit())); // 설정 페이지로 이동
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,))); // 설정 페이지로 이동
                 },child: Text('돌아가기', style: TextStyle(color: Colors.black,),),
               ),
             ),

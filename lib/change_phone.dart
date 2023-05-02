@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class change_phone extends StatelessWidget {
-  const change_phone({Key? key, this.userNum}) : super(key: key);
+  const change_phone({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
 
@@ -59,7 +59,7 @@ class _ChangePhoneState extends State<ChangePhone> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('전화번호 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 개인정보 변경 페이지로 이동
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum,))); // 개인정보 변경 페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -109,7 +109,7 @@ class _ChangePhoneState extends State<ChangePhone> {
                               OutlinedButton(
                                 onPressed: (){
                                   Navigator.of(context).pop(); // 팝업 닫기
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 마이페이지로 이동
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum,))); // 마이페이지로 이동
                                 }, child: Text('확인', style: TextStyle(color: Colors.black),),
                               )
                             ],
@@ -133,7 +133,6 @@ class _ChangePhoneState extends State<ChangePhone> {
                           );
                         }
                     );
-                    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo())); // 개인정보 변경 페이지로 이동
                   },child: Text('확인', style: TextStyle(color: Colors.black,),),
                 ),
               ),

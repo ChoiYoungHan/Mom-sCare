@@ -4,7 +4,7 @@ import 'package:care_application/my_page.dart';
 import 'package:flutter/material.dart';
 
 class chatBot extends StatelessWidget {
-  const chatBot({Key? key, this.userNum}) : super(key: key);
+  const chatBot({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
 
@@ -138,7 +138,7 @@ class _ChatBotState extends State<ChatBot> {
                   ),
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
                       },
                       icon: Icon(Icons.list_alt_outlined)
                   )

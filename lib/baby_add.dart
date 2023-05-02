@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class baby_add extends StatelessWidget {
-  const baby_add({Key? key, this.userNum}) : super(key: key);
+  const baby_add({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
   
@@ -135,7 +135,7 @@ class _BabyAddState extends State<BabyAdd> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('아이 등록', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage(UserNum: widget.UserNum,))); // 마이페이지로 이동
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum,))); // 마이페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -308,7 +308,7 @@ class _BabyAddState extends State<BabyAdd> {
                             OutlinedButton(
                               onPressed: (){
                                 Navigator.of(context).pop(); // 팝업 닫기
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum))); // 마이페이지로 이동
                               }, child: Text('확인'),
                             )
                           ],

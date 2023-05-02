@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class edit extends StatelessWidget {
-  const edit({Key? key, this.userNum}) : super(key: key);
+  const edit({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
 
@@ -38,7 +38,7 @@ class _EditState extends State<Edit> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('설정', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum))); // 마이페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -54,7 +54,7 @@ class _EditState extends State<Edit> {
                 padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                 child: OutlinedButton(
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeUserInfo()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum)));
                     },
                     child: Row(
                       children: [
@@ -88,7 +88,7 @@ class _EditState extends State<Edit> {
                 padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                 child: OutlinedButton(
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question())); // 문의하기 페이지로 이동
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum,))); // 문의하기 페이지로 이동
                     },
                     child: Row(
                       children: [
@@ -122,7 +122,7 @@ class _EditState extends State<Edit> {
                 padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                 child: OutlinedButton(
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => DeleteUser())); // 회원탈퇴 페이지로 이동
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => delete_user(userNum: widget.UserNum))); // 회원탈퇴 페이지로 이동
                     },
                     child: Row(
                       children: [
@@ -156,7 +156,7 @@ class _EditState extends State<Edit> {
               padding: EdgeInsets.fromLTRB(0, 70, 0, 70), // 상하80 여백을 줌
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 마이페이지로 이동
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum))); // 마이페이지로 이동
                 }, child: Text('돌아가기', style: TextStyle(color: Colors.black,),),
               ),
             ),

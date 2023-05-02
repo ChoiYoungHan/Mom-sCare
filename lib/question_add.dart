@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class question_add extends StatelessWidget {
-  const question_add({Key? key, this.userNum}) : super(key: key);
+  const question_add({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
 
@@ -58,14 +58,14 @@ class _QuestionAddState extends State<QuestionAdd> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('문의하기', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
         leading: IconButton(onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question())); // 개인정보 변경 페이지로 이동
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
         ),
         actions: [
           TextButton(
               onPressed: (){
                 inquire_add();
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Question()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum)));
               }, child: Text('보내기', style: TextStyle(color: Colors.black, fontSize: 20),))
         ],
       ),

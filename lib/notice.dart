@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class notice extends StatelessWidget {
-  const notice({Key? key, this.userNum}) : super(key: key);
+  const notice({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
 
@@ -56,7 +56,7 @@ class _NoticeState extends State<Notice> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('공지사항', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyPage())); // 개인정보 변경 페이지로 이동
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -80,7 +80,7 @@ class _NoticeState extends State<Notice> {
                           height: 50,
                           child: OutlinedButton(
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => NoticeRecords())); // 공지내용으로 이동
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => notice_records(userNum: widget.UserNum))); // 공지내용으로 이동
                               },
                               child: Row(
                                 children: [

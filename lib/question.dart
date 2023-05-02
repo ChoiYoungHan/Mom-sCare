@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class question extends StatelessWidget {
-  const question({Key? key, this.userNum}) : super(key: key);
+  const question({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
 
@@ -61,7 +61,7 @@ class _QuestionState extends State<Question> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('문의', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
         leading: IconButton(onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Edit())); // 개인정보 변경 페이지로 이동
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
         ),
       ),
@@ -85,7 +85,7 @@ class _QuestionState extends State<Question> {
                           height: 50, // 높이 50
                           child: OutlinedButton(
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuestionRecords())); // 문의내역 페이지로 이동
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_records(userNum: widget.UserNum))); // 문의내역 페이지로 이동
                               }, // 문의 내용으로 갈 버튼
                               child: Row(
                                 children: [
@@ -136,7 +136,7 @@ class _QuestionState extends State<Question> {
                 },
                 child: InkWell(
                   onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuestionAdd())); // 문의내역 페이지로 이동
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_add(userNum: widget.UserNum))); // 문의내역 페이지로 이동
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class notice_records extends StatelessWidget {
-  const notice_records({Key? key, this.userNum}) : super(key: key);
+  const notice_records({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
 
@@ -56,7 +56,7 @@ class _NoticeRecordsState extends State<NoticeRecords> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('공지사항', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Notice())); // 공지사항항 이지로 이동
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum))); // 공지사항항 이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
