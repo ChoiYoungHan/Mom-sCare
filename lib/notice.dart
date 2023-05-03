@@ -32,6 +32,8 @@ class Notice extends StatefulWidget {
 
 class _NoticeState extends State<Notice> {
 
+  var noticeNum;
+
   Future<List<dynamic>> notice_() async {
     final uri = Uri.parse('http://182.219.226.49/moms/notice');
     final headers = {'Content-Type': 'application/json'};
@@ -80,7 +82,10 @@ class _NoticeState extends State<Notice> {
                           height: 50,
                           child: OutlinedButton(
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => notice_records(userNum: widget.UserNum))); // 공지내용으로 이동
+                                setState(() {
+                                  noticeNum = snapshot.data![index]['NOTICENO'];
+                                });
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => notice_records(userNum: widget.UserNum, noticeNum: noticeNum,))); // 공지내용으로 이동
                               },
                               child: Row(
                                 children: [

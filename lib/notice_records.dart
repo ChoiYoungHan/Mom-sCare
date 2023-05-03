@@ -6,23 +6,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class notice_records extends StatelessWidget {
-  const notice_records({Key? key,required this.userNum}) : super(key: key);
+  const notice_records({Key? key,required this.userNum, required this.noticeNum }) : super(key: key);
 
   final userNum;
+  final noticeNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NoticeRecords(UserNum: userNum,),
+      home: NoticeRecords(UserNum: userNum, NoticeNum: noticeNum,),
     );
   }
 }
 
 class NoticeRecords extends StatefulWidget {
-  const NoticeRecords({Key? key, this.UserNum}) : super(key: key);
+  const NoticeRecords({Key? key, this.UserNum, this.NoticeNum}) : super(key: key);
 
   final UserNum;
+  final NoticeNum;
 
   @override
   State<NoticeRecords> createState() => _NoticeRecordsState();
@@ -34,9 +36,13 @@ class _NoticeRecordsState extends State<NoticeRecords> {
   var date_ = "날짜";
 
   Future<List<dynamic>> notice_() async { // 공지사항 -> 위젯에 표시해주기
-    final uri = Uri.parse('http://182.219.226.49/moms/notice');
+    final uri = Uri.parse('http://182.219.226.49/moms/notice-info');
     final headers = {'Content-Type': 'application/json'};
-    final response = await http.post(uri, headers: headers);
+
+    final noticeNum=widget.NoticeNum;
+
+    final body = jsonEncode({'noticeNum': noticeNum});
+    final response = await http.post(uri, headers: headers, body: body);
 
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);

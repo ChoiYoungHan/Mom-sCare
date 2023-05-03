@@ -32,7 +32,7 @@ class Question extends StatefulWidget {
 }
 
 class _QuestionState extends State<Question> {
-  var noticeNum;
+  var inquireNum;
   late bool _isHovering=true;
 
   Future<List<dynamic>> inquire() async{ // 문의사항 버튼 눌렀을 때
@@ -88,10 +88,10 @@ class _QuestionState extends State<Question> {
                           child: OutlinedButton(
                               onPressed: (){
                                 setState(() {
-                                  noticeNum=snapshot.data![index]['INQUIRENO'];
-                                  print(noticeNum);
+                                  inquireNum=snapshot.data![index]['INQUIRENO'];
+                                  print(inquireNum);
                                 });
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_records(userNum: widget.UserNum, noticeNum: noticeNum,))); // 문의내역 페이지로 이동
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_records(userNum: widget.UserNum, inquireNum: inquireNum,))); // 문의내역 페이지로 이동
                               }, // 문의 내용으로 갈 버튼
                               child: Row(
                                 children: [

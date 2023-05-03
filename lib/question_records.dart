@@ -8,23 +8,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class question_records extends StatelessWidget {
-  const question_records({Key? key,required this.userNum, required this.noticeNum}) : super(key: key);
+  const question_records({Key? key,required this.userNum, required this.inquireNum}) : super(key: key);
 
   final userNum;
-  final noticeNum;
+  final inquireNum;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: QuestionRecords(UserNum: userNum,NoticeNum: noticeNum,)
+      home: QuestionRecords(UserNum: userNum,InquireNum: inquireNum,)
     );
   }
 }
 
 class QuestionRecords extends StatefulWidget {
-  const QuestionRecords({Key? key, this.UserNum, this.NoticeNum}) : super(key: key);
-  final NoticeNum;
+  const QuestionRecords({Key? key, this.UserNum, this.InquireNum}) : super(key: key);
+  final InquireNum;
   final UserNum;
 
   @override
@@ -42,9 +42,9 @@ class _QuestionRecordsState extends State<QuestionRecords> {
     final header = {'Content-Type': 'application/json'};
     
     final clientNum=widget.UserNum;
-    final noticeNum=widget.NoticeNum;
+    final inquireNum=widget.InquireNum;
     
-    final body = jsonEncode({'clientNum': clientNum, 'inquireNo': noticeNum});
+    final body = jsonEncode({'clientNum': clientNum, 'inquireNo': inquireNum});
     final response = await http.post(uri, headers: header, body: body);
 
     final Data=jsonDecode(response.body);
