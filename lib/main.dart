@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:care_application/chatBot.dart';
 import 'package:care_application/home_page.dart';
 import 'package:care_application/input_diary.dart';
+import 'package:care_application/my_page.dart';
 import 'package:care_application/print_diary.dart';
 import 'package:care_application/timeline.dart';
 import 'package:flutter/material.dart';
@@ -251,14 +253,14 @@ class _Calendar_PageState extends State<Calendar_Page> {
                           icon: Icon(Icons.event_note_outlined, color: Colors.blue) // 다이어리 아이콘
                       ),
                       IconButton( // 아이콘 버튼 위젯
-                          onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-
+                          onPressed: (){ // 버튼 클릭 시 동작할 코드 작성                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
                           },
                           icon: Icon(Icons.chat_outlined) // 채팅 아이콘
                       ),
                       IconButton( // 아이콘 버튼 위젯
                           onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
                           },
                           icon: Icon(Icons.list_alt_outlined) // 리스트 아이콘
                       )

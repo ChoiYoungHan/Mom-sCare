@@ -51,7 +51,6 @@ class _NoticeState extends State<Notice> {
 
   @override
   Widget build(BuildContext context) {
-    notice_();
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
@@ -93,7 +92,7 @@ class _NoticeState extends State<Notice> {
                                     child: Text('${snapshot.data![index]['NOTICENO']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
                                     flex: 1,),
                                   Expanded(
-                                    child: Text('${snapshot.data![index]['CONTENT']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
+                                    child: Text('${snapshot.data![index]['TITLE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
                                     flex: 3,),
                                   Expanded(
                                     child: Container(),flex: 2,

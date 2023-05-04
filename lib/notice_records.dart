@@ -35,7 +35,7 @@ class _NoticeRecordsState extends State<NoticeRecords> {
   var Notice_Title = "제목";
   var date_ = "날짜";
 
-  Future<List<dynamic>> notice_() async { // 공지사항 -> 위젯에 표시해주기
+  Future notice_() async { // 공지사항 -> 위젯에 표시해주기
     final uri = Uri.parse('http://182.219.226.49/moms/notice-info');
     final headers = {'Content-Type': 'application/json'};
 
@@ -47,10 +47,10 @@ class _NoticeRecordsState extends State<NoticeRecords> {
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
       print(jsonData); // 받아온 값 로그찍기
-      return jsonData;
+      return 1;
     }else{
       print(response.statusCode.toString());
-      throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
+      //throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
     }
   }
 
@@ -95,7 +95,7 @@ class _NoticeRecordsState extends State<NoticeRecords> {
                 ),
               ],
             ),
-          flex: 1,),
+            flex: 1,),
           Expanded(
             child: Container(
                 width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정

@@ -16,8 +16,8 @@ class question_records extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: QuestionRecords(UserNum: userNum,InquireNum: inquireNum,)
+        debugShowCheckedModeBanner: false,
+        home: QuestionRecords(UserNum: userNum,InquireNum: inquireNum,)
     );
   }
 }
@@ -36,22 +36,20 @@ class _QuestionRecordsState extends State<QuestionRecords> {
   var Answer; // 답변 내용
   var Question_Title;
   var date_;
-
+  late List<dynamic> inquire;
   Future inquire_() async{ // 문의사항 -> 위젯에 표시해줘야함
     final uri = Uri.parse('http://182.219.226.49/moms/inquire-info');
     final header = {'Content-Type': 'application/json'};
-    
+
     final clientNum=widget.UserNum;
     final inquireNum=widget.InquireNum;
-    
+
     final body = jsonEncode({'clientNum': clientNum, 'inquireNo': inquireNum});
     final response = await http.post(uri, headers: header, body: body);
 
     final Data=jsonDecode(response.body);
-    Question_Title = Data['TITLE'];
-    date_ = Data['INQUIRE_DATE'];
-    Question_ = Data['CONTENT'];
-    Answer = Data['REPLY'];
+    inquire=Data;
+    print(inquire[0]['TITLE']);
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
       print(jsonData);
@@ -89,15 +87,15 @@ class _QuestionRecordsState extends State<QuestionRecords> {
                 ),
                 Expanded(
                   child: Container(
-                      child: Text('${Question_Title}',style: TextStyle(fontSize: 30),)
+                      child: Text('${inquire[0]['TITLE']}',style: TextStyle(fontSize: 30),)
                   ),
-                flex: 1,),
+                  flex: 1,),
                 Expanded(
                   child: Container(), flex: 2,
                 ),
                 Expanded(
                   child: Container(
-                      child: Text('${date_}', )
+                      child: Text('${inquire[0]['INQUIRE_DATE']}', )
                   ),
                   flex: 1,),
                 Expanded(
@@ -108,15 +106,15 @@ class _QuestionRecordsState extends State<QuestionRecords> {
             flex: 1,),
           Expanded(
             child: Container(
-              width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정
-              decoration: BoxDecoration(
-                border: Border.all(
-                    width:1
-                )
-              ),
+                width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        width:1
+                    )
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Text('${Question_}'),
+                  child: Text('${inquire[0]['CONTENT']}'),
                 )
             ),
             flex: 2,),
@@ -133,7 +131,7 @@ class _QuestionRecordsState extends State<QuestionRecords> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Text('${Answer}'),
+                  child: Text('${inquire[0]['REPLY']}'),
                 )
             ),
             flex: 2,),

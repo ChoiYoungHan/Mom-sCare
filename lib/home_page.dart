@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum)));
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
                             },
                             icon: Icon(Icons.list_alt_outlined)
                         )
