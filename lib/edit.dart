@@ -45,7 +45,7 @@ class _EditState extends State<Edit> {
       body: Column(
         children: [
           Expanded(
-            child: Container(),flex: 3, // 위 여백을 위해 영역 비율 3
+            child: Container(),flex: 3, // 상단 여백을 위해 영역 비율 3
           ),
           Expanded(
             child: Container(
@@ -54,7 +54,7 @@ class _EditState extends State<Edit> {
                 padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                 child: OutlinedButton(
                     onPressed: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum))); // 개인정보 변경페이지로 이동
                     },
                     child: Row(
                       children: [

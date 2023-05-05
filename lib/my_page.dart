@@ -13,16 +13,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class my_page extends StatelessWidget {
-  const my_page({Key? key,required this.userNum}) : super(key: key);
+  const my_page({Key? key,required this.userNum, this.babyNum}) : super(key: key);
 
   final userNum;
-
+  final babyNum;
   @override
   Widget build(BuildContext context) {
     print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MyPage(UserNum: userNum)
+        home: MyPage(UserNum: userNum, )
     );
   }
 }
@@ -40,7 +40,7 @@ class _MyPageState extends State<MyPage> {
   var baby_num;
   final List<String> babies = <String>['A','B','C','D','E','F','G','H','I']; // 추후 받아올 아이 정보
 
-  Future<List<dynamic>> babies_() async {
+  Future<List<dynamic>> babies_() async { // 아이 목록 출력 함수
     final uri = Uri.parse('http://182.219.226.49/moms/baby');
     final headers = {'Content-Type': 'application/json'};
 
@@ -73,10 +73,10 @@ class _MyPageState extends State<MyPage> {
               child: FutureBuilder<List<dynamic>>(
                 future: babies_(),
                 builder: (context, snapshot){
-                  if(snapshot.hasData){
+                  if(snapshot.hasData){ // 받아온 데이터가 존재 할 시
                     return ListView.builder(
                       scrollDirection: Axis.horizontal, // 리스트뷰를 가로로 함
-                      itemCount: snapshot.data!.length,
+                      itemCount: snapshot.data!.length, // 데이터의 길이만큼을 카운트함
                       itemBuilder: (context, index){
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(0,0,0,0),
@@ -86,7 +86,7 @@ class _MyPageState extends State<MyPage> {
                             child: OutlinedButton(
                                 onPressed: (){
                                   setState(() {
-                                    baby_num=index;
+                                    baby_num=snapshot.data![index]['BABYNO']; // 버튼이 눌렸을 시 아이 번호를 입력 받음
                                   });
                                 },
                                 child: Column(
@@ -94,13 +94,13 @@ class _MyPageState extends State<MyPage> {
                                     Expanded(
                                       //child: Text('${snapshot.data![index]['TITLE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
                                       child: Image.asset('assets/baby_babyInfo.png'),
-                                      flex: 1,),
+                                      flex: 2,),
                                     Expanded(
-                                      child: Container(),flex: 2,
+                                      child: Container(),flex: 1,
                                     ),
                                     Expanded(
-                                      child: Container(),
-                                      //child: Text('${snapshot.data![index]['babyName']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
+                                      //child: Container(),
+                                      child: Text('${snapshot.data![index]['BABYNAME']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 아이의 이름
                                       flex: 1,),
                                   ],
                                 )
@@ -109,10 +109,10 @@ class _MyPageState extends State<MyPage> {
                         );
                       },
                     );
-                  }else if(snapshot.hasError){
-                    return Text('아이를 등록해주세요',style: TextStyle(color: Colors.black),);
+                  }else if(snapshot.hasError){ // 데이터가 존재하지 않거나 에러가 발생 시
+                    return Center(child: Text('아이를 등록해주세요',style: TextStyle(color: Colors.black),));
                   }
-                  return Center(child: const CircularProgressIndicator(color: Colors.grey,),);
+                  return Center(child: const CircularProgressIndicator(color: Colors.grey,),); // 데이터를 불러오는 동안 보여주는 화면 (버퍼링 위젯)
                 },
               )
               /*child: ListView.builder(
@@ -233,7 +233,7 @@ class _MyPageState extends State<MyPage> {
             children: [
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum,))); // 홈페이지로 화면이동
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum,))); // 홈페이지로 화면 이동
                 },
                 icon: Icon(Icons.home_outlined),
               ),
@@ -245,7 +245,7 @@ class _MyPageState extends State<MyPage> {
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum))); // 챗봇페이지로 화면 이동
                 },
                 icon: Icon(Icons.chat_outlined),
               ),

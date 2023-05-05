@@ -32,10 +32,12 @@ class QuestionRecords extends StatefulWidget {
 }
 
 class _QuestionRecordsState extends State<QuestionRecords> {
-  var Question_; // 질문 내용
-  var Answer; // 답변 내용
+  //보류 변수
+  var Question_;
+  var Answer;
   var Question_Title;
   var date_;
+
   late List<dynamic> inquire;
   Future inquire_() async{ // 문의사항 -> 위젯에 표시해줘야함
     final uri = Uri.parse('http://182.219.226.49/moms/inquire-info');
@@ -49,7 +51,6 @@ class _QuestionRecordsState extends State<QuestionRecords> {
 
     final Data=jsonDecode(response.body);
     inquire=Data;
-    print(inquire[0]['TITLE']);
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
       print(jsonData);
@@ -57,7 +58,6 @@ class _QuestionRecordsState extends State<QuestionRecords> {
     } else{
       print(response.statusCode.toString());
       return 0;
-      throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
     }
   }
 

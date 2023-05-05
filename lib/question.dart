@@ -40,7 +40,6 @@ class _QuestionState extends State<Question> {
     final header = {'Content-Type': 'application/json'};
 
     final clientnum=widget.UserNum;
-    print(clientnum);
     final body = jsonEncode({'clientNum': clientnum});
     final response = await http.post(uri, headers: header, body: body);
 
@@ -63,7 +62,7 @@ class _QuestionState extends State<Question> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('문의', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
         leading: IconButton(onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum))); // 설정 페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
         ),
       ),
@@ -76,7 +75,7 @@ class _QuestionState extends State<Question> {
             child: FutureBuilder<List<dynamic>>(
               future: inquire(),
               builder: (context, snapshot){
-                if(snapshot.hasData){
+                if(snapshot.hasData){ // 문의 내용이 존재 할 시
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index){
@@ -88,7 +87,7 @@ class _QuestionState extends State<Question> {
                           child: OutlinedButton(
                               onPressed: (){
                                 setState(() {
-                                  inquireNum=snapshot.data![index]['INQUIRENO'];
+                                  inquireNum=snapshot.data![index]['INQUIRENO']; // 버튼 클릭 시 해당하는 문의사항의 번호를 입력받는다
                                   print(inquireNum);
                                 });
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_records(userNum: widget.UserNum, inquireNum: inquireNum,))); // 문의내역 페이지로 이동
@@ -114,10 +113,10 @@ class _QuestionState extends State<Question> {
                       );
                     },
                   );
-                }else if(snapshot.hasError){
-                  return Text('문의 없음');
+                }else if(snapshot.hasError){ // 문의내용이 없거나 에러시
+                  return Text('문의 없음',style: TextStyle(color: Colors.black),);
                 }
-                return Center(child: const CircularProgressIndicator(),);
+                return Center(child: const CircularProgressIndicator(),); // 데이터 로드 하는 동안 버퍼링 화면 출력
               },
             ),
             flex: 15,), // 영역 비율 15 부여
@@ -126,33 +125,33 @@ class _QuestionState extends State<Question> {
           ),
         ],
       ),
-      floatingActionButton: Stack(
+      floatingActionButton: Stack( // 화면 위에 씌워주는 위젯
         children: [
           Positioned(
             bottom: 20,
             right: 5,
             child: MouseRegion(
-                cursor: SystemMouseCursors.click,
+                cursor: SystemMouseCursors.click, // 사용안함
                 onEnter: (_) {
                   setState(() {
-                    _isHovering = false;
+                    _isHovering = false; // 사용안함
                   });
                 },
                 onExit: (_) {
                   setState(() {
-                    _isHovering = true;
+                    _isHovering = true; // 사용안함
                   });
                 },
-                child: InkWell(
-                  onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_add(userNum: widget.UserNum))); // 문의내역 페이지로 이동
+                child: InkWell( // 클릭 활성화 위젯
+                  onTap: (){ // 한번 클릭 시
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_add(userNum: widget.UserNum))); // 문의추가 페이지로 이동
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (!_isHovering)
                         Padding(
-                          padding: EdgeInsets.fromLTRB(0,0,0,10),
+                          padding: EdgeInsets.fromLTRB(0,0,0,10), // 텍스트의 하단 여백 10 부여
                           child: Text('문의 추가',style: TextStyle(color: Colors.black,fontSize: 14,fontWeight: FontWeight.bold,),
                           ),
                         ),

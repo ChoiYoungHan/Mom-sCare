@@ -41,14 +41,13 @@ class _BabyAddState extends State<BabyAdd> {
   TextEditingController input_babies_father = TextEditingController(); // 받아올 아빠 이름
 
 
-  Future baby_add() async{
+  Future baby_add() async{ // 아이 추가 함수
     final uri = Uri.parse('http://182.219.226.49/moms/baby/register');
     final headers = {'Content-Type': 'application/json'};
 
     final user_num = widget.UserNum; // 유저번호
 
     final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': user_num});
-    // body의 clientNum 에 UserNum 사용해야함
     final response = await http.post(uri, headers: headers, body: body);
     if(response.statusCode == 200){
       print('성공');
@@ -68,8 +67,8 @@ class _BabyAddState extends State<BabyAdd> {
             title: Text(edit_value,style: TextStyle(color: Color(0xFF835529)),),backgroundColor: Color(0xFFFFE7BA),
             content: TextField(
               controller: edit,
-              maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
-              textAlign: TextAlign.right,
+              maxLines: 1, // 한 줄 이상의 텍스트를 입력받지 못하도록 설정
+              textAlign: TextAlign.right, // 오른쪽 성렬
               style: TextStyle(color:  Color(0xFF835529)),
               decoration: InputDecoration(
                   hintText: '${edit_value}을 입력 해주세요',
@@ -94,29 +93,25 @@ class _BabyAddState extends State<BabyAdd> {
               ),
               OutlinedButton(
                   onPressed: (){
-                    if(edit_value=='아이 이름'){
+                    if(edit_value=='아이 이름'){ // 팝업창이 호출된 위젯에 따라 입력되는 변수 설정
                       setState(() {
                         babies=edit.text;
                       });
-                      // 데이터베이스에 저장할 코드 작성 예정
                     }
                     else if(edit_value=='출산 예정일'){
                       setState(() {
                         babies_birth=edit.text;
                       });
-                      // 데이터베이스에 저장할 코드 작성 예정
                     }
                     else if(edit_value=='엄마 이름'){
                       setState(() {
                         babies_mother=edit.text;
                       });
-                      // 데이터베이스에 저장할 코드 작성 예정
                     }
                     else if(edit_value=='아빠 이름'){
                       setState(() {
                         babies_father=edit.text;
                       });
-                      // 데이터베이스에 저장할 코드 작성 예정
                     }
                     Navigator.of(context).pop();
                   },
@@ -170,8 +165,8 @@ class _BabyAddState extends State<BabyAdd> {
                         ),
                         Expanded(
                           child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                              fit: BoxFit.scaleDown, // 작아지게
-                              child :Text('${babies}',style: TextStyle(color: Colors.black),)) // 입력받은 아이의 정보 (데이터베이스 연동 후 수정 예정)
+                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                              child :Text('${babies}',style: TextStyle(color: Colors.black),)) // 입력받은 아이의 정보
                           ,flex: 1,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -206,8 +201,8 @@ class _BabyAddState extends State<BabyAdd> {
                         ),
                         Expanded(
                           child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                              fit: BoxFit.scaleDown, // 작아지게
-                              child :Text('${babies_birth}',style: TextStyle(color: Colors.black),)) // 입력받은 날짜의 정보 (데이터베이스 연동 후 수정 예정)
+                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                              child :Text('${babies_birth}',style: TextStyle(color: Colors.black),)) // 입력받은 날짜의 정보
                           ,flex: 1,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -242,8 +237,8 @@ class _BabyAddState extends State<BabyAdd> {
                         ),
                         Expanded(
                           child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                              fit: BoxFit.scaleDown, // 작아지게
-                              child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)) // 입력받은 엄마의 정보 (데이터베이스 연동 후 수정 예정)
+                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                              child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)) // 입력받은 엄마의 정보
                           ,flex: 1,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -278,8 +273,8 @@ class _BabyAddState extends State<BabyAdd> {
                         ),
                         Expanded(
                           child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                              fit: BoxFit.scaleDown, // 작아지게
-                              child :Text('${babies_father}',style: TextStyle(color: Colors.black),)) // 입력받은 아빠의 정보 (데이터베이스 연동 후 수정 예정)
+                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                              child :Text('${babies_father}',style: TextStyle(color: Colors.black),)) // 입력받은 아빠의 정보
                           ,flex: 1,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -294,8 +289,8 @@ class _BabyAddState extends State<BabyAdd> {
               height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
               width: MediaQuery.of(context).size.width*0.4,
               padding: EdgeInsets.fromLTRB(0, 50, 0, 30), // 상하80 여백을 줌
-              child: (babies != '_' && babies_birth != '_' && babies_mother != '_' && babies_father != '_') ?
-              OutlinedButton(
+              child: (babies != '_' && babies_birth != '_' && babies_mother != '_' && babies_father != '_') ? // 입력한 정보중에 하나라도 입력하지 않은 정보가 존재 할 시 오류 버튼을 출력하도록 설정
+              OutlinedButton( // 4가지 정보를 전부 입력했을 시
                 onPressed: () {
                   baby_add(); // 아이 추가
                   showDialog( // 팝업 위젯
@@ -317,7 +312,7 @@ class _BabyAddState extends State<BabyAdd> {
                       }
                   );
                 }, child: Text('확인', style: TextStyle(color: Colors.black),),
-              ):
+              ): // 정보가 한개라도 입력되지 않았다면
               OutlinedButton(
                 onPressed: (){
                   showDialog(

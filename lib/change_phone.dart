@@ -31,7 +31,6 @@ class ChangePhone extends StatefulWidget {
 class _ChangePhoneState extends State<ChangePhone> {
 
   TextEditingController PH = TextEditingController(); // 전화번호 입력 컨트롤러
-  var Ph; // 추후 데이터베이스에서 받아올 값
 
   Future change_ph() async { // 전화번호 변경 DB 연동 함수
     final uri = Uri.parse('http://182.219.226.49/moms/change-phone');
@@ -40,7 +39,7 @@ class _ChangePhoneState extends State<ChangePhone> {
     final phone_num = PH.text;
     final userNum = widget.UserNum;
 
-    final body = jsonEncode({'phone': phone_num,'clientNum': '64'});
+    final body = jsonEncode({'phone': phone_num,'clientNum': userNum});
     final response = await http.post(uri, headers: header, body: body);
 
     if(response.statusCode == 200){
@@ -70,7 +69,7 @@ class _ChangePhoneState extends State<ChangePhone> {
           ),
           Expanded(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(0,65,0,0),
+                padding: EdgeInsets.fromLTRB(0,65,0,0), // 텍스트의 상단 여백 65 부여
                 child: Text('전화번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
               ),
             flex: 2,), // 영역비율 2 부여
@@ -91,13 +90,13 @@ class _ChangePhoneState extends State<ChangePhone> {
             flex: 2,), // 영역 비율 2 부여
           Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 40, 0, 40), // 커튼의 상하 여백 40 부여
+              padding: EdgeInsets.fromLTRB(0, 40, 0, 40), // 위젯의 상하 여백 40 부여
               child: Container(
                 height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
                 width: MediaQuery.of(context).size.width*0.4, // 위젯의 너비를 화면 너비*0.4로 설정
                 child: OutlinedButton(
                   onPressed: () async {
-                    await change_ph()==1?
+                    await change_ph()==1? // 전화번호 변경 성공 시
                     showDialog( // 팝업 위젯
                         context: context,
                         barrierColor: Colors.grey.withOpacity(0.6),
@@ -115,7 +114,7 @@ class _ChangePhoneState extends State<ChangePhone> {
                             ],
                           );
                         }
-                    ):
+                    ): // 전화번호 변경 실패 시
                     showDialog( // 팝업 위젯
                         context: context,
                         barrierColor: Colors.grey.withOpacity(0.6),

@@ -31,18 +31,24 @@ class NoticeRecords extends StatefulWidget {
 }
 
 class _NoticeRecordsState extends State<NoticeRecords> {
-  var Notice_ = "공지 내용";
-  var Notice_Title = "제목";
-  var date_ = "날짜";
-
-  Future notice_() async { // 공지사항 -> 위젯에 표시해주기
+  var Notice_;
+  var Notice_Title;
+  var date_;
+  late List<dynamic> notice_info;
+  Future notice_() async { // 공지사항 내용 출력 함수
     final uri = Uri.parse('http://182.219.226.49/moms/notice-info');
     final headers = {'Content-Type': 'application/json'};
 
     final noticeNum=widget.NoticeNum;
 
-    final body = jsonEncode({'noticeNum': noticeNum});
+    final body = jsonEncode({'noticeNo': noticeNum});
     final response = await http.post(uri, headers: headers, body: body);
+
+    var Data= jsonDecode(response.body);
+    notice_info=Data;
+    Notice_ = notice_info[0]['TITLE'];
+    Notice_Title = notice_info[0]['NOTICE_DATE'];
+    date_ = notice_info[0]['CONTENT'];
 
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
@@ -56,13 +62,14 @@ class _NoticeRecordsState extends State<NoticeRecords> {
 
   @override
   Widget build(BuildContext context) {
+    notice_();
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('공지사항', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum))); // 공지사항항 이지로 이동
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum))); // 공지사항 페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -105,7 +112,7 @@ class _NoticeRecordsState extends State<NoticeRecords> {
                     )
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10), // 모든 여백 10 부여
                   child: Text('${Notice_}'),
                 )
             ),

@@ -59,7 +59,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.all(10), // 네  여백 10 부여
+                        padding: EdgeInsets.all(10), // 모든 여백 10 부여
                         child: Image.asset(('password.png'),color: Colors.black,),
                       ),
                     flex: 2,), // 영역 2 부여

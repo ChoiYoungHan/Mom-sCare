@@ -40,7 +40,7 @@ class _DeleteUserState extends State<DeleteUser> {
     final client_num = widget.UserNum; // 아기번호 값도 받아와야함
     final pw = password.text;
 
-    final body = jsonEncode({'clientNum': '64', 'pw': pw});
+    final body = jsonEncode({'clientNum': client_num, 'pw': pw});
     final response = await http.post(uri, headers: header, body: body);
 
     if(response.statusCode == 200){
@@ -65,16 +65,16 @@ class _DeleteUserState extends State<DeleteUser> {
       body: Column(
         children: [
           Expanded(
-            child: Container(),flex: 4,
+            child: Container(),flex: 4, // 상단 여백 4부여
           ),
           Expanded(
-            child: Text('비밀번호 입력',style: TextStyle(color: Colors.black),),flex: 2,
-          ),
+            child: Text('비밀번호 입력',style: TextStyle(color: Colors.black),)
+          ,flex: 2,), // 여백 2 부여
           Expanded(
             child: TextField(
               controller: password,
-              maxLines: null,
-              textAlign: TextAlign.left,
+              maxLines: 1, // 한줄만 입력받도록 설정
+              textAlign: TextAlign.left, // 좌측 정렬
               style: TextStyle(color: Colors.black),
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -83,9 +83,9 @@ class _DeleteUserState extends State<DeleteUser> {
                 hintText: ('비밀번호를 입력하세요')
               ),
             ),
-          flex: 2,),
+          flex: 2,), // 여백 2부여
           Expanded(
-            child: Container(), flex: 1,
+            child: Container(), flex: 1, // 여백 1 부여
           ),
           Expanded(
             child: OutlinedButton(
@@ -105,7 +105,7 @@ class _DeleteUserState extends State<DeleteUser> {
                         ),
                         OutlinedButton(
                           onPressed: () async{
-                            await delete_User()==1?
+                            await delete_User()==1? // 삭제 요청 성공 여부 판별
                             showDialog(
                                 context: context,
                                 barrierColor: Colors.grey.withOpacity(0.6),

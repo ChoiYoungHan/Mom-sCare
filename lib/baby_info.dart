@@ -43,16 +43,44 @@ class _BabyInfoState extends State<BabyInfo> {
   TextEditingController input_babies_birth = TextEditingController(); // 받아올 출산 예정일
   TextEditingController input_babies_mother = TextEditingController(); // 받아올 엄마 이름
   TextEditingController input_babies_father = TextEditingController(); // 받아올 아빠 이름
-  //해당 텍스트 들은 전역변수로 설정하게 될 수 있음
 
-  Future baby_modify() async{
+  late List<dynamic> baby;
+  Future baby_info_() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/inquire-info');
+    final header = {'Content-Type': 'application/json'};
+
+    final clientNum=widget.UserNum;
+    final babynum=widget.BabyNum;
+
+    final body = jsonEncode({'clientNum': clientNum, 'babtNo': babynum});
+    final response = await http.post(uri, headers: header, body: body);
+
+    final Data=jsonDecode(response.body);
+    baby=Data;
+    babies=baby[0]['BABYNAME'];
+    babies_birth=baby[0]['EXPECTEDDATE'];
+    babies_mother=baby[0]['MOMNAME'];
+    babies_father=baby[0]['DADNAME'];
+
+    if(response.statusCode == 200){
+      var jsonData = jsonDecode(response.body);
+      print(jsonData);
+      return 1;
+    } else{
+      print(response.statusCode.toString());
+      return 0;
+      throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
+    }
+  }
+
+  Future baby_modify() async{ // 아이 정보 수정 함수
     final uri = Uri.parse('http://182.219.226.49/moms/baby/modify');
     final header = {'Content-Type': 'application/json'};
 
     final baby_num = widget.BabyNum; // 아기번호
     final user_num = widget.UserNum; // 유저번호
 
-    final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': '64', 'babyNo': '1'});
+    final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': user_num, 'babyNo': baby_num});
     final response = await http.post(uri, headers: header, body: body);
 
     if(response.statusCode == 200){
@@ -63,13 +91,13 @@ class _BabyInfoState extends State<BabyInfo> {
     }
   }
 
-  Future baby_delete() async {
+  Future baby_delete() async { // 아이 삭제 함수
     final uri = Uri.parse('http://182.219.226.49/moms/baby/delete');
     final header = {'Content-Type': 'application/json'};
 
     final user_num = widget.UserNum; // 유저번호
 
-    final body = jsonEncode({'babyName': babies,'clientNum': '64'});
+    final body = jsonEncode({'babyName': babies,'clientNum': user_num});
     final response = await http.post(uri, headers: header, body: body);
 
     if(response.statusCode == 200){
@@ -114,8 +142,7 @@ class _BabyInfoState extends State<BabyInfo> {
                   child: Text('닫기',style: TextStyle(color: Color(0xFF835529),backgroundColor: Color(0xFFFFE7BA)),)
               ),
               OutlinedButton(
-                  onPressed: (){
-                    // 값을 데이터베이스에 넣는 부분 추가예정
+                  onPressed: (){ // 4가지 정보중 어떤 위젯인지 판별
                     if(value == input_babies)
                       setState(() {
                         babies=value.text;
@@ -144,6 +171,7 @@ class _BabyInfoState extends State<BabyInfo> {
 
   @override
   Widget build(BuildContext context) {
+    baby_info_();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
@@ -186,8 +214,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                 ),
                                 Expanded(
                                   child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                      fit: BoxFit.scaleDown, // 작아지게
-                                      child :Text('${babies}',style: TextStyle(color: Colors.black),)) // 설정된 아기의 정보 (데이터베이스 연동 후 수정 예정)
+                                      fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                      child :Text('${babies}',style: TextStyle(color: Colors.black),)) // 설정된 아기의 정보
                                   ,flex: 2,), // 영역 비율 2 부여
                                 Expanded(
                                     child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -222,8 +250,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                 ),
                                 Expanded(
                                   child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                      fit: BoxFit.scaleDown, // 작아지게
-                                      child :Text('${babies_birth}',style: TextStyle(color: Colors.black),)) // 설정된 출산 예정일의 정보 (데이터베이스 연동 후 수정 예정)
+                                      fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                      child :Text('${babies_birth}',style: TextStyle(color: Colors.black),)) // 설정된 출산 예정일의 정보
                                   ,flex: 2,), // 영역 비율 2 부여
                                 Expanded(
                                     child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -258,8 +286,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                 ),
                                 Expanded(
                                   child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                      fit: BoxFit.scaleDown, // 작아지게
-                                      child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)) // 설정된 엄마의 정보 (데이터베이스 연동 후 수정 예정)
+                                      fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                      child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)) // 설정된 엄마의 정보
                                   ,flex: 2,), // 영역 비율 2 부여
                                 Expanded(
                                     child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -296,8 +324,8 @@ class _BabyInfoState extends State<BabyInfo> {
                                 ),
                                 Expanded(
                                   child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                      fit: BoxFit.scaleDown, // 작아지게
-                                      child :Text('${babies_father}',style: TextStyle(color: Colors.black),)) // 설정된 아빠의 정보 (데이터베이스 연동 후 수정 예정)
+                                      fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                      child :Text('${babies_father}',style: TextStyle(color: Colors.black),)) // 설정된 아빠의 정보
                                   ,flex: 2,), // 영역 비율 2 부여
                                 Expanded(
                                     child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -388,7 +416,7 @@ class _BabyInfoState extends State<BabyInfo> {
                       child: Container(
                         height: MediaQuery.of(context).size.width*0.8, // 위젯의 높이를 화면 너비*0.8로 설정
                         padding: EdgeInsets.fromLTRB(40, 60, 0, 60), // 좌측40 상하60 여백을 줌
-                        child: (babies != '_' && babies_birth != '_' && babies_mother != '_' && babies_father != '_') ?
+                        child: (babies != baby[0]['BABYNAME'] && babies_birth != baby[0]['EXPECTEDDATE'] && babies_mother != baby[0]['MOMNAME'] && babies_father != baby[0]['DADNAME']) ? // 기존 정보와 같은지 다른지 판별
                         OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                             onPressed: () async {
                               await baby_modify()==1? // 아이 정보를 수정할 때 나오는 팝업이 return이 느려 await 할당

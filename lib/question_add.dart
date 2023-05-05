@@ -32,7 +32,7 @@ class _QuestionAddState extends State<QuestionAdd> {
   TextEditingController title = TextEditingController(); // 제목
   TextEditingController contents = TextEditingController(); // 내용
 
-  Future inquire_add() async{ // 문의사항 버튼 눌렀을 때
+  Future inquire_add() async{ // 문의사항 추가 함수
     final uri = Uri.parse('http://182.219.226.49/moms/inquire-request');
     final header = {'Content-Type': 'application/json'};
 
@@ -64,8 +64,8 @@ class _QuestionAddState extends State<QuestionAdd> {
         actions: [
           TextButton(
               onPressed: (){
-                inquire_add();
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum)));
+                inquire_add(); // 문의 추가하는 함수
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum))); // 문의사항 페이지로 이동
               }, child: Text('보내기', style: TextStyle(color: Colors.black, fontSize: 20),))
         ],
       ),
@@ -89,8 +89,8 @@ class _QuestionAddState extends State<QuestionAdd> {
               width: MediaQuery.of(context).size.width*0.7,
               child: TextField(
                 controller: title,
-                maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
-                textAlign: TextAlign.left,
+                maxLines: 1, // 한줄 만 입력받도록 설정
+                textAlign: TextAlign.left, // 좌측 정렬
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
@@ -108,7 +108,7 @@ class _QuestionAddState extends State<QuestionAdd> {
                 child: TextField(
                   controller: contents,
                   maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
-                  textAlign: TextAlign.left,
+                  textAlign: TextAlign.left, // 좌측 정렬
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
