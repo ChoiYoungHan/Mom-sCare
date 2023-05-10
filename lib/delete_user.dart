@@ -13,9 +13,11 @@ class delete_user extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("delete_user 페이지");
+    print(userNum);
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DeleteUser(UserNum: userNum)
+        debugShowCheckedModeBanner: false,
+        home: DeleteUser(UserNum: userNum)
     );
   }
 }
@@ -39,7 +41,7 @@ class _DeleteUserState extends State<DeleteUser> {
 
     final client_num = widget.UserNum; // 아기번호 값도 받아와야함
     final pw = password.text;
-
+    print(pw);
     final body = jsonEncode({'clientNum': client_num, 'pw': pw});
     final response = await http.post(uri, headers: header, body: body);
 
@@ -69,21 +71,24 @@ class _DeleteUserState extends State<DeleteUser> {
           ),
           Expanded(
             child: Text('비밀번호 입력',style: TextStyle(color: Colors.black),)
-          ,flex: 2,), // 여백 2 부여
+            ,flex: 2,), // 여백 2 부여
           Expanded(
-            child: TextField(
-              controller: password,
-              maxLines: 1, // 한줄만 입력받도록 설정
-              textAlign: TextAlign.left, // 좌측 정렬
-              style: TextStyle(color: Colors.black),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black)
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20,0,20,0),
+              child: TextField(
+                controller: password,
+                maxLines: 1, // 한줄만 입력받도록 설정
+                textAlign: TextAlign.left, // 좌측 정렬
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black)
+                    ),
+                    hintText: ('비밀번호를 입력하세요')
                 ),
-                hintText: ('비밀번호를 입력하세요')
               ),
             ),
-          flex: 2,), // 여백 2부여
+            flex: 2,), // 여백 2부여
           Expanded(
             child: Container(), flex: 1, // 여백 1 부여
           ),
@@ -91,66 +96,81 @@ class _DeleteUserState extends State<DeleteUser> {
             child: OutlinedButton(
               onPressed: (){
                 showDialog(
-                  context: context,
-                  barrierColor: Colors.grey.withOpacity(0.6),
-                  builder: (BuildContext context){
-                    return AlertDialog(
-                      title: Text(''),
-                      content: Text('삭제 후 복구 불가능합니다.\n 삭제하시겠습니까?',style: TextStyle(color: Colors.black),),
-                      actions: [
-                        OutlinedButton(
-                          onPressed: (){
-                            Navigator.of(context).pop(); // 팝업 닫기
-                          }, child: Text('아니오',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                        ),
-                        OutlinedButton(
-                          onPressed: () async{
-                            await delete_User()==1? // 삭제 요청 성공 여부 판별
-                            showDialog(
-                                context: context,
-                                barrierColor: Colors.grey.withOpacity(0.6),
-                                builder: (BuildContext context){
-                                  return AlertDialog(
-                                    title: Text(''),
-                                    content: Text('유저 정보가 삭제되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                                    actions: [
-                                      OutlinedButton(
-                                          onPressed: (){
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page())); // 마이페이지로 이동
-                                          },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
-                                      )
-                                    ],
-                                  );
-                                }
-                            ):
-                            showDialog(
-                                context: context,
-                                barrierColor: Colors.grey.withOpacity(0.6),
-                                builder: (BuildContext context){
-                                  return AlertDialog(
-                                    title: Text(''),
-                                    content: Text('오류 발생',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                                    actions: [
-                                      OutlinedButton(
-                                          onPressed: (){
-                                            Navigator.of(context).pop();
-                                          },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
-                                      )
-                                    ],
-                                  );
-                                }
-                            );
-                          }, child: Text('네',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                        )
-                      ],
-                    );
-                  }
+                    context: context,
+                    barrierColor: Colors.grey.withOpacity(0.6),
+                    builder: (BuildContext context){
+                      print(password.text);
+                      return password.text==''?
+                      AlertDialog(
+                        title: Text(''),
+                        content: Text('비밀번호를 입력하세요',textAlign: TextAlign.center,),
+                        actions: [
+                          OutlinedButton(
+                              onPressed: (){
+                                Navigator.of(context).pop();
+                              }
+                              , child: Text('확인',style: TextStyle(color: Colors.black),))
+                        ],
+                      )
+                          :
+                      AlertDialog(
+                        title: Text(''),
+                        content: Text('삭제 후 복구 불가능합니다.\n 삭제하시겠습니까?',style: TextStyle(color: Colors.black),),
+                        actions: [
+                          OutlinedButton(
+                            onPressed: (){
+                              Navigator.of(context).pop(); // 팝업 닫기
+                            }, child: Text('아니오',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                          ),
+                          OutlinedButton(
+                            onPressed: () async{
+                              await delete_User()==1? // 삭제 요청 성공 여부 판별
+                              showDialog(
+                                  context: context,
+                                  barrierColor: Colors.grey.withOpacity(0.6),
+                                  builder: (BuildContext context){
+                                    return AlertDialog(
+                                      title: Text(''),
+                                      content: Text('유저 정보가 삭제되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                      actions: [
+                                        OutlinedButton(
+                                            onPressed: (){
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page())); // 마이페이지로 이동
+                                            },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
+                                        )
+                                      ],
+                                    );
+                                  }
+                              ):
+                              showDialog(
+                                  context: context,
+                                  barrierColor: Colors.grey.withOpacity(0.6),
+                                  builder: (BuildContext context){
+                                    return AlertDialog(
+                                      title: Text(''),
+                                      content: Text('비밀번호가 일치하지 않습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                      actions: [
+                                        OutlinedButton(
+                                            onPressed: (){
+                                              Navigator.of(context).pop();
+                                            },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
+                                        )
+                                      ],
+                                    );
+                                  }
+                              );
+                            }, child: Text('네',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                          )
+                        ],
+                      );
+                    }
                 );
               },
               child: Text('확인',style: TextStyle(color: Colors.black),),
             ),
-          )
+          ),
+          Expanded(child: Container(),flex: 5,)
         ],
       ),
     );

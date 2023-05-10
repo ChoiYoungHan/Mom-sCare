@@ -15,6 +15,10 @@ class question_records extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("question_records 페이지");
+    print(userNum);
+    print("unquireNum는 ");
+    print(inquireNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: QuestionRecords(UserNum: userNum,InquireNum: inquireNum,)
@@ -63,83 +67,93 @@ class _QuestionRecordsState extends State<QuestionRecords> {
 
   @override
   Widget build(BuildContext context) {
-    inquire_();
     return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-          backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-          title: Text('문의내역', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
-          leading: IconButton(onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum))); // 문의하기 페이지로 이동
-          }, icon: Icon(Icons.arrow_back, color: Colors.black,),
-          )
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(), flex: 1,
-          ),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(), flex: 1,
-                ),
-                Expanded(
-                  child: Container(
-                      child: Text('${inquire[0]['TITLE']}',style: TextStyle(fontSize: 30),)
-                  ),
-                  flex: 1,),
-                Expanded(
-                  child: Container(), flex: 2,
-                ),
-                Expanded(
-                  child: Container(
-                      child: Text('${inquire[0]['INQUIRE_DATE']}', )
-                  ),
-                  flex: 1,),
-                Expanded(
-                  child: Container(), flex: 1,
-                ),
-              ],
-            ),
-            flex: 1,),
-          Expanded(
-            child: Container(
-                width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width:1
-                    )
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text('${inquire[0]['CONTENT']}'),
-                )
-            ),
-            flex: 2,),
-          Expanded(
-            child: Container(), flex: 1,
-          ),
-          Expanded(
-            child: Container(
-                width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width:1
-                    )
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Text('${inquire[0]['REPLY']}'),
-                )
-            ),
-            flex: 2,),
-          Expanded(
-            child: Container(), flex: 3,
-          ),
-        ],
-      ),
+        appBar: AppBar(
+            automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+            backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
+            title: Text('문의내역', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
+            leading: IconButton(onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum))); // 문의하기 페이지로 이동
+            }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+            )
+        ),
+        body:
+        FutureBuilder(
+            future: inquire_(),
+            builder: (context, snapshot){
+              if(snapshot.hasData){
+                Column(
+                  children: [
+                    Expanded(
+                      child: Container(), flex: 1,
+                    ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Container(), flex: 1,
+                          ),
+                          Expanded(
+                            child: Container(
+                                child: Text('${inquire[0]['TITLE']}',style: TextStyle(fontSize: 30),)
+                            ),
+                            flex: 1,),
+                          Expanded(
+                            child: Container(), flex: 2,
+                          ),
+                          Expanded(
+                            child: Container(
+                                child: Text('${inquire[0]['INQUIRE_DATE']}', )
+                            ),
+                            flex: 1,),
+                          Expanded(
+                            child: Container(), flex: 1,
+                          ),
+                        ],
+                      ),
+                      flex: 1,),
+                    Expanded(
+                      child: Container(
+                          width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width:1
+                              )
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text('${inquire[0]['CONTENT']}'),
+                          )
+                      ),
+                      flex: 2,),
+                    Expanded(
+                      child: Container(), flex: 1,
+                    ),
+                    Expanded(
+                      child: Container(
+                          width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width:1
+                              )
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text('${inquire[0]['REPLY']}'),
+                          )
+                      ),
+                      flex: 2,),
+                    Expanded(
+                      child: Container(), flex: 3,
+                    ),
+                  ],
+                );
+              } else if(snapshot.hasError){ // 데이터가 존재하지 않거나 에러가 발생 시
+                return Center(child: Text('아이를 등록해주세요',style: TextStyle(color: Colors.black),));
+              }
+              return Center(child: const CircularProgressIndicator(color: Colors.grey,),); // 데이터를 불러오는 동안 보여주는 화면 (버퍼링 위젯)
+            }
+        )
     );
   }
 }

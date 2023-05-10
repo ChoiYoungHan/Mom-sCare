@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class FullscreenImagePage extends StatefulWidget {
   final List<String> imageUrl;
@@ -43,7 +44,12 @@ class _FullscreenImagePageState extends State<FullscreenImagePage> {
           },
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              child: Image.network('http://182.219.226.49/image/'+ widget.imageUrl[index], fit: BoxFit.contain),
+                child: CachedNetworkImage(
+                    imageUrl: 'http://182.219.226.49/image/' + widget.imageUrl[index],
+                    fit: BoxFit.contain,
+                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) => Icon(Icons.error)
+                )
             );
           },
         )

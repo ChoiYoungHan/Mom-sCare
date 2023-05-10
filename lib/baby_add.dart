@@ -9,9 +9,10 @@ class baby_add extends StatelessWidget {
   const baby_add({Key? key,required this.userNum}) : super(key: key);
 
   final userNum;
-  
+
   @override
   Widget build(BuildContext context) {
+    print("baby_add 페이지");
     print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -24,7 +25,7 @@ class BabyAdd extends StatefulWidget {
   const BabyAdd({Key? key, this.UserNum}) : super(key: key);
 
   final UserNum;
-  
+
   @override
   State<BabyAdd> createState() => _BabyAddState();
 }
@@ -46,7 +47,9 @@ class _BabyAddState extends State<BabyAdd> {
     final headers = {'Content-Type': 'application/json'};
 
     final user_num = widget.UserNum; // 유저번호
-
+    print("유저번호는 ");
+    print(user_num);
+    print(babies+babies_birth+babies_mother+babies_father);
     final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': user_num});
     final response = await http.post(uri, headers: headers, body: body);
     if(response.statusCode == 200){
@@ -66,6 +69,7 @@ class _BabyAddState extends State<BabyAdd> {
           return AlertDialog(
             title: Text(edit_value,style: TextStyle(color: Color(0xFF835529)),),backgroundColor: Color(0xFFFFE7BA),
             content: TextField(
+              maxLength: 15,
               controller: edit,
               maxLines: 1, // 한 줄 이상의 텍스트를 입력받지 못하도록 설정
               textAlign: TextAlign.right, // 오른쪽 성렬
@@ -94,24 +98,16 @@ class _BabyAddState extends State<BabyAdd> {
               OutlinedButton(
                   onPressed: (){
                     if(edit_value=='아이 이름'){ // 팝업창이 호출된 위젯에 따라 입력되는 변수 설정
-                      setState(() {
-                        babies=edit.text;
-                      });
+                      babies=edit.text;
                     }
                     else if(edit_value=='출산 예정일'){
-                      setState(() {
-                        babies_birth=edit.text;
-                      });
+                      babies_birth=edit.text;
                     }
                     else if(edit_value=='엄마 이름'){
-                      setState(() {
-                        babies_mother=edit.text;
-                      });
+                      babies_mother=edit.text;
                     }
                     else if(edit_value=='아빠 이름'){
-                      setState(() {
-                        babies_father=edit.text;
-                      });
+                      babies_father=edit.text;
                     }
                     Navigator.of(context).pop();
                   },

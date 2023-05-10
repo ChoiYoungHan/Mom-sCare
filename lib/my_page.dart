@@ -19,7 +19,8 @@ class my_page extends StatelessWidget {
   final babyNum;
   @override
   Widget build(BuildContext context) {
-    print(userNum);
+    // print("my_page 페이지");
+    // print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: MyPage(UserNum: userNum, )
@@ -37,8 +38,18 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
+
+
+
+  var baby_name;
   var baby_num;
   final List<String> babies = <String>['A','B','C','D','E','F','G','H','I']; // 추후 받아올 아이 정보
+  late Future<List<dynamic>> babiesFuture;
+
+  void initState(){
+    super.initState();
+    babiesFuture = babies_();
+  }
 
   Future<List<dynamic>> babies_() async { // 아이 목록 출력 함수
     final uri = Uri.parse('http://182.219.226.49/moms/baby');
@@ -47,14 +58,16 @@ class _MyPageState extends State<MyPage> {
     final clientnum = widget.UserNum;
 
     final body = jsonEncode({'clientNum': clientnum});
+    print('아이 정보 호출 1');
     final response = await http.post(uri, headers: headers, body: body);
+    print('아이 정보 호출 2');
 
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
-      print(jsonData); // 받아온 값 로그찍기
+
       return jsonData;
     }else{
-      print(response.statusCode.toString());
+      print('myPage에서 아기 정보 불러오는 것에 대한 실패' + response.statusCode.toString());
       throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
     }
   }
@@ -87,7 +100,9 @@ class _MyPageState extends State<MyPage> {
                                 onPressed: (){
                                   setState(() {
                                     baby_num=snapshot.data![index]['BABYNO']; // 버튼이 눌렸을 시 아이 번호를 입력 받음
+                                    baby_name = snapshot.data![index]['BABYNAME'];
                                   });
+
                                 },
                                 child: Column(
                                   children: [
@@ -135,6 +150,8 @@ class _MyPageState extends State<MyPage> {
                 );
               })*/
               ,flex: 2), // 위젯이 차지할 영역 비율 2
+          Expanded(child:Container(),flex:1),
+          Expanded(child: Text("${baby_name}를 보고 있습니다!"),flex: 1,),
           Expanded(
               child: Row( // 가로 위젯
                 children: [
@@ -144,8 +161,11 @@ class _MyPageState extends State<MyPage> {
                           padding: EdgeInsets.all(30), // 네 면의 여백을 30만큼 줌
                           child: OutlinedButton( // 테두리만 있는 버튼
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => baby_info(userNum: widget.UserNum, babyNum: baby_num,))); // 홈페이지로 화면이동
-                              }, // 버튼을 눌렀을 때 실행될 함수 지정
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => baby_info(userNum: widget.UserNum, babyNum: baby_num),
+                                  ),
+                                );                              }, // 버튼을 눌렀을 때 실행될 함수 지정
                               child: Text('아기 정보', style: TextStyle(color: Colors.black),)
                           )
                       )
@@ -156,7 +176,11 @@ class _MyPageState extends State<MyPage> {
                           padding: EdgeInsets.all(30), // 네 면의 여백을 30만큼 줌
                           child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                               onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => baby_add(userNum: widget.UserNum,))); // 홈페이지로 화면이동
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => baby_add(userNum: widget.UserNum),
+                                  ),
+                                );
                               }, // 버튼을 눌렀을 때 실행될 함수 지정
                               child: Text('우리 아기 등록', style: TextStyle(color: Colors.black),)
                           )
@@ -164,7 +188,7 @@ class _MyPageState extends State<MyPage> {
                   )
                 ],
               )
-              ,flex: 2), // 위젯이 차지할 영역 비율 2
+              ,flex: 3), // 위젯이 차지할 영역 비율 2
           Expanded(
             child: Row( // 가로 위젯
               children: [
@@ -174,8 +198,11 @@ class _MyPageState extends State<MyPage> {
                         padding: EdgeInsets.all(30), // 네 면의 여백을 30만큼 줌
                         child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                             onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum))); // 캘린더페이지로 화면 이동
-                            }, // 버튼을 눌렀을 때 실행될 함수 지정
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => edit(userNum: widget.UserNum),
+                                ),
+                              );                             }, // 버튼을 눌렀을 때 실행될 함수 지정
                             child: Text('설정', style: TextStyle(color: Colors.black),)
                         )
                     )
@@ -194,7 +221,7 @@ class _MyPageState extends State<MyPage> {
                 )
               ],
             )
-            ,flex: 2,), // 위젯이 차지할 영역 비율 2
+            ,flex: 3,), // 위젯이 차지할 영역 비율 2
           Expanded(
               child: Container(
                   height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
@@ -223,7 +250,7 @@ class _MyPageState extends State<MyPage> {
                       child: Text('로그아웃', style: TextStyle(color: Colors.black),)
                   )
               )
-              ,flex: 2) // 위젯이 차지할 영역 비율 2
+              ,flex: 3) // 위젯이 차지할 영역 비율 2
         ],
       ),
       bottomNavigationBar: BottomAppBar(

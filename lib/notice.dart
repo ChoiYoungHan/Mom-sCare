@@ -14,6 +14,8 @@ class notice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("notice 페이지");
+    print(userNum);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Notice(UserNum: userNum,),
@@ -89,7 +91,7 @@ class _NoticeState extends State<Notice> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: Text('${snapshot.data![index]['NOTICENO']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의번호가 적힌 버튼,
+                                    child: Text("${index+1}",style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의번호가 적힌 버튼,
                                     flex: 1,), // 공간 1 부여
                                   Expanded(
                                     child: Text('${snapshot.data![index]['TITLE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 제목이 적힌 버튼,

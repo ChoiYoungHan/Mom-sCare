@@ -15,6 +15,8 @@ class change_pw extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("change_pw 페이지");
+    print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: ChangePw(UserNum: userNum)
@@ -60,13 +62,13 @@ class _ChangePwState extends State<ChangePw> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-        backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-        title: Text('비밀번호 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
-        leading: IconButton(onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_pw_certification(userNum: widget.UserNum,))); // 개인정보 변경 페이지로 이동
-        }, icon: Icon(Icons.arrow_back, color: Colors.black,),
-        )
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+          backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
+          title: Text('비밀번호 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
+          leading: IconButton(onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_pw_certification(userNum: widget.UserNum,))); // 개인정보 변경 페이지로 이동
+          }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+          )
       ),
       body: Column(
         children: [
@@ -77,10 +79,10 @@ class _ChangePwState extends State<ChangePw> {
             child: Column(
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Text('현재 비밀번호', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
-                  )
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Text('현재 비밀번호', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
+                    )
                 ),
                 Expanded(
                   child: Padding(
@@ -90,16 +92,16 @@ class _ChangePwState extends State<ChangePw> {
                       textAlign: TextAlign.right,
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
-                       border: OutlineInputBorder(
-                         borderSide: BorderSide(color: Colors.black)
-                       )
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)
+                          )
                       ),
                     ),
                   ),
                 )
               ],
             ),
-          flex: 3,),
+            flex: 3,),
           Expanded(
             child: Container(),flex: 2,
           ),
@@ -129,7 +131,7 @@ class _ChangePwState extends State<ChangePw> {
                 )
               ],
             ),
-          flex: 3,),
+            flex: 3,),
           Expanded(
             child: Container(),flex: 2,
           ),
@@ -159,7 +161,7 @@ class _ChangePwState extends State<ChangePw> {
                 )
               ],
             ),
-          flex: 3,),
+            flex: 3,),
           Expanded(
             child: Container(),flex: 2,
           ),
@@ -171,12 +173,12 @@ class _ChangePwState extends State<ChangePw> {
                 width: MediaQuery.of(context).size.width*0.4,
                 child: OutlinedButton(
                   onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
                   },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
                 ),
               ),
             ),
-          flex: 2,),
+            flex: 2,),
           Expanded(
             child: Container(),flex: 4,
           )

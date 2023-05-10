@@ -14,9 +14,11 @@ class change_pw_certification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("change_pw_certification 페이지");
+    print(userNum);
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ChangePwCertification(UserNum: userNum)
+        debugShowCheckedModeBanner: false,
+        home: ChangePwCertification(UserNum: userNum)
     );
   }
 }

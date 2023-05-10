@@ -12,6 +12,8 @@ class question_add extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("question_add 페이지");
+    print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: QuestionAdd(UserNum: userNum,)

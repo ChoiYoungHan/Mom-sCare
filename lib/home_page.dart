@@ -36,6 +36,12 @@ class _HomePageState extends State<HomePage> {
 
   var babyname, week, dday, exist;
 
+  List<String> b_babyname = [];
+  List<String> b_expectteddate = [];
+  List<String> b_dday = [];
+  List<String> b_week = [];
+
+
   Future<Response> receiveWeek() async {
 
     final uri = Uri.parse('http://182.219.226.49/moms/pregnancy-week');
@@ -51,6 +57,19 @@ class _HomePageState extends State<HomePage> {
 
       if(jsonData != null){
 
+        b_babyname.clear();
+        b_expectteddate.clear();
+        b_dday.clear();
+        b_week.clear();
+
+        jsonData.forEach((element){
+          b_babyname.add('babyname');
+          b_expectteddate.add('expecteddate');
+          b_dday.add('dday');
+          b_week.add('week');
+        });
+
+        print(jsonData[0]);
         print(utf8.decode(jsonData[0]['babyname'].runes.toList()));
         print(utf8.decode(jsonData[0]['expecteddate'].runes.toList()));
         print(jsonData[0]['dday']);
@@ -139,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                               padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                               child: Container( // 상자 위젯
                                 width: MediaQuery.of(context).size.width * 0.95, // 화면 가로 길이의 95%만큼 너비를 줌
-                                height: MediaQuery.of(context).size.width * 0.5, // 화면 세로 길이의 50%만큼 높이를 줌
+                                height: MediaQuery.of(context).size.width * 0.55, // 화면 세로 길이의 50%만큼 높이를 줌
                                 decoration: BoxDecoration( // 박스 디자인
                                     border: Border.all(color: Colors.grey, width: 2) // 박스 테두리 회색, 두께 2
                                 ),

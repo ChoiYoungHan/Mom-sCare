@@ -13,6 +13,8 @@ class edit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("edit 페이지");
+    print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Edit(UserNum: userNum,)

@@ -12,6 +12,8 @@ class change_user_info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("change_user_info 페이지");
+    print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: ChangeUserInfo(UserNum: userNum)
@@ -33,13 +35,13 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-        backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-        title: Text('개인정보 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 회색으로 설정
-        leading: IconButton(onPressed: () {
-         Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,))); // 설정 페이지로 이동
-        }, icon: Icon(Icons.arrow_back, color: Colors.black,),
-        )
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+          backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
+          title: Text('개인정보 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 회색으로 설정
+          leading: IconButton(onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,))); // 설정 페이지로 이동
+          }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+          )
       ),
       body: Column(
         children: [
@@ -60,15 +62,15 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.all(10), // 모든 여백 10 부여
-                        child: Image.asset(('password.png'),color: Colors.black,),
+                        child: Image.asset(('assets/password.png'),color: Colors.black,),
                       ),
-                    flex: 2,), // 영역 2 부여
+                      flex: 2,), // 영역 2 부여
                     Expanded(
                       child: Container(),flex: 1, // 아이콘과 텍스트 사이 여백 1부여
                     ),
                     Expanded(
-                        child:Text('비밀정보 변경',style: TextStyle(color: Colors.black),)
-                    ,flex: 5,), // 영역 5 부여
+                      child:Text('비밀정보 변경',style: TextStyle(color: Colors.black),)
+                      ,flex: 5,), // 영역 5 부여
                     Expanded(
                       child: Container(),flex: 2, // 중간 여백 비율2 부여
                     ),
@@ -79,7 +81,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                 ),
               ),
             ),
-          flex: 3,), // 버튼사이 간격 3부여
+            flex: 3,), // 버튼사이 간격 3부여
           Expanded(
             child: Container(), flex: 2, // 버튼사이 간격 2부여
           ),
@@ -97,7 +99,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.all(10), // 네 면의 여백 10 부여
-                        child: Image.asset(('phone_number.png'),color: Colors.black,),
+                        child: Image.asset(('assets/phone_number.png'),color: Colors.black,),
                       ),
                       flex: 2,), // 영역 2 부여
                     Expanded(
@@ -116,7 +118,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                 ),
               ),
             ),
-          flex: 3,), // 버튼사이 간격 3부여
+            flex: 3,), // 버튼사이 간격 3부여
           Expanded(
             child: Container(),flex: 2, // 버튼사이 여백2 부여
           ),
@@ -131,7 +133,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                 },child: Text('돌아가기', style: TextStyle(color: Colors.black,),),
               ),
             ),
-          flex: 4,), // 영역 비율 4 부여
+            flex: 4,), // 영역 비율 4 부여
           Expanded(
             child: Container(),flex: 5, // 하단 여백 5 부여
           )
