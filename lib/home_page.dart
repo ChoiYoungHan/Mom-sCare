@@ -42,6 +42,11 @@ class _HomePageState extends State<HomePage> {
   List<String> b_week = [];
 
 
+  void initState(){
+    super.initState();
+    receiveWeek();
+  }
+
   Future<Response> receiveWeek() async {
 
     final uri = Uri.parse('http://182.219.226.49/moms/pregnancy-week');
@@ -55,6 +60,8 @@ class _HomePageState extends State<HomePage> {
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
 
+      print('요청 성공');
+
       if(jsonData != null){
 
         b_babyname.clear();
@@ -63,22 +70,27 @@ class _HomePageState extends State<HomePage> {
         b_week.clear();
 
         jsonData.forEach((element){
-          b_babyname.add('babyname');
-          b_expectteddate.add('expecteddate');
-          b_dday.add('dday');
-          b_week.add('week');
+          String encodedName = element['babyname'];
+          String decodedName = utf8.decode(encodedName.runes.toList());
+          b_babyname.add(decodedName);
+
+          b_expectteddate.add(element['expecteddate']);
+          b_dday.add(element['dday'].toString());
+          b_week.add(element['week'].toString());
         });
 
-        print(jsonData[0]);
-        print(utf8.decode(jsonData[0]['babyname'].runes.toList()));
-        print(utf8.decode(jsonData[0]['expecteddate'].runes.toList()));
-        print(jsonData[0]['dday']);
-        print(jsonData[0]['week']);
+        print(b_babyname);
+
+        print('안녕');
+        // print(utf8.decode(jsonData[0]['babyname'].runes.toList()));
+        // print(utf8.decode(jsonData[0]['expecteddate'].runes.toList()));
+        // print(jsonData[0]['dday']);
+        // print(jsonData[0]['week']);
 
         babyname = utf8.decode(jsonData[0]['babyname'].runes.toList());
         dday = jsonData[0]['dday'];
         week = jsonData[0]['week'];
-        print('babyname은' + babyname);
+        // print('babyname은' + babyname);
 
         exist = '1';
       } else {
@@ -109,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                   child: GestureDetector( // Container와 같이 Gesture를 감지할 수 없는 위젯들에게 Gesture 기능을 부여할 수 있는 위젯
                       child: Column( // 세로 정렬
                           children: [
-                            exist == '1' ?
+                            babyname != null ?
                             Padding( // 여백을 주기 위해 사용하는 위젯
                               padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                               child: Container( // 상자 위젯
@@ -138,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text(babyname.toString() + '와', style: TextStyle(color: Colors.grey, fontSize: 25)),
+                                                      Text(b_babyname[0].toString() + '와', style: TextStyle(color: Colors.grey, fontSize: 25)),
                                                       SizedBox(height: 5),
                                                       Text('만남을 기다리기까지', style: TextStyle(color: Colors.grey, fontSize: 25)),
                                                       SizedBox(height: 5),

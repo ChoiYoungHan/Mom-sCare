@@ -41,13 +41,18 @@ class _TimeLineState extends State<TimeLine> {
 
     final ClientNum = widget.UserNum;
 
+
     final body = jsonEncode({'clientNum': ClientNum});
+
     final response = await http.post(uri, headers: headers, body: body);
 
     if(response.statusCode == 200){
 
       var jsonData = jsonDecode(response.body);
 
+      if(jsonData['success']==false){
+        print('저장값 없음');
+      }
       Diary_Date.clear();
       Image_URL.clear();
       jsonData.forEach((element){

@@ -52,6 +52,7 @@ class _BabyAddState extends State<BabyAdd> {
     print(babies+babies_birth+babies_mother+babies_father);
     final body = jsonEncode({'babyName': babies, 'expectedDate': babies_birth, 'dadName': babies_father, 'momName': babies_mother, 'clientNum': user_num});
     final response = await http.post(uri, headers: headers, body: body);
+
     if(response.statusCode == 200){
       print('성공');
       return 1;

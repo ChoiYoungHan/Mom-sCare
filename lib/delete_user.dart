@@ -41,7 +41,8 @@ class _DeleteUserState extends State<DeleteUser> {
 
     final client_num = widget.UserNum; // 아기번호 값도 받아와야함
     final pw = password.text;
-    print(pw);
+    print('회원삭제 시 clientNum은' + client_num);
+    print('회원삭제 시 비밀번호는' + pw);
     final body = jsonEncode({'clientNum': client_num, 'pw': pw});
     final response = await http.post(uri, headers: header, body: body);
 
