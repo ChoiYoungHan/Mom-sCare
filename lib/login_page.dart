@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
         String UserNum = jsonData['cnum'].toString();
         print(UserNum);
         Navigator.of(context, rootNavigator: true).pop();
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(userNum: UserNum)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: UserNum)));
       } else {
         Popup(context, '회원정보가 일치하지 않습니다.');
       }
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 15), // 좌 20 상 0 우 20 하 15의 여백을 줌
                           child: ElevatedButton( // 버튼 위젯
                               onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Register_Page()));
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Register_Page()));
                               },
                               child: Text('회원가입'), // 텍스트로 '회원가입' 출력
                               style: ButtonStyle( // 버튼의 스타일 지정
@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 0), // 좌 20 상 0 우 20 하 15의 여백을 줌
                           child: TextButton( // 텍스트 버튼 위젯
                               onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Find_ID()));
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Find_ID()));
                               },
                               child: Text('아이디/비밀번호 찾기', // 텍스트로 '아이디/비밀번호 찾기' 출력
                                   style: TextStyle( // 텍스트 스타일 지정
@@ -189,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 0), // 좌 20 상 0 우 20 하 15의 여백을 줌
                           child: TextButton( // 텍스트 버튼 위젯
                               onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: null)));
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: null)));
                               },
                               child: Text('게스트 로그인', // 텍스트로 '아이디/비밀번호 찾기' 출력
                                   style: TextStyle( // 텍스트 스타일 지정

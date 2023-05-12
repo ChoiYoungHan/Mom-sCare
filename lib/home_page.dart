@@ -99,11 +99,8 @@ class _HomePageState extends State<HomePage> {
       }
 
     }
-
     return response;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -150,13 +147,13 @@ class _HomePageState extends State<HomePage> {
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text(b_babyname[0].toString() + '와', style: TextStyle(color: Colors.grey, fontSize: 25)),
+                                                      FittedBox(child: Text(b_babyname[0].toString() + '와', style: TextStyle(color: Colors.grey, fontSize: 25))),
                                                       SizedBox(height: 5),
-                                                      Text('만남을 기다리기까지', style: TextStyle(color: Colors.grey, fontSize: 25)),
+                                                      FittedBox(child: Text('만남을 기다리기까지', style: TextStyle(color: Colors.grey, fontSize: 25))),
                                                       SizedBox(height: 5),
-                                                      Text(dday.toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 30)),
+                                                      FittedBox(child: Text(dday.toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 30))),
                                                       SizedBox(height: 5),
-                                                      Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 25)),
+                                                      FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 25))),
                                                     ]
                                                 ),
                                               )
@@ -261,19 +258,19 @@ class _HomePageState extends State<HomePage> {
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
                             },
                             icon: Icon(Icons.event_note_outlined)
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
                             },
                             icon: Icon(Icons.chat_outlined)
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
                             },
                             icon: Icon(Icons.list_alt_outlined)
                         )

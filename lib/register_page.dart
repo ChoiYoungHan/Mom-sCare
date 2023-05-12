@@ -199,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
             backgroundColor: Colors.white, // 배경색 흰색
             leading: IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login_Page()));
                 },
                 icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 아이콘, 색상은 회색
             ),
@@ -309,6 +309,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             SizedBox(height: 5), // 높이 5만큼의 공간을 줌
                             TextField( // 텍스트 필드 위젯
                                 controller: inputPhone, // 입력받은 값은 변수 inputPhone에 저장
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration( // 디자인
                                     hintText: '전화번호를 입력해주세요.',
                                     border: OutlineInputBorder( // 모서리에 테두리를 줄 것임
@@ -346,6 +347,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
                                   if(inputID.text == '' || inputPhone.text == '' || inputEmail.text == ''){
                                     Popup(context, '아이디와 전화번호, 이메일은 필수로 입력하셔야 합니다.');
+                                  } else if(!inputEmail.text.contains('@') && !inputEmail.text.contains('.')){
+                                    Popup(context, '이메일 형식이 올바르지 않습니다.');
                                   } else {
                                     setState(() {
                                       sendEmail();
@@ -363,6 +366,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   Visibility(
                                     visible: _editCheck,
                                     child: TextField(
+                                      keyboardType: TextInputType.number,
                                       controller: inputEmailCheck,
                                       decoration: InputDecoration(
                                           hintText: '인증번호를 입력해주세요.',
@@ -414,7 +418,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                             actions: [
                                               ElevatedButton(
                                                 onPressed: (){
-                                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page()));
+                                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login_Page()));
                                                   sendData();
                                                 },
                                                 child: Text('확인'),
