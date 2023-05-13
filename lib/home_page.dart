@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:care_application/baby_add.dart';
 import 'package:care_application/chatBot.dart';
 import 'package:care_application/main.dart';
 import 'package:care_application/my_page.dart';
@@ -40,12 +41,6 @@ class _HomePageState extends State<HomePage> {
   List<String> b_expectteddate = [];
   List<String> b_dday = [];
   List<String> b_week = [];
-
-
-  void initState(){
-    super.initState();
-    receiveWeek();
-  }
 
   Future<Response> receiveWeek() async {
 
@@ -118,71 +113,84 @@ class _HomePageState extends State<HomePage> {
                   child: GestureDetector( // Container와 같이 Gesture를 감지할 수 없는 위젯들에게 Gesture 기능을 부여할 수 있는 위젯
                       child: Column( // 세로 정렬
                           children: [
-                            babyname != null ?
-                            Padding( // 여백을 주기 위해 사용하는 위젯
-                              padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
-                              child: Container( // 상자 위젯
-                                  width: MediaQuery.of(context).size.width * 0.95, // 화면 가로 길이의 95%를 너비로 설정
-                                  height: MediaQuery.of(context).size.height * 0.3, // 화면 세로 길이의 30%를 높이로 설정
-                                  decoration: BoxDecoration( // 상자 위젯 디자인
-                                      border: Border.all(color: Colors.grey, width: 2) // 상자의 테두리 회색, 두께 2
-                                  ),
-                                  child: Row( // 가로 정렬
+                            b_babyname != null ?
+                            Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.95,
+                                height: MediaQuery.of(context).size.height * 0.3,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey, width: 2)
+                                ),
+                                child: ListView.builder(
+                                  physics: PageScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: b_babyname.length,
+                                  itemBuilder: (context, index){
+                                    return Row(
                                       mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
                                       children: [
                                         Padding( // 여백을 주기 위해 사용하는 위젯
-                                            padding: EdgeInsets.all(20), // 모든 면의 여백을 20만큼 줌
-                                            child: Image.asset('assets/newborn.png', // 이미지 가져오기
-                                                width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%를 너비로 설정
-                                                height: MediaQuery.of(context).size.height * 0.45 // 화면 세로 길이의 45%를 높이로 설정
-                                            )
+                                          padding: EdgeInsets.all(20), // 모든 면의 여백을 20만큼 줌
+                                          child: Image.asset('assets/newborn.png', // 이미지 가져오기
+                                            width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%를 너비로 설정
+                                            height: MediaQuery.of(context).size.height * 0.45 // 화면 세로 길이의 45%를 높이로 설정
+                                          )
                                         ),
                                         Padding( // 여백을 주기 위해 사용하는 위젯
                                           padding: EdgeInsets.all(5), // 모든 면의 여백을 5만큼 줌
                                           child: Container( // 상자 위젯
-                                              width: MediaQuery.of(context).size.width * 0.422, // 화면 가로 길이의 42%를 너비로 설정
-                                              child: Padding( // 여백을 주기 위해 사용하는 위젯
-                                                padding: EdgeInsets.all(5), // 모든 면의 여백을 5만큼 줌
-                                                child: Column( // 세로 정렬
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      FittedBox(child: Text(b_babyname[0].toString() + '와', style: TextStyle(color: Colors.grey, fontSize: 25))),
-                                                      SizedBox(height: 5),
-                                                      FittedBox(child: Text('만남을 기다리기까지', style: TextStyle(color: Colors.grey, fontSize: 25))),
-                                                      SizedBox(height: 5),
-                                                      FittedBox(child: Text(dday.toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 30))),
-                                                      SizedBox(height: 5),
-                                                      FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 25))),
-                                                    ]
-                                                ),
+                                            width: MediaQuery.of(context).size.width * 0.422, // 화면 가로 길이의 42%를 너비로 설정
+                                            child: Padding( // 여백을 주기 위해 사용하는 위젯
+                                              padding: EdgeInsets.all(5), // 모든 면의 여백을 5만큼 줌
+                                              child: Column( // 세로 정렬
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  FittedBox(child: Text(b_babyname[index].toString() + '님과', style: TextStyle(color: Colors.grey, fontSize: 25))),
+                                                  SizedBox(height: 5),
+                                                  FittedBox(child: Text('만남까지', style: TextStyle(color: Colors.grey, fontSize: 25))),
+                                                  SizedBox(height: 5),
+                                                  FittedBox(child: Text(b_dday[index].toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 30))),
+                                                  SizedBox(height: 5),
+                                                  FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 25))),
+                                                ]
                                               )
-                                          ),
+                                            )
+                                          )
                                         )
                                       ]
-                                  )
-                              ),
-                            ) :
+                                    );
+                                  }
+                                )
+                              )
+                            )
+                            :
                             Padding( // 여백을 주기 위해 사용하는 위젯
                               padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
-                              child: Container( // 상자 위젯
-                                width: MediaQuery.of(context).size.width * 0.95, // 화면 가로 길이의 95%만큼 너비를 줌
-                                height: MediaQuery.of(context).size.width * 0.55, // 화면 세로 길이의 50%만큼 높이를 줌
-                                decoration: BoxDecoration( // 박스 디자인
-                                    border: Border.all(color: Colors.grey, width: 2) // 박스 테두리 회색, 두께 2
-                                ),
-                                child: Column( // 세로정렬
-                                  children: [
-                                    Padding( // 여백을 주기 위해 사용하는 위젯
-                                      padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
-                                      child: Image.asset('assets/baby.png', // 이미지를 불러옴
-                                          width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%만큼 너비를 줌
-                                          height: MediaQuery.of(context).size.height * 0.2, // 화면 세로 길이의 20%만큼 높이를 줌
-                                          color: Colors.grey // 색상은 회색
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => baby_add(userNum: widget.UserNum)));
+                                },
+                                child: Container( // 상자 위젯
+                                  width: MediaQuery.of(context).size.width * 0.95, // 화면 가로 길이의 95%만큼 너비를 줌
+                                  height: MediaQuery.of(context).size.width * 0.55, // 화면 세로 길이의 50%만큼 높이를 줌
+                                  decoration: BoxDecoration( // 박스 디자인
+                                      border: Border.all(color: Colors.grey, width: 2) // 박스 테두리 회색, 두께 2
+                                  ),
+                                  child: Column( // 세로정렬
+                                    children: [
+                                      Padding( // 여백을 주기 위해 사용하는 위젯
+                                        padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
+                                        child: Image.asset('assets/baby.png', // 이미지를 불러옴
+                                            width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%만큼 너비를 줌
+                                            height: MediaQuery.of(context).size.height * 0.23, // 화면 세로 길이의 20%만큼 높이를 줌
+                                            color: Colors.grey // 색상은 회색
+                                        ),
                                       ),
-                                    ),
-                                    Text('아기 등록하기', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 색상은 회색, 크기 20, 볼드체
-                                  ],
+                                      Text('아기 등록하기', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 색상은 회색, 크기 20, 볼드체
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -192,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                       child: InkWell(
                                         onTap: (){
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Week_Info()));
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum)));
                                         },
                                         child: Container( // 상자 위젯
                                             width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
