@@ -232,7 +232,14 @@ class _BabyInfoState extends State<BabyInfo> {
                                 padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                                 child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                                     onPressed: (){
-                                      popup('출산 예정일', input_babies_birth);
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2020),
+                                        lastDate: DateTime(2030),
+                                      ).then((selectedDate){
+                                        babies_birth=selectedDate.toString().split(" ")[0];
+                                      });
                                     }, // 버튼을 눌렀을 때 실행될 함수 지정
                                     child: Row(
                                       children: [

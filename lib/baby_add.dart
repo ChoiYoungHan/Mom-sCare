@@ -63,6 +63,7 @@ class _BabyAddState extends State<BabyAdd> {
 
   Future popup(String edit_value){
     TextEditingController edit=TextEditingController();
+
     return showDialog(
         context: context,
         barrierColor: Colors.grey.withOpacity(0.6),
@@ -180,7 +181,14 @@ class _BabyAddState extends State<BabyAdd> {
                 padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                 child: OutlinedButton(
                     onPressed: (){
-                      popup('출산 예정일');
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2030),
+                      ).then((selectedDate){
+                          babies_birth=selectedDate.toString().split(" ")[0];
+                      });
                     },
                     child: Row(
                       children: [
