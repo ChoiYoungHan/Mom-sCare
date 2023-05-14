@@ -48,6 +48,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
     // 선택한 날짜와 시간, 일정 내용을 저장할 변수
     DateTime selectedDate = DateTime.now();
     TimeOfDay selectedTime = TimeOfDay.now();
+    String schedule = '';
 
     // 팝업을 띄운 뒤 캘린더에서 선택한 날짜를 저장한다.
     await showModalBottomSheet(
