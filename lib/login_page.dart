@@ -6,8 +6,10 @@ import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'find_ID.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
+  await initializeDateFormatting('ko_KR', null);
   runApp(const Login_Page());
 }
 
