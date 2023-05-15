@@ -22,8 +22,9 @@ class MyApp extends StatelessWidget {
     print('Calendar_Page에서 받은 ' + userNum);
 
     return MaterialApp(
-        debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 Debug 리본을 제거
-        home: Calendar_Page(UserNum: userNum)
+      locale: const Locale('ko', 'KR'),
+      debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 Debug 리본을 제거
+      home: Calendar_Page(UserNum: userNum)
     );
   }
 }
@@ -66,6 +67,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
                               subtitle: Text("${DateFormat('yyyy/MM/dd').format(selectedDate)}"), // 아래에 선택한 날짜 정보를 출력
                               onTap: () async {
                                 final DateTime ? pickedDate = await showDatePicker( // showDatePicker 함수를 호출하여 팝업 창을 띄움
+                                    locale: const Locale('ko', 'KR'),
                                     context: context,
                                     initialDate: selectedDate, // 팝업이 띄워졌을 때, 초기화하는 날짜 값
                                     firstDate: DateTime.utc(2020, 12, 31), // 선택 가능한 가장 빠른 날짜
