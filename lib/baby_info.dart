@@ -44,7 +44,6 @@ class _BabyInfoState extends State<BabyInfo> {
   var babies_mother='_';
   var babies_father='_';
   TextEditingController input_babies = TextEditingController(); // 받아올 아이 이름
-  TextEditingController input_babies_birth = TextEditingController(); // 받아올 출산 예정일
   TextEditingController input_babies_mother = TextEditingController(); // 받아올 엄마 이름
   TextEditingController input_babies_father = TextEditingController(); // 받아올 아빠 이름
 
@@ -150,8 +149,6 @@ class _BabyInfoState extends State<BabyInfo> {
                   onPressed: (){ // 4가지 정보중 어떤 위젯인지 판별
                     if(value == input_babies)
                       babies=value.text;
-                    else if(value == input_babies_birth)
-                      babies_birth=value.text;
                     else if(value == input_babies_mother)
                       babies_mother=value.text;
                     else if(value == input_babies_father)
@@ -238,8 +235,12 @@ class _BabyInfoState extends State<BabyInfo> {
                                         firstDate: DateTime(2020),
                                         lastDate: DateTime(2030),
                                       ).then((selectedDate){
-                                        babies_birth=selectedDate.toString().split(" ")[0];
+                                        setState(() {
+                                          var a=selectedDate.toString().split(" ")[0];
+                                          babies_birth=a;
+                                        });
                                       });
+                                      if(babies_birth=='null')babies_birth='-';
                                     }, // 버튼을 눌렀을 때 실행될 함수 지정
                                     child: Row(
                                       children: [

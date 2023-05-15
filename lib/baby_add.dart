@@ -37,7 +37,6 @@ class _BabyAddState extends State<BabyAdd> {
   var babies_mother='_';
   var babies_father='_';
   TextEditingController input_babies = TextEditingController(); // 받아올 아이 이름
-  TextEditingController input_babies_birth = TextEditingController(); // 받아올 출산 예정일
   TextEditingController input_babies_mother = TextEditingController(); // 받아올 엄마 이름
   TextEditingController input_babies_father = TextEditingController(); // 받아올 아빠 이름
 
@@ -187,8 +186,11 @@ class _BabyAddState extends State<BabyAdd> {
                         firstDate: DateTime(2020),
                         lastDate: DateTime(2030),
                       ).then((selectedDate){
+                        setState(() {
                           babies_birth=selectedDate.toString().split(" ")[0];
+                        });
                       });
+                      if(babies_birth=='null')babies_birth='-';
                     },
                     child: Row(
                       children: [
@@ -206,8 +208,8 @@ class _BabyAddState extends State<BabyAdd> {
                         ),
                         Expanded(
                           child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                              child :Text('${babies_birth}',style: TextStyle(color: Colors.black),)) // 입력받은 날짜의 정보
+                              fit: BoxFit.scaleDown,  // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                              child :Text(babies_birth,style: TextStyle(color: Colors.black),)) // 입력받은 날짜의 정보
                           ,flex: 1,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
