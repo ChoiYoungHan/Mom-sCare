@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:math';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:care_application/change_user_info.dart';
 import 'package:care_application/edit.dart';
@@ -79,6 +81,12 @@ class _ChangePhoneState extends State<ChangePhone> {
             child: Padding(
               padding: EdgeInsets.fromLTRB(100,0,100,0), //텍스트 필드의 상하 여백 100 부여
               child: TextField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(11), // 최대 11자리까지 입력 가능
+                  PhoneNumberFormatter(), // 핸드폰 번호 포맷터 적용
+                ],
                 controller: PH,
                 textAlign: TextAlign.right, // 오른쪽 정렬
                 style: TextStyle(color: Colors.black),
@@ -145,5 +153,31 @@ class _ChangePhoneState extends State<ChangePhone> {
         ],
       ),
     );
+  }
+}
+
+class PhoneNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // 핸드폰 번호에 하이픈(-) 추가
+    if (newValue.text.isNotEmpty && newValue.text.length > 3) {
+      final number = newValue.text.replaceAll(RegExp(r'\D'), '');
+      final buffer = StringBuffer();
+      buffer.write(number.substring(0, 3));
+      if (number.length > 3) {
+        buffer.write('-');
+        buffer.write(number.substring(3, min(number.length, 7)));
+      }
+      if (number.length > 7) {
+        buffer.write('-');
+        buffer.write(number.substring(7, min(number.length, 11)));
+      }
+      return TextEditingValue(
+        text: buffer.toString(),
+        selection: TextSelection.collapsed(offset: buffer.length),
+      );
+    }
+    return newValue;
   }
 }

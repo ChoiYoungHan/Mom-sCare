@@ -82,7 +82,7 @@ class _QuestionRecordsState extends State<QuestionRecords> {
             future: inquire_(),
             builder: (context, snapshot){
               if(snapshot.hasData){
-                Column(
+                return Column(
                   children: [
                     Expanded(
                       child: Container(), flex: 1,
@@ -149,7 +149,7 @@ class _QuestionRecordsState extends State<QuestionRecords> {
                   ],
                 );
               } else if(snapshot.hasError){ // 데이터가 존재하지 않거나 에러가 발생 시
-                return Center(child: Text('아이를 등록해주세요',style: TextStyle(color: Colors.black),));
+                return Center(child: Text('공지사항을 등록해주세요',style: TextStyle(color: Colors.black),));
               }
               return Center(child: const CircularProgressIndicator(color: Colors.grey,),); // 데이터를 불러오는 동안 보여주는 화면 (버퍼링 위젯)
             }

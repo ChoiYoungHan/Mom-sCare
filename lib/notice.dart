@@ -97,11 +97,11 @@ class _NoticeState extends State<Notice> {
                                     child: Text('${snapshot.data![index]['TITLE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 제목이 적힌 버튼,
                                     flex: 3,), // 공간 3 부여
                                   Expanded(
-                                    child: Container(),flex: 2, // 중간 여백 2 부여
+                                    child: Container(),flex: 1, // 중간 여백 2 부여
                                   ),
                                   Expanded(
-                                    child: Text('${snapshot.data![index]['CONTENT_DATE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 날짜가 적힌 버튼,
-                                    flex: 1,), // 공간 1 부여
+                                    child: Text('${snapshot.data![index]['CONTENT_DATE'].toString().split(" ")[0]}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 날짜가 적힌 버튼,
+                                    flex: 3,), // 공간 1 부여
                                 ],
                               )
                           ),
