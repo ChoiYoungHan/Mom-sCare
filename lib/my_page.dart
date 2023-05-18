@@ -213,7 +213,7 @@ class _MyPageState extends State<MyPage> {
                         padding: EdgeInsets.all(30), // 네 면의 여백을 30만큼 줌
                         child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                             onPressed: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum))); // 공지사항 페이지로 이동
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum))); // 공지사항 페이지로 이동
                             }, // 버튼을 눌렀을 때 실행될 함수 지정
                             child: Text('공지사항', style: TextStyle(color: Colors.black),)
                         )
@@ -240,7 +240,7 @@ class _MyPageState extends State<MyPage> {
                                   OutlinedButton(
                                       onPressed:(){
                                         Navigator.of(context).pop();
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page()));
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login_Page()));
                                       }, child: Text('확인'))
                                 ],
                               );
@@ -260,19 +260,19 @@ class _MyPageState extends State<MyPage> {
             children: [
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum,))); // 홈페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum,))); // 홈페이지로 화면 이동
                 },
                 icon: Icon(Icons.home_outlined),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum,))); // 캘린더페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum,))); // 캘린더페이지로 화면 이동
                 },
                 icon: Icon(Icons.event_note_outlined),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum))); // 챗봇페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum))); // 챗봇페이지로 화면 이동
                 },
                 icon: Icon(Icons.chat_outlined),
               ),

@@ -120,13 +120,13 @@ class _ChatBotState extends State<ChatBot> {
                 children: [
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(UserNum: widget.UserNum)));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage(UserNum: widget.UserNum)));
                       },
                       icon: Icon(Icons.home_outlined)
                   ),
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
                       },
                       icon: Icon(Icons.event_note_outlined)
                   ),
@@ -138,7 +138,7 @@ class _ChatBotState extends State<ChatBot> {
                   ),
                   IconButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
                       },
                       icon: Icon(Icons.list_alt_outlined)
                   )

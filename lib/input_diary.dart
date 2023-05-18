@@ -97,7 +97,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
     if (response.statusCode == 200) {
       print('Uploaded!');
       Navigator.of(context, rootNavigator: true).pop();
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => print_diary(selectedDate: widget.selectedDate, userNum: widget.UserNum)));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => print_diary(selectedDate: widget.selectedDate, userNum: widget.UserNum)));
 
     } else {
       print('Upload failed with status ${response.statusCode}');
@@ -132,7 +132,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
           leading: IconButton( // 좌측에 정렬 & 아이콘 버튼 위젯
               onPressed: (){ // 수행할 코드를 작성
                 String userNo = widget.UserNum;
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum))); // Calendar_Page로 이동
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum))); // Calendar_Page로 이동
               },
               icon: Icon(Icons.arrow_back, color: Colors.grey) // 아이콘은 뒤로가기 아이콘을 넣으며 색상은 회색
           ),

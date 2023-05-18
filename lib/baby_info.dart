@@ -175,7 +175,7 @@ class _BabyInfoState extends State<BabyInfo> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('아기 정보', style: TextStyle(color: Colors.black)), // 상단 바 글자색을 검정색으로 설정
         leading: IconButton(onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum,))); // 마이페이지로 이동
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum,))); // 마이페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
         ),
       ),
@@ -386,7 +386,7 @@ class _BabyInfoState extends State<BabyInfo> {
                                                               OutlinedButton(
                                                                   onPressed: (){
                                                                     Navigator.of(context).pop();
-                                                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum,))); // 마이페이지로 이동
+                                                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum,))); // 마이페이지로 이동
                                                                   },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
                                                               )
                                                             ],
@@ -440,7 +440,7 @@ class _BabyInfoState extends State<BabyInfo> {
                                               OutlinedButton(
                                                 onPressed: (){
                                                   Navigator.of(context).pop(); // 팝업 닫기
-                                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum,))); // 마이페이지로 이동
+                                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum,))); // 마이페이지로 이동
                                                 }, child: Text('확인', style: TextStyle(color: Colors.black),),
                                               )
                                             ],

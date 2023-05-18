@@ -63,7 +63,7 @@ class _QuestionState extends State<Question> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('문의', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
         leading: IconButton(onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum))); // 설정 페이지로 이동
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum))); // 설정 페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
         ),
       ),
@@ -91,7 +91,7 @@ class _QuestionState extends State<Question> {
                                   inquireNum=snapshot.data![index]['INQUIRENO']; // 버튼 클릭 시 해당하는 문의사항의 번호를 입력받는다
                                   print(inquireNum);
                                 });
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_records(userNum: widget.UserNum, inquireNum: inquireNum,))); // 문의내역 페이지로 이동
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question_records(userNum: widget.UserNum, inquireNum: inquireNum,))); // 문의내역 페이지로 이동
                               }, // 문의 내용으로 갈 버튼
                               child: Row(
                                 children: [
@@ -145,7 +145,7 @@ class _QuestionState extends State<Question> {
                 },
                 child: InkWell( // 클릭 활성화 위젯
                   onTap: (){ // 한번 클릭 시
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => question_add(userNum: widget.UserNum))); // 문의추가 페이지로 이동
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question_add(userNum: widget.UserNum))); // 문의추가 페이지로 이동
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

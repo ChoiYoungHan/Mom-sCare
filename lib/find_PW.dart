@@ -143,7 +143,7 @@ class _FindPWState extends State<FindPW> {
             backgroundColor: Colors.white, // 배경색은 흰색
             leading: IconButton( // 아이콘 버튼 위젯
                 onPressed: (){ // 뒤로가기 버튼 클릭 시 동작할 코드 작성
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Login_Page()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login_Page()));
                 },
                 icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 아이콘, 색상은 회색
             ),
@@ -152,7 +152,7 @@ class _FindPWState extends State<FindPW> {
                 children: [
                   TextButton( // 텍스트 버튼 위젯
                       onPressed: () { // 아이디 찾기 버튼 클릭 시 수행할 코드 작성
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Find_ID()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Find_ID()));
                       },
                       child: Text('아이디 찾기', // 텍스트 위젯, '아이디 찾기' 문구 출력
                           style: TextStyle( // 텍스트 디자인 설정

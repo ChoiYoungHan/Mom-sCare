@@ -101,7 +101,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
                 actions: [
                   TextButton(
                       onPressed: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum)));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum)));
                       },
                       child: Text('확인')
                   )
@@ -125,7 +125,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
           backgroundColor: Colors.white, // 상단바 배경 흰색
           leading: IconButton(
               onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum)));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum)));
               },
               icon: Icon(Icons.arrow_back, color: Colors.grey)
           ),
@@ -194,7 +194,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
                                   itemBuilder: (context, index){
                                     return GestureDetector(
                                       onTap: (){
-                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: imageList, Index: index)));
+                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: imageList, Index: index)));
                                       },
                                       child: Container(
                                           margin: EdgeInsets.all(3),

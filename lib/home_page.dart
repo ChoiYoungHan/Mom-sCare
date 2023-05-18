@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                       child: InkWell(
                                         onTap: (){
-                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum)));
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum)));
                                         },
                                         child: Container( // 상자 위젯
                                             width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌

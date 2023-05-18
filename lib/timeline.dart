@@ -86,7 +86,7 @@ class _TimeLineState extends State<TimeLine> {
                     backgroundColor: Colors.white, // 배경은 흰색
                     leading: IconButton( // 아이콘 버튼 위젯
                         onPressed: (){ // 아이콘 클릭 시 동작할 코드 구현
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
                         },
                         icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
                     ),
@@ -147,7 +147,7 @@ class _TimeLineState extends State<TimeLine> {
                                                         final urls = url[index];
                                                         return GestureDetector(
                                                           onTap: (){
-                                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: url, Index: index)));
+                                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: url, Index: index)));
                                                           },
                                                           child: Container( // 상자 위젯
                                                               margin: EdgeInsets.all(2), // 모든 면의 마진을 2만큼 줌

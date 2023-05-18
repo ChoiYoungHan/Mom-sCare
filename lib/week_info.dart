@@ -36,7 +36,7 @@ class _WeekInfoState extends State<WeekInfo> {
             backgroundColor: Colors.white,
             leading: IconButton( // 아이콘 버튼 위젯
                 onPressed: (){ // 뒤로가기 버튼 클릭 시 수행할 동작
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.userNum)));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.userNum)));
                 },
                 icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
             ),
