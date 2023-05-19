@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:http/http.dart' as http;
 
 import 'package:care_application/change_pw_certification.dart';
@@ -42,13 +43,15 @@ class _ChangePwState extends State<ChangePw> {
   var Pw2;
   var Pw3;
 
-  Future change_password() async{
+  Future change_password() async{ //비밀번호 인증+변경
     final uri = Uri.parse('http://182.219.226.49/'); // 링크 받아와야함
     final headers = {'Content-Type': 'application/json'};
 
     final user_num = widget.UserNum; // 유저번호
+    final pw_now = PW1.text;
+    final pw_change = PW2.text;
 
-    final body = jsonEncode({'clientNum': '64'}); // 입력값 받아와야함
+    final body = jsonEncode({'clientNum': user_num,'현재 비밀번호': pw_now, '바꿀 비밀번호': pw_change}); // 입력값 받아와야함
     final response = await http.post(uri, headers: headers, body: body);
     if(response.statusCode == 200){
       print('성공');
@@ -88,6 +91,7 @@ class _ChangePwState extends State<ChangePw> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(100,0,100,0),
                     child: TextField(
+                      obscureText: true,
                       controller: PW1,
                       textAlign: TextAlign.right,
                       style: TextStyle(color: Colors.black),
@@ -118,6 +122,7 @@ class _ChangePwState extends State<ChangePw> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(100,0,100,0),
                     child: TextField(
+                      obscureText: true,
                       controller: PW2,
                       textAlign: TextAlign.right,
                       style: TextStyle(color: Colors.black),
@@ -148,6 +153,7 @@ class _ChangePwState extends State<ChangePw> {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(100,0,100,0),
                     child: TextField(
+                      obscureText: true,
                       controller: PW3,
                       textAlign: TextAlign.right,
                       style: TextStyle(color: Colors.black),
@@ -171,11 +177,72 @@ class _ChangePwState extends State<ChangePw> {
               child: Container(
                 height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
                 width: MediaQuery.of(context).size.width*0.4,
-                child: OutlinedButton(
-                  onPressed: (){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
+                child: PW2.text==PW3.text?
+                OutlinedButton(
+                  onPressed: () async {
+                    await change_password()==1?
+                    showDialog(
+                        context: context,
+                        barrierColor: Colors.grey.withOpacity(0.6),
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                            title: Text(''),
+                            content: Text('삭제가 완료되었습니다'),
+                            actions: [
+                              OutlinedButton(
+                                onPressed: (){
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,)));
+                                },child: Text('확인',style: TextStyle(color: Colors.black),),
+                              )
+                            ],
+                          );
+                        }
+                    )
+                        :
+                    showDialog(
+                        context: context,
+                        barrierColor: Colors.grey.withOpacity(0.6),
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                            title: Text(''),
+                            content: Text('서버 통신 오류'),
+                            actions: [
+                              OutlinedButton(
+                                onPressed: (){
+                                  Navigator.of(context).pop();
+                                },child: Text('확인',style: TextStyle(color: Colors.black),),
+                              )
+                            ],
+                          );
+                        }
+                    );
+                    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
                   },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
-                ),
+                )
+                    :
+                OutlinedButton(
+                  onPressed: (){
+                    showDialog(
+                        context: context,
+                        barrierColor: Colors.grey.withOpacity(0.6),
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                            title: Text(''),
+                            content: Text('변경할 비밀번호가 일치하지 않습니다'),
+                            actions: [
+                              OutlinedButton(
+                                onPressed: (){
+                                  Navigator.of(context).pop();
+                                },child: Text('확인',style: TextStyle(color: Colors.black),),
+                              )
+                            ],
+                          );
+                        }
+                    );
+                  },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
+                )
+                ,
               ),
             ),
             flex: 2,),
