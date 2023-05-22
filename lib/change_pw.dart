@@ -37,12 +37,9 @@ class _ChangePwState extends State<ChangePw> {
   TextEditingController PW1 = TextEditingController(); // 비밀번호 입력 컨트롤러
   TextEditingController PW2 = TextEditingController();
   TextEditingController PW3 = TextEditingController();
-  var Pw1; // 비밀번호
-  var Pw2;
-  var Pw3;
 
   Future change_password() async{ //비밀번호 인증+변경
-    final uri = Uri.parse('// http://182.219.226.49/moms/change-pw/pw/afterlogin'); // 링크 받아와야함
+    final uri = Uri.parse('http://182.219.226.49/moms/change-pw/pw/afterlogin'); // 링크 받아와야함
     final headers = {'Content-Type': 'application/json'};
 
     final user_num = widget.UserNum; // 유저번호
