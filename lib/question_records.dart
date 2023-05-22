@@ -91,23 +91,35 @@ class _QuestionRecordsState extends State<QuestionRecords> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Container(), flex: 1,
-                          ),
-                          Expanded(
-                            child: Container(
-                                child: Text('${inquire[0]['TITLE']}',style: TextStyle(fontSize: 30),)
-                            ),
-                            flex: 1,),
-                          Expanded(
                             child: Container(), flex: 2,
                           ),
                           Expanded(
                             child: Container(
-                                child: Text('${inquire[0]['INQUIRE_DATE']}', )
+                                child: Align(alignment:Alignment.centerLeft,child: FittedBox(fit: BoxFit.scaleDown,child: Text('${inquire[0]['TITLE']}',style: TextStyle(fontSize: 30),)))
                             ),
-                            flex: 1,),
+                            flex: 5,),
                           Expanded(
                             child: Container(), flex: 1,
+                          ),
+                          Expanded(
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Container(),flex: 1,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                        child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text('${inquire[0]['INQUIRE_DATE']}', )
+                                        )
+                                    ),flex: 3,
+                                  )
+                                ],
+                              ),
+                            flex: 2,),
+                          Expanded(
+                            child: Container(), flex: 2,
                           ),
                         ],
                       ),

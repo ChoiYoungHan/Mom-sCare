@@ -1,6 +1,5 @@
 import 'package:care_application/change_phone.dart';
 import 'package:care_application/change_pw.dart';
-import 'package:care_application/change_pw_certification.dart';
 import 'package:care_application/edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +54,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_pw_certification(userNum: widget.UserNum))); // 비밀번호 설정 페이지로 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_pw(userNum: widget.UserNum))); // 비밀번호 설정 페이지로 이동
                 },
                 child: Row(
                   children: [

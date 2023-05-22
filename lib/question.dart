@@ -99,11 +99,12 @@ class _QuestionState extends State<Question> {
                                     child: Text("${index+1}",style: TextStyle(color: Colors.black),),
                                     flex: 1,),
                                   Expanded(
-                                    child: SizedBox(child: Text('${snapshot.data![index]['TITLE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left)), // 문의 내용이 적힌 버튼,
+                                    child: SizedBox(child: Text('${snapshot.data![index]['TITLE']}',maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,style: TextStyle(color: Colors.black),textAlign: TextAlign.left)), // 문의 내용이 적힌 버튼,
                                     flex: 2,),
-                                  Expanded(
-                                    child: Container(),flex: 4,
-                                  ),
+                                  // Expanded(
+                                  //   child: Container(),flex: 1,
+                                  // ),
                                   Expanded(
                                     child: Text('${snapshot.data![index]['INQUIRE_DATE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 문의 내용이 적힌 버튼,
                                     flex: 4,),

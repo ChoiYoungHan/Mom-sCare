@@ -55,6 +55,7 @@ class _QuestionAddState extends State<QuestionAdd> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
@@ -91,6 +92,7 @@ class _QuestionAddState extends State<QuestionAdd> {
               width: MediaQuery.of(context).size.width*0.7,
               child: TextField(
                 controller: title,
+                maxLength: 15,
                 maxLines: 1, // 한줄 만 입력받도록 설정
                 textAlign: TextAlign.left, // 좌측 정렬
                 style: TextStyle(color: Colors.black),
@@ -108,6 +110,7 @@ class _QuestionAddState extends State<QuestionAdd> {
                 width: MediaQuery.of(context).size.width*0.7,
                 height: MediaQuery.of(context).size.height*0.7,
                 child: TextField(
+                  maxLength: 100,
                   controller: contents,
                   maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
                   textAlign: TextAlign.left, // 좌측 정렬

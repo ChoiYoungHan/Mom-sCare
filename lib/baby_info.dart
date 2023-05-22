@@ -112,8 +112,10 @@ class _BabyInfoState extends State<BabyInfo> {
     }
   }
 
-  Future<void> popup(String editValue, TextEditingController value) async {
-    await showGeneralDialog(
+  Future popup(String editValue) {
+    TextEditingController edit=TextEditingController();
+
+    return showGeneralDialog(
       context: context,
       barrierColor: Colors.grey.withOpacity(0.6), // 팝업창 투명도
       pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
@@ -121,7 +123,8 @@ class _BabyInfoState extends State<BabyInfo> {
           title: Text(editValue,style: TextStyle(color: Color(0xFF835529)),),
           backgroundColor: Color(0xFFFFE7BA),
           content: TextField( // 텍스트 필드 위젯
-            controller: value, // 컨트롤되는 변수
+            maxLength: 15,
+            controller: edit, // 컨트롤되는 변수
             maxLines: 1, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
             textAlign: TextAlign.right, // 텍스트 우측 정렬
             style: TextStyle(color: Color(0xFF835529)),
@@ -141,7 +144,7 @@ class _BabyInfoState extends State<BabyInfo> {
           actions: [
             OutlinedButton(
               onPressed: () {
-                value.clear(); // 다시 버튼을 눌렀을 때 값 비워두기
+                edit.clear(); // 다시 버튼을 눌렀을 때 값 비워두기
                 Navigator.of(context).pop(); // 팝업 닫기
               },
               child: Text('닫기',style: TextStyle(color: Color(0xFF835529), backgroundColor: Color(0xFFFFE7BA)),
@@ -149,14 +152,17 @@ class _BabyInfoState extends State<BabyInfo> {
             ),
             OutlinedButton(
               onPressed: () { // 4가지 정보중 어떤 위젯인지 판별
-                if (value == input_babies)
-                  babies = value.text;
-                else if (value == input_babies_mother)
-                  babies_mother = value.text;
-                else if (value == input_babies_father)
-                  babies_father = value.text;
+                if(editValue=='아이 이름'){ // 팝업창이 호출된 위젯에 따라 입력되는 변수 설정
+                  babies=edit.text;
+                }
+                else if(editValue=='엄마 이름'){
+                  babies_mother=edit.text;
+                }
+                else if(editValue=='아빠 이름'){
+                  babies_father=edit.text;
+                }
                 Navigator.of(context).pop();
-                value.clear();// 다시 버튼을 눌렀을 때 값 비워두기
+                edit.clear();// 다시 버튼을 눌렀을 때 값 비워두기
               },
               child: Text('확인',style: TextStyle(color: Color(0xFF835529), backgroundColor: Color(0xFFFFE7BA)),
               ),
@@ -198,7 +204,7 @@ class _BabyInfoState extends State<BabyInfo> {
                               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                               child: OutlinedButton( // 테두리만 있는 버튼
                                   onPressed: (){
-                                    popup('아기 이름',input_babies);
+                                    popup('아기 이름');
                                   }, // 버튼을 눌렀을 때 실행될 함수 지정
                                   child: Row(
                                     children: [
@@ -215,9 +221,12 @@ class _BabyInfoState extends State<BabyInfo> {
                                           child: Container(),flex:2 // 중간 공백 비율 2 부여
                                       ),
                                       Expanded(
-                                        child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                            fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                                            child :Text('${babies}',style: TextStyle(color: Colors.black),)) // 설정된 아기의 정보
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                              child :Text('${babies}',style: TextStyle(color: Colors.black),)),
+                                        ) // 설정된 아기의 정보
                                         ,flex: 2,), // 영역 비율 2 부여
                                       Expanded(
                                           child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -237,11 +246,12 @@ class _BabyInfoState extends State<BabyInfo> {
                                     showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
-                                      firstDate: DateTime(2020),
+                                      firstDate: DateTime.now(),
                                       lastDate: DateTime(2030),
                                     ).then((selectedDate){
                                       var a=selectedDate.toString().split(" ")[0];
                                       babies_birth=a;
+                                      print(babies_birth);
                                     });
                                     if(babies_birth=='null')babies_birth='-';
                                   }, // 버튼을 눌렀을 때 실행될 함수 지정
@@ -257,7 +267,7 @@ class _BabyInfoState extends State<BabyInfo> {
                                         child:Text('출산 예정일',style: TextStyle(color: Colors.black),)
                                         ,flex: 2,), // 영역 비율 2 부여
                                       Expanded(
-                                          child: Container(),flex:2 // 중간 공백 비율 2 부여
+                                          child: Container(),flex:1 // 중간 공백 비율 2 부여
                                       ),
                                       Expanded(
                                         child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
@@ -279,7 +289,7 @@ class _BabyInfoState extends State<BabyInfo> {
                               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                               child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                                   onPressed: (){
-                                    popup('엄마 이름', input_babies_mother);
+                                    popup('엄마 이름');
                                   }, // 버튼을 눌렀을 때 실행될 함수 지정
                                   child: Row(
                                     children: [
@@ -296,9 +306,12 @@ class _BabyInfoState extends State<BabyInfo> {
                                           child: Container(),flex:2 // 중간 공백 비율 2 부여
                                       ),
                                       Expanded(
-                                        child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                            fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                                            child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)) // 설정된 엄마의 정보
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                              child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)),
+                                        ) // 설정된 엄마의 정보
                                         ,flex: 2,), // 영역 비율 2 부여
                                       Expanded(
                                           child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
@@ -315,7 +328,7 @@ class _BabyInfoState extends State<BabyInfo> {
                               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                               child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                                   onPressed: (){
-                                    popup('아빠 이름', input_babies_father);
+                                    popup('아빠 이름');
                                   }, // 버튼을 눌렀을 때 실행될 함수 지정
                                   child: Row(
                                     children: [
@@ -332,9 +345,12 @@ class _BabyInfoState extends State<BabyInfo> {
                                           child: Container(),flex:2 // 중간 공백 비율 2 부여
                                       ),
                                       Expanded(
-                                        child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                            fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                                            child :Text('${babies_father}',style: TextStyle(color: Colors.black),)) // 설정된 아빠의 정보
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                              child :Text('${babies_father}',style: TextStyle(color: Colors.black),)),
+                                        ) // 설정된 아빠의 정보
                                         ,flex: 2,), // 영역 비율 2 부여
                                       Expanded(
                                           child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)

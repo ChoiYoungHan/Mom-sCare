@@ -1,3 +1,4 @@
+import 'package:care_application/chatBot_page.dart';
 import 'package:care_application/home_page.dart';
 import 'package:care_application/main.dart';
 import 'package:care_application/my_page.dart';
@@ -17,6 +18,13 @@ class chatBot extends StatelessWidget {
   }
 }
 
+class ChatMessage {
+  final String sender;
+  final String message;
+
+  ChatMessage({required this.sender, required this.message});
+}
+
 class ChatBot extends StatefulWidget {
   const ChatBot({Key? key, this.UserNum}) : super(key: key);
 
@@ -27,6 +35,36 @@ class ChatBot extends StatefulWidget {
 }
 
 class _ChatBotState extends State<ChatBot> {
+
+  TextEditingController _textController = TextEditingController();
+  List<ChatMessage> _messages = [];
+  ScrollController _scrollController = ScrollController();
+
+  void _sendMessage() {
+    setState(() {
+      String message = _textController.text;
+
+      // 사용자가 입력한 메시지를 오른쪽에 출력
+      _messages.add(ChatMessage(sender: "user", message: message));
+
+      // 입력한 메시지 처리
+      if (message != null) {
+        //다이얼로그 플로우 처리 후 받게될 답변
+        _messages.add(ChatMessage(sender: "bot", message: "Yes"));
+      }
+
+      _textController.clear();
+
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      });
+    });
+  }
+
   bool isuser = false;
   final List<String> chat = <String>['1','2','3','4','5'];
 
@@ -42,7 +80,7 @@ class _ChatBotState extends State<ChatBot> {
               padding: const EdgeInsets.all(8.0),
               child: OutlinedButton(
                   onPressed: (){
-
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot_page(userNum: widget.UserNum)));
                   }, child: Text('채팅내역', style: TextStyle(color: Colors.black, fontSize: 20),)),
             )
           ],
@@ -50,67 +88,56 @@ class _ChatBotState extends State<ChatBot> {
         body: Column(
           children: [
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.builder(
-                  //reverse: false,
-                  itemCount: chat.length,
-                  itemBuilder: (context, index){
-                    return Row(
-                      mainAxisAlignment: isuser ? MainAxisAlignment.start : MainAxisAlignment.end,
-                      children: [
-                        Container(
-                            decoration: BoxDecoration(
-                                color: isuser ? Colors.green[100] : Colors.grey[300],
-                                borderRadius: BorderRadius.circular(8)
-                            ),child: Text('${chat[index]}',style: TextStyle(color: Colors.black),)
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: _messages.length,
+                itemBuilder: (BuildContext context, int index) {
+                  ChatMessage chatMessage = _messages[index];
+                  bool isUserMessage = chatMessage.sender == "user";
+                  return ListTile(
+                    title: Align(
+                      alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: isUserMessage ? Colors.blue : Colors.green,
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              '${chat[index]}',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 4.0),
-                            Text(
-                                '${chat[index]}'
-                            ),
-                          ],
+                        child: Text(
+                          chatMessage.message,
+                          style: TextStyle(color: Colors.white),
                         ),
-                      ],
-                    );
-                  },
-                ),
+                      ),
+                    ),
+                  );
+                },
               ),
-              flex: 9,),
-            Expanded(
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              color: Colors.grey[200],
               child: Row(
                 children: [
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: TextField(
-
+                    child: TextField(
+                      controller: _textController,
+                      decoration: InputDecoration(
+                        hintText: '메시지 입력',
                       ),
                     ),
-                    flex: 8,),
-                  Expanded(
-                    child: IconButton(
-                      onPressed: (){
-                        setState(() {
-                          isuser=true;
-                          chat.add('new message');
-                          print(isuser);
-                        });
-                      },
-                      icon: Icon(Icons.arrow_back),),
-                  )
+                  ),
+                  SizedBox(width: 16),
+                  ElevatedButton(
+                    style:
+                      ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                    ),
+                    onPressed: _sendMessage,
+                    child: Text('전송'),
+                  ),
                 ],
               ),
-              flex: 1,)
+            ),
           ],
         ),
         bottomNavigationBar: BottomAppBar( // 하단 바

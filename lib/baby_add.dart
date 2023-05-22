@@ -101,9 +101,6 @@ class _BabyAddState extends State<BabyAdd> {
                     if(edit_value=='아이 이름'){ // 팝업창이 호출된 위젯에 따라 입력되는 변수 설정
                       babies=edit.text;
                     }
-                    else if(edit_value=='출산 예정일'){
-                      babies_birth=edit.text;
-                    }
                     else if(edit_value=='엄마 이름'){
                       babies_mother=edit.text;
                     }
@@ -157,14 +154,17 @@ class _BabyAddState extends State<BabyAdd> {
                         Expanded(
                           child:Text('아기 이름',style: TextStyle(color: Colors.black),)
                           ,flex: 2,), // 영역 비율 2 부여
+                        //Expanded(
+                        //    child: Container(),flex:1 // 중간 공백 비율 2 부여
+                        //),
                         Expanded(
-                            child: Container(),flex:2 // 중간 공백 비율 2 부여
-                        ),
-                        Expanded(
-                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                              child :Text('${babies}',style: TextStyle(color: Colors.black),)) // 입력받은 아이의 정보
-                          ,flex: 1,), // 영역 비율 1 부여
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                child :Text('${babies}',style: TextStyle(color: Colors.black),)),
+                          ) // 입력받은 아이의 정보
+                          ,flex: 2,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                         )
@@ -183,7 +183,7 @@ class _BabyAddState extends State<BabyAdd> {
                       showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
-                        firstDate: DateTime(2020),
+                        firstDate: DateTime.now(),
                         lastDate: DateTime(2030),
                       ).then((selectedDate){
                         setState(() {
@@ -204,13 +204,13 @@ class _BabyAddState extends State<BabyAdd> {
                           child:Text('출산 예정일',style: TextStyle(color: Colors.black),)
                           ,flex: 2,), // 영역 비율 2 부여
                         Expanded(
-                            child: Container(),flex:2 // 중간 공백 비율 2 부여
+                            child: Container(),flex:1 // 중간 공백 비율 2 부여
                         ),
                         Expanded(
                           child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
                               fit: BoxFit.scaleDown,  // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
                               child :Text(babies_birth,style: TextStyle(color: Colors.black),)) // 입력받은 날짜의 정보
-                          ,flex: 1,), // 영역 비율 1 부여
+                          ,flex: 2,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                         )
@@ -239,14 +239,17 @@ class _BabyAddState extends State<BabyAdd> {
                         Expanded(
                           child:Text('엄마 이름',style: TextStyle(color: Colors.black),)
                           ,flex: 2,), // 영역 비율 2 부여
+                        // Expanded(
+                        //     child: Container(),flex:2 // 중간 공백 비율 2 부여
+                        // ),
                         Expanded(
-                            child: Container(),flex:2 // 중간 공백 비율 2 부여
-                        ),
-                        Expanded(
-                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                              child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)) // 입력받은 엄마의 정보
-                          ,flex: 1,), // 영역 비율 1 부여
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)),
+                          ) // 입력받은 엄마의 정보
+                          ,flex: 2,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                         )
@@ -275,14 +278,17 @@ class _BabyAddState extends State<BabyAdd> {
                         Expanded(
                           child:Text('아빠 이름',style: TextStyle(color: Colors.black),)
                           ,flex: 2,), // 영역 비율 2 부여
+                        // Expanded(
+                        //     child: Container(),flex:2 // 중간 공백 비율 2 부여
+                        // ),
                         Expanded(
-                            child: Container(),flex:2 // 중간 공백 비율 2 부여
-                        ),
-                        Expanded(
-                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                              child :Text('${babies_father}',style: TextStyle(color: Colors.black),)) // 입력받은 아빠의 정보
-                          ,flex: 1,), // 영역 비율 1 부여
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                child :Text('${babies_father}',style: TextStyle(color: Colors.black),)),
+                          ) // 입력받은 아빠의 정보
+                          ,flex: 2,), // 영역 비율 1 부여
                         Expanded(
                             child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                         )
