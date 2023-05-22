@@ -63,6 +63,20 @@ class _FindPWState extends State<FindPW> {
   }
 
   Future<void> sendEmail() async {
+
+    // 먼저, 다음과 같이 Modal 위젯을 이용하여 화면 전체를 커버합니다.
+    showDialog(
+      context: context,
+      barrierDismissible: false, // 사용자가 다른 영역을 탭하여 Modal 위젯을 닫지 못하도록 합니다.
+      builder: (BuildContext context) {
+        // Modal 위젯의 child로 CircularProgressIndicator 위젯을 사용합니다.
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+
     final uri = Uri.parse('http://182.219.226.49/moms/change-pw');
     final headers = {'Content-Type' : 'application/json'};
 
@@ -76,6 +90,7 @@ class _FindPWState extends State<FindPW> {
     if(response.statusCode == 200){
 
       var jsonData = jsonDecode(response.body);
+      Navigator.of(context, rootNavigator: true).pop();
 
       if(jsonData['success'] == true){
         setState(() {
@@ -130,7 +145,29 @@ class _FindPWState extends State<FindPW> {
     final response = await http.post(uri, headers: headers, body: body);
 
     if(response.statusCode == 200){
-      Popup(context, '비밀번호가 정상적으로 변경되었습니다.');
+      showDialog(
+        context: context,
+          builder: (BuildContext context){
+            return AlertDialog(
+                content: Container(
+                    height: 25,
+                    child: Center(child: FittedBox(child: Text('비밀번호가 정상적으로 변경되었습니다.', style: TextStyle(color: Colors.grey, fontSize: 17))))
+                ),
+                actions: [
+                  ElevatedButton(
+                      onPressed: (){
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Login_Page()));
+                      },
+                      child: Text('확인'),
+                      style: ButtonStyle(
+                          minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
+                      )
+                  )
+                ]
+            );
+          }
+      );
+
     } else {
 
     }
@@ -307,6 +344,8 @@ class _FindPWState extends State<FindPW> {
                               onPressed: (){ // 인증메일 발송 버튼 클릭 시 동작할 코드 작성
                                 if(inputID.text == '' || inputPhone.text == '' || inputEmail.text == ''){
                                   Popup(context, '공백 없이 입력해주세요.');
+                                } else if(!inputEmail.text.contains('@') && !inputEmail.text.contains('.')){
+                                  Popup(context, '이메일 형식이 올바르지 않습니다.');
                                 } else {
                                   sendEmail();
                                 }

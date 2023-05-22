@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                   child: GestureDetector( // Container와 같이 Gesture를 감지할 수 없는 위젯들에게 Gesture 기능을 부여할 수 있는 위젯
                       child: Column( // 세로 정렬
                           children: [
-                            b_babyname != null ?
+                            b_babyname.isNotEmpty ?
                             Padding(
                               padding: EdgeInsets.all(10),
                               child: Container(

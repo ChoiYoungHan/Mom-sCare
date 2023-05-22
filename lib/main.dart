@@ -45,95 +45,6 @@ class _Calendar_PageState extends State<Calendar_Page> {
 
   var str;
 
-  void showAddAlarm(BuildContext context) async {
-    // 선택한 날짜와 시간, 일정 내용을 저장할 변수
-    DateTime selectedDate = DateTime.now();
-    TimeOfDay selectedTime = TimeOfDay.now();
-    String schedule = '';
-
-    // 팝업을 띄운 뒤 캘린더에서 선택한 날짜를 저장한다.
-    await showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder( // setState함수가 호출될 때 팝업도 다시 빌드하기 위해 사용
-              builder: (BuildContext context, StateSetter setState){
-                return Container( // 상자 위젯
-                    height: MediaQuery.of(context).size.height * 0.45,
-                    child: Column( // 세로 정렬
-                        children: [
-                          Card( // 카드 위젯
-                            child: ListTile( // 리스트 타일 위젯
-                              title: Text('날짜 선택'), // 텍스트 '날짜 선택' 출력
-                              subtitle: Text("${DateFormat('yyyy/MM/dd').format(selectedDate)}"), // 아래에 선택한 날짜 정보를 출력
-                              onTap: () async {
-                                final DateTime ? pickedDate = await showDatePicker( // showDatePicker 함수를 호출하여 팝업 창을 띄움
-                                    locale: const Locale('ko', 'KR'),
-                                    context: context,
-                                    initialDate: selectedDate, // 팝업이 띄워졌을 때, 초기화하는 날짜 값
-                                    firstDate: DateTime.utc(2020, 12, 31), // 선택 가능한 가장 빠른 날짜
-                                    lastDate: DateTime.utc(2123, 12, 31) // 선택 가능한 가장 늦은 날짜
-                                );
-
-                                // 팝업에서 선택한 날짜가 현재 선택된 날짜와 다르다면, selectedDate를 업데이트함
-                                if(pickedDate != null && pickedDate != selectedDate){
-                                  setState(() {
-                                    selectedDate = pickedDate;
-                                  });
-                                }
-                              },
-                            ),
-                          ),
-                          Card(
-                              child: ListTile(
-                                title: TextField(
-                                    decoration: InputDecoration(hintText: '일정을 입력해주세요.'),
-                                    onChanged: (value){
-                                      setState((){
-                                        schedule = value;
-                                      });
-                                    }
-                                ),
-                              )
-                          ),
-                          Card(
-                              child: ListTile(
-                                title: Text('시간 등록'),
-                                subtitle: Text("${selectedTime.hour.toString().padLeft(2, '0')}시${selectedTime.minute.toString().padLeft(2, '0')}분"),
-                                onTap: () async {
-                                  final TimeOfDay? pickedTime = await showTimePicker(
-                                      context: context,
-                                      initialTime: selectedTime
-                                  );
-
-                                  if(pickedTime != null && pickedTime != selectedTime){
-                                    setState(() {
-                                      selectedTime = pickedTime;
-                                    });
-                                  }
-                                },
-                              )
-                          ),
-                          Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 5),
-                              child: ElevatedButton(
-                                onPressed: (){
-
-                                },
-                                child: Text('완료'),
-                                style: ButtonStyle(
-                                    minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
-                                ),
-                              )
-                          )
-                        ]
-                    )
-                );
-              }
-          );
-        }
-    );
-  }
-
   Future<void> receiveData() async {
     final uri = Uri.parse('http://182.219.226.49/moms/diary');
     final headers = {'Content-Type': 'application/json'};
@@ -178,12 +89,6 @@ class _Calendar_PageState extends State<Calendar_Page> {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Time_Line(userNum: widget.UserNum)));
                   },
                   icon: Icon(Icons.view_timeline_outlined, color: Colors.orange) // 타임라인 아이콘, 색상은 주황
-              ),
-              IconButton(
-                  onPressed: (){
-                    showAddAlarm(context);
-                  },
-                  icon: Icon(Icons.alarm_rounded, color: Colors.orange)
               )
             ]
         ),

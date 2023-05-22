@@ -89,6 +89,19 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
   Future<void> sendEmail() async {
+
+    // 먼저, 다음과 같이 Modal 위젯을 이용하여 화면 전체를 커버합니다.
+    showDialog(
+      context: context,
+      barrierDismissible: false, // 사용자가 다른 영역을 탭하여 Modal 위젯을 닫지 못하도록 합니다.
+      builder: (BuildContext context) {
+        // Modal 위젯의 child로 CircularProgressIndicator 위젯을 사용합니다.
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
     final uri = Uri.parse('http://182.219.226.49/moms/sendemail');
     final headers = {'Content-Type': 'application/json'};
 
@@ -102,6 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
     if(response.statusCode == 200){
 
       var jsonData = jsonDecode(response.body);
+      Navigator.of(context, rootNavigator: true).pop();
 
       if(jsonData == null || !jsonData.containsKey('message')){
         setState(() {
