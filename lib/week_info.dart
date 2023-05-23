@@ -27,31 +27,33 @@ class WeekInfo extends StatefulWidget {
 }
 
 class _WeekInfoState extends State<WeekInfo> {
+  List<String> baby_info = [];
+  List<String> baby_evenIndex = [];
+  List<String> baby_oddIndex = [];
+  List<String> moms_info = [];
+  List<String> moms_evenIndex = [];
+  List<String> moms_oddIndex = [];
+  List<String> todo_info = [];
+  List<String> todo_evenIndex = [];
+  List<String> todo_oddIndex = [];
 
-  List<String> info = [];
-  List<String> info_info = [];
-  List<String> evenIndex = [];
-  List<String> oddIndex = [];
-  List<String> Characteristic = [];
-
-  Future<void> receiveSymptom() async {
-    final uri = Uri.parse('http://182.219.226.49/moms/week-info-symptom');
+  Future<void> receiveBabyInfo() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/week-info-baby');
     final headers = {'Content-Type': 'application/json'};
 
-    final week = '1';
-    final division = 'moms';
+    final week = '13';
 
-    final body = jsonEncode({'week': week, 'division' : division});
-
-    print(week);
+    final body = jsonEncode({'week': week});
 
     final response = await http.post(uri, headers: headers, body: body);
 
     if(response.statusCode == 200){
+
       var jsonData = jsonDecode(response.body);
 
-      evenIndex.clear();
-      oddIndex.clear();
+      baby_info.clear();
+      baby_evenIndex.clear();
+      baby_oddIndex.clear();
 
       jsonData.forEach((element){
         String encodedName = element['info'];
@@ -62,52 +64,117 @@ class _WeekInfoState extends State<WeekInfo> {
 
         // 분할된 값들을 원하는 형태로 가공하여 저장하거나 사용
         for (String value in splitValues) {
-          info.add(value);
+          baby_info.add(value);
         }
       });
 
-      for (int i = 0; i < info.length; i++) {
+      for (int i = 0; i < baby_info.length; i++) {
         if (i % 2 == 0) {
-          evenIndex.add(info[i]);
+          baby_evenIndex.add(baby_info[i]);
         } else {
-          oddIndex.add(info[i]);
+          baby_oddIndex.add(baby_info[i]);
         }
       }
 
-      print(evenIndex);
-      print(oddIndex);
-      // print(info);
+
     } else {
+
     }
   }
 
-  Future<void> receiveCharacteristic() async {
-    final uri = Uri.parse('http://182.219.226.49/moms/week-info-characteristic');
+  Future<void> receiveMomInfo() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/week-info-moms');
     final headers = {'Content-Type': 'application/json'};
 
-    final week = '1';
-    final division = 'moms';
+    final week = '14';
 
-    final body = jsonEncode({'week': week, 'division' : division});
+    final body = jsonEncode({'week': week});
 
     final response = await http.post(uri, headers: headers, body: body);
 
     if(response.statusCode == 200){
-      await receiveSymptom();
+
       var jsonData = jsonDecode(response.body);
 
-      Characteristic.add(utf8.decode(jsonData[0]['info'].runes.toList()));
+      moms_info.clear();
+      moms_evenIndex.clear();
+      moms_oddIndex.clear();
 
-      print('정보 전달 성공');
+      jsonData.forEach((element){
+        String encodedName = element['info'];
+        String decodedName = utf8.decode(encodedName.runes.toList());
+
+        // ':'을 구분자로 사용하여 문자열을 분할하여 배열에 저장
+        List<String> splitValues = decodedName.split(' : ');
+
+        // 분할된 값들을 원하는 형태로 가공하여 저장하거나 사용
+        for (String value in splitValues) {
+          moms_info.add(value);
+        }
+      });
+
+      for (int i = 0; i < moms_info.length; i++) {
+        if (i % 2 == 0) {
+          moms_evenIndex.add(moms_info[i]);
+        } else {
+          moms_oddIndex.add(moms_info[i]);
+        }
+      }
+      await receiveTodo();
+
     } else {
-      print('정보 전달 실패');
+
+    }
+  }
+
+  Future<void> receiveTodo() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/week-info-todo');
+    final headers = {'Content-Type': 'application/json'};
+
+    final week = '14';
+
+    final body = jsonEncode({'week': week});
+
+    final response = await http.post(uri, headers: headers, body: body);
+
+    if(response.statusCode == 200){
+
+      var jsonData = jsonDecode(response.body);
+
+      todo_info.clear();
+      todo_evenIndex.clear();
+      todo_oddIndex.clear();
+
+      jsonData.forEach((element){
+        String encodedName = element['info'];
+        String decodedName = utf8.decode(encodedName.runes.toList());
+
+        // ':'을 구분자로 사용하여 문자열을 분할하여 배열에 저장
+        List<String> splitValues = decodedName.split(' : ');
+
+        // 분할된 값들을 원하는 형태로 가공하여 저장하거나 사용
+        for (String value in splitValues) {
+          todo_info.add(value);
+        }
+      });
+
+      for (int i = 0; i < todo_info.length; i++) {
+        if (i % 2 == 0) {
+          todo_evenIndex.add(todo_info[i]);
+        } else {
+          todo_oddIndex.add(todo_info[i]);
+        }
+      }
+
+    } else {
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: receiveCharacteristic(),
+        future: widget.division == 'moms' ? receiveMomInfo() : receiveBabyInfo(),
         builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.waiting){
             return Center(
@@ -123,91 +190,162 @@ class _WeekInfoState extends State<WeekInfo> {
                         },
                         icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
                     ),
-                    title: widget.division == 'moms' ? // 삼항 연산자, baby_mom의 값이 1이면
+                    title: widget.division == 'moms' ?
                     Text(widget.week + '주의 엄마는?', style: TextStyle(color: Colors.black)) :
                     Text(widget.week + '주의 아기는?', style: TextStyle(color: Colors.black))
                 ),
                 body: SafeArea( // MediaQuery를 통해 앱의 실제 화면 크기를 계산하고 이를 영역으로 삼아 내용을 표시
-                    child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
-                                child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    child: FittedBox(
-                                        child: Text('특징',
-                                            style: TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
-                                            )
-                                        )
-                                    )
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(5, 0, 3, 0),
-                                child: Container(
-                                    child: Text.rich(
-                                        TextSpan(
-                                            text: Characteristic[0],
-                                            style: TextStyle(color: Colors.black, fontSize: 14)
-                                        )
-                                    )
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(7, 10, 0, 0),
-                                child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    child: FittedBox(
-                                        child: Text('나타날 수 있는 증상',
-                                            style: TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold
-                                            )
-                                        )
-                                    )
-                                ),
-                              ),
-                              Expanded(
-                                child: ListView.builder(
-                                    itemCount: evenIndex.length,
-                                    itemBuilder: (context, index){
-                                      return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                                padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                                child: Text(
-                                                    evenIndex[index],
-                                                    style: TextStyle(
-                                                        fontWeight: FontWeight.bold
-                                                    )
-                                                )
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        widget.week == '1' || widget.week == '2' ?
+                            Center(
+                              child: Text('1주차와 2주차의 정보는 표기되지 않습니다.'),
+                            )
+                            :
+                        widget.division == 'moms' ?
+                        Expanded(
+                            child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(4, 5, 0, 0),
+                                    child: Container(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text('엄마의 변화',
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: ListView.builder(
+                                          itemCount: moms_evenIndex.length,
+                                          itemBuilder: (context, index) {
+                                            return Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                      padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                                      child: Text(
+                                                          moms_evenIndex[index],
+                                                          style: TextStyle(
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 17
+                                                          )
+                                                      )
+                                                  ),
+                                                  Padding(
+                                                      padding: EdgeInsets.all(5),
+                                                      child: Text(
+                                                          moms_oddIndex[index],
+                                                          style: TextStyle(
+                                                              fontSize: 15
+                                                          )
+                                                      )
+                                                  )
+                                                ]
+                                            );
+                                          }
+                                      )
+                                  ),
+                                  todo_info.isNotEmpty ?
+                                  Expanded(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                                            child: Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text('엄마와 아빠가 해야할 일',
+                                                style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
                                             ),
-                                            Padding(
-                                                padding: EdgeInsets.all(5),
-                                                child: Text(
-                                                    oddIndex[index],
-                                                    style: TextStyle(
-                                                        fontSize: 13
-                                                    )
-                                                )
+                                          ),
+                                          Expanded(
+                                              child: ListView.builder(
+                                                  itemCount: todo_evenIndex.length,
+                                                  itemBuilder: (context, index) {
+                                                    return Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisSize: MainAxisSize.max,
+                                                        children: [
+                                                          Padding(
+                                                              padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                                              child: Text(
+                                                                  todo_evenIndex[index],
+                                                                  style: TextStyle(
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 17
+                                                                  )
+                                                              )
+                                                          ),
+                                                          Padding(
+                                                              padding: EdgeInsets.all(5),
+                                                              child: Text(
+                                                                  todo_oddIndex[index],
+                                                                  style: TextStyle(
+                                                                      fontSize: 15
+                                                                  )
+                                                              )
+                                                          )
+                                                        ]
+                                                    );
+                                                  }
+                                              )
+                                          )
+                                        ],
+                                      )
+                                  ) : Container()
+                                ]
+                            )
+                        ) :
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: baby_evenIndex.length,
+                            itemBuilder: (context, index){
+                              return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                        child: Text(
+                                            baby_evenIndex[index],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17
                                             )
-                                          ]
-                                      );
-                                    }
-                                ),
-                              )
-                            ]
+                                        )
+                                    ),
+                                    Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: Text(
+                                            baby_oddIndex[index],
+                                            style: TextStyle(
+                                                fontSize: 15
+                                            )
+                                        )
+                                    )
+                                  ]
+                              );
+                            },
+                          ),
                         )
+                      ]
                     )
+                  )
                 )
             );
           }
