@@ -3,6 +3,11 @@ import 'package:care_application/home_page.dart';
 import 'package:care_application/main.dart';
 import 'package:care_application/my_page.dart';
 import 'package:flutter/material.dart';
+import 'package:dialogflow_grpc/dialogflow_grpc.dart';
+import 'package:grpc/grpc.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class chatBot extends StatelessWidget {
   const chatBot({Key? key,required this.userNum}) : super(key: key);
@@ -34,39 +39,89 @@ class ChatBot extends StatefulWidget {
   State<ChatBot> createState() => _ChatBotState();
 }
 
+String? _apiKey;
 class _ChatBotState extends State<ChatBot> {
 
   TextEditingController _textController = TextEditingController();
   List<ChatMessage> _messages = [];
   ScrollController _scrollController = ScrollController();
 
-  void _sendMessage() {
-    setState(() {
-      String message = _textController.text;
+  Future<String> _loadApiKey() async {
+    final apiKeyPath = 'assets/mom-s-care-hgrt-412b21b7d28b.json';
+    final apiKeyFile = await rootBundle.loadString(apiKeyPath);
+    final apiKeyJson = jsonDecode(apiKeyFile);
+    final apiKey = apiKeyJson['private_key'];
 
-      // 사용자가 입력한 메시지를 오른쪽에 출력
-      _messages.add(ChatMessage(sender: "user", message: message));
+    print('apiKey는 $apiKey');
+    return apiKey;
+  }
 
-      // 입력한 메시지 처리
-      if (message != null) {
-        //다이얼로그 플로우 처리 후 받게될 답변
-        _messages.add(ChatMessage(sender: "bot", message: "Yes"));
-      }
+  Future<void> _setupDialogflow() async {
+    if (_apiKey == null) {
+      _apiKey = await _loadApiKey();
+    }
+  }
 
-      _textController.clear();
+  void _sendMessage() async {
+    String message = _textController.text;
 
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
+    if (message.isNotEmpty) {
+      setState(() {
+        _messages.add(ChatMessage(sender: "user", message: message));
       });
+
+      // Dialogflow에 메시지 전송 및 응답 처리
+      await _setupDialogflow();
+
+      final projectId = 'mom-s-care-hgrt'; // Dialogflow 에이전트의 프로젝트 ID를 설정해야 합니다.
+      final sessionId = widget.UserNum; // 대화 세션의 고유한 ID를 설정해야 합니다.
+
+      print('$_apiKey');
+
+      try {
+        final response = await http.post(
+          Uri.parse('https://dialogflow.googleapis.com/v3/projects/$projectId/locations/global/agent/sessions/$sessionId:detectIntent'),
+          headers: {
+            'Authorization': 'Bearer $_apiKey',
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode({
+            'queryInput': {
+              'text': {
+                'text': message,
+                'languageCode': 'ko' // 사용자 메시지의 언어 코드를 설정해야 합니다. 예: 'en'은 영어, 'ko'는 한국어입니다.
+              }
+            }
+          }),
+        );
+
+        if (response.statusCode == 200) {
+          final jsonResponse = jsonDecode(response.body);
+          final fulfillmentText = jsonResponse['queryResult']['fulfillmentText'];
+
+          setState(() {
+            _messages.add(ChatMessage(sender: "bot", message: fulfillmentText));
+          });
+        } else {
+          print('Error communicating with Dialogflow: ${response.statusCode}');
+        }
+      } catch (e) {
+        print('Exception occurred: $e');
+      }
+    }
+
+    _textController.clear();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     });
   }
 
-  bool isuser = false;
-  final List<String> chat = <String>['1','2','3','4','5'];
+
 
   @override
   Widget build(BuildContext context) {

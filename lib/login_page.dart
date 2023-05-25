@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:care_application/chatBot.dart';
 import 'package:care_application/home_page.dart';
 import 'package:care_application/my_page.dart';
 import 'package:care_application/register_page.dart';
@@ -178,6 +179,20 @@ class _LoginPageState extends State<LoginPage> {
                           child: TextButton( // 텍스트 버튼 위젯
                               onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
                                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Find_ID()));
+                              },
+                              child: Text('아이디/비밀번호 찾기', // 텍스트로 '아이디/비밀번호 찾기' 출력
+                                  style: TextStyle( // 텍스트 스타일 지정
+                                      color: Colors.blue, // 색상은 파랑
+                                      decoration: TextDecoration.underline // 아래에 선긋기
+                                  )
+                              )
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 0), // 좌 20 상 0 우 20 하 15의 여백을 줌
+                          child: TextButton( // 텍스트 버튼 위젯
+                              onPressed: (){ // 버튼을 누를 시 동작할 코드 작성
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ChatBot()));
                               },
                               child: Text('아이디/비밀번호 찾기', // 텍스트로 '아이디/비밀번호 찾기' 출력
                                   style: TextStyle( // 텍스트 스타일 지정
