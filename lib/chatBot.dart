@@ -42,7 +42,13 @@ class _ChatBotState extends State<ChatBot> {
   List<ChatMessage> _messages = [];
   ScrollController _scrollController = ScrollController();
 
+  bool ButtonEnabled = true;
+
   void _sendMessage() async {
+
+    setState(() {
+      ButtonEnabled = false;
+    });
     String message = _textController.text;
 
     var receiveMsg = '';
@@ -87,6 +93,10 @@ class _ChatBotState extends State<ChatBot> {
           curve: Curves.easeOut,
         );
       });
+    });
+
+    setState(() {
+      ButtonEnabled = true;
     });
   }
 
@@ -161,7 +171,7 @@ class _ChatBotState extends State<ChatBot> {
                     backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                     foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                   ),
-                  onPressed: _sendMessage,
+                  onPressed: ButtonEnabled ? _sendMessage : null,
                   child: Text('전송'),
                 ),
               ],
