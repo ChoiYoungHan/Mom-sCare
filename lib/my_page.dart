@@ -44,6 +44,9 @@ class _MyPageState extends State<MyPage> {
   var baby_name;
   var baby_num;
   var baby_index;
+
+  bool selectedButton = false;
+
   final List<String> babies = <String>['A','B','C','D','E','F','G','H','I']; // 추후 받아올 아이 정보
   late Future<List<dynamic>> babiesFuture;
 
@@ -92,7 +95,6 @@ class _MyPageState extends State<MyPage> {
                       scrollDirection: Axis.horizontal, // 리스트뷰를 가로로 함
                       itemCount: snapshot.data!.length, // 데이터의 길이만큼을 카운트함
                       itemBuilder: (context, index){
-
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(0,0,0,0),
                           child: Container(
@@ -104,6 +106,7 @@ class _MyPageState extends State<MyPage> {
                                     baby_num=snapshot.data![index]['BABYNO']; // 버튼이 눌렸을 시 아이 번호를 입력 받음
                                     baby_name = snapshot.data![index]['BABYNAME'];
                                     baby_index=index;
+                                    selectedButton = true;
                                   });
                                 },
                                 child: Column(
@@ -146,7 +149,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: (){
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (context) => baby_info(userNum: widget.UserNum, babyNum: baby_num, index: baby_index),
+                                    builder: (context) => baby_info(userNum: widget.UserNum, babyNum: baby_num, index: selectedButton == true ? baby_index : widget.index),
                                   ),
                                 );                              }, // 버튼을 눌렀을 때 실행될 함수 지정
                               child: Text('아기 정보', style: TextStyle(color: Colors.black),)
@@ -161,7 +164,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: (){
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (context) => baby_add(userNum: widget.UserNum, index: baby_index),
+                                    builder: (context) => baby_add(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index),
                                   ),
                                 );
                               }, // 버튼을 눌렀을 때 실행될 함수 지정
@@ -196,7 +199,7 @@ class _MyPageState extends State<MyPage> {
                         padding: EdgeInsets.all(30), // 네 면의 여백을 30만큼 줌
                         child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                             onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum, index: baby_index))); // 공지사항 페이지로 이동
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index))); // 공지사항 페이지로 이동
                             }, // 버튼을 눌렀을 때 실행될 함수 지정
                             child: Text('공지사항', style: TextStyle(color: Colors.black),)
                         )
@@ -243,19 +246,19 @@ class _MyPageState extends State<MyPage> {
             children: [
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum, index: baby_index))); // 홈페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index))); // 홈페이지로 화면 이동
                 },
                 icon: Icon(Icons.home_outlined),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: baby_index))); // 캘린더페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index))); // 캘린더페이지로 화면 이동
                 },
                 icon: Icon(Icons.event_note_outlined),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: baby_index))); // 챗봇페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index))); // 챗봇페이지로 화면 이동
                 },
                 icon: Icon(Icons.chat_outlined),
               ),

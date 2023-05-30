@@ -35,7 +35,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  var babyname, week, dday, exist;
+  var babyname, week, dday, exist, currentIndex;
 
   List<String> b_babyname = [];
   List<String> b_expectteddate = [];
@@ -128,6 +128,7 @@ class _HomePageState extends State<HomePage> {
                                         itemCount: b_babyname.length,
                                         controller: PageController(initialPage: widget.index),
                                         itemBuilder: (context, index){
+                                          currentIndex = index;
                                           return Row(
                                               mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
                                               children: [
@@ -171,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                               padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                               child: InkWell(
                                 onTap: (){
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => baby_add(userNum: widget.UserNum, index: widget.index)));
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => baby_add(userNum: widget.UserNum, index: currentIndex)));
                                 },
                                 child: Container( // 상자 위젯
                                   width: MediaQuery.of(context).size.width * 0.95, // 화면 가로 길이의 95%만큼 너비를 줌
@@ -201,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                       child: InkWell(
                                         onTap: (){
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'baby', week: b_week[0].toString(), index: widget.index)));
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'baby', week: b_week[0].toString(), index: currentIndex)));
                                         },
                                         child: Container( // 상자 위젯
                                             width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
@@ -229,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                       child: InkWell(
                                         onTap: (){
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'moms', week: b_week[0].toString(), index: widget.index)));
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'moms', week: b_week[0].toString(), index: currentIndex)));
                                         },
                                         child: Container( // 상자 위젯
                                             width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
@@ -272,19 +273,19 @@ class _HomePageState extends State<HomePage> {
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: currentIndex)));
                             },
                             icon: Icon(Icons.event_note_outlined)
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: widget.index)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: currentIndex)));
                             },
                             icon: Icon(Icons.chat_outlined)
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: currentIndex)));
                             },
                             icon: Icon(Icons.list_alt_outlined)
                         )
