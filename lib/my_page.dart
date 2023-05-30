@@ -13,25 +13,25 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class my_page extends StatelessWidget {
-  const my_page({Key? key,required this.userNum, this.babyNum}) : super(key: key);
+  const my_page({Key? key,required this.userNum, this.babyNum, this.index}) : super(key: key);
 
   final userNum;
-  final babyNum;
+  final babyNum, index;
   @override
   Widget build(BuildContext context) {
     // print("my_page 페이지");
     // print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MyPage(UserNum: userNum, )
+        home: MyPage(UserNum: userNum, index: index)
     );
   }
 }
 
 class MyPage extends StatefulWidget {
-  const MyPage({Key? key, this.UserNum}) : super(key: key);
+  const MyPage({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<MyPage> createState() => _MyPageState();
@@ -91,6 +91,7 @@ class _MyPageState extends State<MyPage> {
                       scrollDirection: Axis.horizontal, // 리스트뷰를 가로로 함
                       itemCount: snapshot.data!.length, // 데이터의 길이만큼을 카운트함
                       itemBuilder: (context, index){
+
                         return Padding(
                           padding: const EdgeInsets.fromLTRB(0,0,0,0),
                           child: Container(
@@ -102,7 +103,6 @@ class _MyPageState extends State<MyPage> {
                                     baby_num=snapshot.data![index]['BABYNO']; // 버튼이 눌렸을 시 아이 번호를 입력 받음
                                     baby_name = snapshot.data![index]['BABYNAME'];
                                   });
-
                                 },
                                 child: Column(
                                   children: [
@@ -130,28 +130,9 @@ class _MyPageState extends State<MyPage> {
                   return Center(child: const CircularProgressIndicator(color: Colors.grey,),); // 데이터를 불러오는 동안 보여주는 화면 (버퍼링 위젯)
                 },
               )
-              /*child: ListView.builder(
-              scrollDirection: Axis.horizontal, // 가로로 스크롤 할 수 있도록 설정
-              itemCount: babies.length, // 아이템 개수를 받아온 아이 리스트의 길이로 설정
-              itemBuilder: (context, index){
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 40, 0, 40), // 상하단 패딩 40 적용
-                  child: Container(
-                    width: 120, // 버튼 너비
-                    height: 50, // 버튼 높이
-                    child: ElevatedButton(
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)), // 버튼의 배경색을 흰색으로 적용
-                      onPressed: (){
-                        baby_num=index;
-                      },
-                      child: Text('${babies[index]}',style: TextStyle(color: Colors.black),) // 버튼의 이름을 아이의 이름으로 설정 + 검정색을 글씨
-                    )
-                  ),
-                );
-              })*/
               ,flex: 2), // 위젯이 차지할 영역 비율 2
           Expanded(child:Container(),flex:1),
-          Expanded(child: Text("${baby_name}를 보고 있습니다!"),flex: 1,),
+          Expanded(child: Text("${baby_name}를 보고 있습니다!"), flex: 1),
           Expanded(
               child: Row( // 가로 위젯
                 children: [
@@ -163,7 +144,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: (){
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (context) => baby_info(userNum: widget.UserNum, babyNum: baby_num),
+                                    builder: (context) => baby_info(userNum: widget.UserNum, babyNum: baby_num, index: widget.index),
                                   ),
                                 );                              }, // 버튼을 눌렀을 때 실행될 함수 지정
                               child: Text('아기 정보', style: TextStyle(color: Colors.black),)
@@ -178,7 +159,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: (){
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (context) => baby_add(userNum: widget.UserNum),
+                                    builder: (context) => baby_add(userNum: widget.UserNum, index: widget.index),
                                   ),
                                 );
                               }, // 버튼을 눌렀을 때 실행될 함수 지정
@@ -200,7 +181,7 @@ class _MyPageState extends State<MyPage> {
                             onPressed: (){
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (context) => edit(userNum: widget.UserNum),
+                                  builder: (context) => edit(userNum: widget.UserNum, index: widget.index),
                                 ),
                               );                             }, // 버튼을 눌렀을 때 실행될 함수 지정
                             child: Text('설정', style: TextStyle(color: Colors.black),)
@@ -213,7 +194,7 @@ class _MyPageState extends State<MyPage> {
                         padding: EdgeInsets.all(30), // 네 면의 여백을 30만큼 줌
                         child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                             onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum))); // 공지사항 페이지로 이동
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum, index: widget.index))); // 공지사항 페이지로 이동
                             }, // 버튼을 눌렀을 때 실행될 함수 지정
                             child: Text('공지사항', style: TextStyle(color: Colors.black),)
                         )
@@ -260,19 +241,19 @@ class _MyPageState extends State<MyPage> {
             children: [
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum,))); // 홈페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum, index: widget.index))); // 홈페이지로 화면 이동
                 },
                 icon: Icon(Icons.home_outlined),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum,))); // 캘린더페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index))); // 캘린더페이지로 화면 이동
                 },
                 icon: Icon(Icons.event_note_outlined),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum))); // 챗봇페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: widget.index))); // 챗봇페이지로 화면 이동
                 },
                 icon: Icon(Icons.chat_outlined),
               ),

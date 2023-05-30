@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 
 
 class change_pw extends StatelessWidget {
-  const change_pw({Key? key,required this.userNum}) : super(key: key);
+  const change_pw({Key? key,required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +18,15 @@ class change_pw extends StatelessWidget {
     print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ChangePw(UserNum: userNum)
+        home: ChangePw(UserNum: userNum, index: index)
     );
   }
 }
 
 class ChangePw extends StatefulWidget {
-  const ChangePw({Key? key, this.UserNum}) : super(key: key);
+  const ChangePw({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<ChangePw> createState() => _ChangePwState();
@@ -64,7 +64,7 @@ class _ChangePwState extends State<ChangePw> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('비밀번호 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum,))); // 개인정보 변경 페이지로 이동
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum, index: widget.index))); // 개인정보 변경 페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -187,7 +187,7 @@ class _ChangePwState extends State<ChangePw> {
                               OutlinedButton(
                                 onPressed: (){
                                   Navigator.of(context).pop();
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,)));
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum, index: widget.index)));
                                 },child: Text('확인',style: TextStyle(color: Colors.black),),
                               )
                             ],
@@ -212,7 +212,6 @@ class _ChangePwState extends State<ChangePw> {
                           );
                         }
                     );
-                    //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum))); // 개인정보 변경 페이지로 이동
                   },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
                 )
                     :

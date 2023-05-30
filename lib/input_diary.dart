@@ -7,10 +7,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 class input_diary extends StatelessWidget {
-  const input_diary({Key? key, required this.selectedDate, required this.userNum}) : super(key: key);
+  const input_diary({Key? key, required this.selectedDate, required this.userNum, this.index}) : super(key: key);
 
   final DateTime selectedDate;
-  final userNum;
+  final userNum, index;
 
 
 
@@ -21,15 +21,15 @@ class input_diary extends StatelessWidget {
 
     return MaterialApp(
         debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 Debug 리본을 제거
-        home: inputdiary_Page(selectedDate: selectedDate, UserNum: userNum)
+        home: inputdiary_Page(selectedDate: selectedDate, UserNum: userNum, index: index)
     );
   }
 }
 
 class inputdiary_Page extends StatefulWidget {
-  const inputdiary_Page({Key? key, required this.selectedDate, required this.UserNum}) : super(key: key);
+  const inputdiary_Page({Key? key, required this.selectedDate, required this.UserNum, this.index}) : super(key: key);
   final DateTime selectedDate;
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<inputdiary_Page> createState() => _inputdiary_PageState();
@@ -97,7 +97,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
     if (response.statusCode == 200) {
       print('Uploaded!');
       Navigator.of(context, rootNavigator: true).pop();
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => print_diary(selectedDate: widget.selectedDate, userNum: widget.UserNum)));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => print_diary(selectedDate: widget.selectedDate, userNum: widget.UserNum, index: widget.index)));
 
     } else {
       print('Upload failed with status ${response.statusCode}');
@@ -111,6 +111,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
     final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
     final Client_Num = widget.UserNum;
     final Content = inputDiary.text;
+
     // clientNum, diary_date, content
     final body = jsonEncode({'diary_date': Date, 'clientNum': Client_Num, 'content': Content});
     final response = await http.post(uri, headers: headers, body: body);
@@ -132,7 +133,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
           leading: IconButton( // 좌측에 정렬 & 아이콘 버튼 위젯
               onPressed: (){ // 수행할 코드를 작성
                 String userNo = widget.UserNum;
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum))); // Calendar_Page로 이동
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum, index: widget.index))); // Calendar_Page로 이동
               },
               icon: Icon(Icons.arrow_back, color: Colors.grey) // 아이콘은 뒤로가기 아이콘을 넣으며 색상은 회색
           ),

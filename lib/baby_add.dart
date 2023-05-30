@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class baby_add extends StatelessWidget {
-  const baby_add({Key? key,required this.userNum}) : super(key: key);
+  const baby_add({Key? key,required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +16,15 @@ class baby_add extends StatelessWidget {
     print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: BabyAdd(UserNum: userNum,)
+        home: BabyAdd(UserNum: userNum,index: index)
     );
   }
 }
 
 class BabyAdd extends StatefulWidget {
-  const BabyAdd({Key? key, this.UserNum}) : super(key: key);
+  const BabyAdd({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<BabyAdd> createState() => _BabyAddState();
@@ -125,7 +125,7 @@ class _BabyAddState extends State<BabyAdd> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('아이 등록', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum,))); // 마이페이지로 이동
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -317,7 +317,7 @@ class _BabyAddState extends State<BabyAdd> {
                             OutlinedButton(
                               onPressed: (){
                                 Navigator.of(context).pop(); // 팝업 닫기
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum))); // 마이페이지로 이동
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
                               }, child: Text('확인'),
                             )
                           ],

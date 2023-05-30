@@ -8,27 +8,25 @@ import 'package:http/http.dart';
 
 class print_diary extends StatelessWidget {
   final DateTime selectedDate;
-  final userNum;
+  final userNum, index;
 
-  const print_diary({Key? key, required this.selectedDate, required this.userNum}) : super(key: key);
+  const print_diary({Key? key, required this.selectedDate, required this.userNum, this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    print('print_diary페이지에서 받은 '+userNum);
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: printdiary_Page(selectedDate: selectedDate, UserNum: userNum)
+        home: printdiary_Page(selectedDate: selectedDate, UserNum: userNum, index: index)
     );
   }
 }
 
 class printdiary_Page extends StatefulWidget {
-  const printdiary_Page({Key? key, required this.selectedDate, required this.UserNum}) : super(key: key);
+  const printdiary_Page({Key? key, required this.selectedDate, required this.UserNum, this.index}) : super(key: key);
 
   final DateTime selectedDate;
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<printdiary_Page> createState() => _printdiary_PageState();
@@ -101,7 +99,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
                 actions: [
                   TextButton(
                       onPressed: (){
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum)));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum, index: widget.index)));
                       },
                       child: Text('확인')
                   )
@@ -125,7 +123,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
           backgroundColor: Colors.white, // 상단바 배경 흰색
           leading: IconButton(
               onPressed: (){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum)));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum, index: widget.index)));
               },
               icon: Icon(Icons.arrow_back, color: Colors.grey)
           ),

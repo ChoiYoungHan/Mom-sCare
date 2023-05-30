@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
         String UserNum = jsonData['cnum'].toString();
         print(UserNum);
         Navigator.of(context, rootNavigator: true).pop();
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: UserNum)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: UserNum, index: 0)));
       } else {
         Popup(context, '회원정보가 일치하지 않습니다.');
       }

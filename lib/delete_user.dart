@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class delete_user extends StatelessWidget {
-  const delete_user({Key? key,required this.userNum}) : super(key: key);
+  const delete_user({Key? key,required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +17,15 @@ class delete_user extends StatelessWidget {
     print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: DeleteUser(UserNum: userNum)
+        home: DeleteUser(UserNum: userNum, index: index)
     );
   }
 }
 
 class DeleteUser extends StatefulWidget {
-  const DeleteUser({Key? key, this.UserNum}) : super(key: key);
+  const DeleteUser({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<DeleteUser> createState() => _DeleteUserState();
@@ -61,7 +61,7 @@ class _DeleteUserState extends State<DeleteUser> {
         backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
         title: Text('회원 탈퇴', style: TextStyle(color: Colors.black)), // 상단 바 글자색을 검정색으로 설정
         leading: IconButton(onPressed: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,))); // 마이페이지로 이동
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
         }, icon: Icon(Icons.arrow_back, color: Colors.black,),
         ),
       ),

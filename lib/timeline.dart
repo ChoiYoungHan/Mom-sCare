@@ -7,23 +7,23 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class Time_Line extends StatelessWidget {
-  const Time_Line({Key? key, required this.userNum}) : super(key: key);
+  const Time_Line({Key? key, required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 debug 리본 제거
-        home: TimeLine(UserNum: userNum)
+        home: TimeLine(UserNum: userNum, index: index)
     );
   }
 }
 
 class TimeLine extends StatefulWidget {
-  const TimeLine({Key? key, required this.UserNum}) : super(key: key);
+  const TimeLine({Key? key, required this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
   @override
   State<TimeLine> createState() => _TimeLineState();
 }
@@ -86,7 +86,7 @@ class _TimeLineState extends State<TimeLine> {
                     backgroundColor: Colors.white, // 배경은 흰색
                     leading: IconButton( // 아이콘 버튼 위젯
                         onPressed: (){ // 아이콘 클릭 시 동작할 코드 구현
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index)));
                         },
                         icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
                     ),

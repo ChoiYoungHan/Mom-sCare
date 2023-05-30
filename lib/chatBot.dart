@@ -15,23 +15,23 @@ class ChatMessage {
 }
 
 class chatBot extends StatelessWidget {
-  const chatBot({Key? key,required this.userNum}) : super(key: key);
+  const chatBot({Key? key,required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ChatBot(UserNum: userNum)
+        home: ChatBot(UserNum: userNum, index: index)
     );
   }
 }
 
 class ChatBot extends StatefulWidget {
-  const ChatBot({Key? key, this.UserNum}) : super(key: key);
+  const ChatBot({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<ChatBot> createState() => _ChatBotState();
@@ -114,7 +114,7 @@ class _ChatBotState extends State<ChatBot> {
             child: OutlinedButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => ChatBotPage(UserNum: widget.UserNum))); // 수정: chatBot_page -> ChatBotPage
+                    MaterialPageRoute(builder: (context) => ChatBotPage(UserNum: widget.UserNum, index: widget.index))); // 수정: chatBot_page -> ChatBotPage
               },
               child: Text(
                 '채팅내역',
@@ -187,14 +187,14 @@ class _ChatBotState extends State<ChatBot> {
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomePage(UserNum: widget.UserNum)));
+                    MaterialPageRoute(builder: (context) => HomePage(UserNum: widget.UserNum, index: widget.index)));
               },
               icon: Icon(Icons.home_outlined),
             ),
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
+                    MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index)));
               },
               icon: Icon(Icons.event_note_outlined),
             ),
@@ -205,7 +205,7 @@ class _ChatBotState extends State<ChatBot> {
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => MyPage(UserNum: widget.UserNum))); // 수정: my_page -> MyPage
+                    MaterialPageRoute(builder: (context) => MyPage(UserNum: widget.UserNum, index: widget.index))); // 수정: my_page -> MyPage
               },
               icon: Icon(Icons.list_alt_outlined),
             ),

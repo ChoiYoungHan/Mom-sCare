@@ -5,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class change_user_info extends StatelessWidget {
-  const change_user_info({Key? key,required this.userNum}) : super(key: key);
+  const change_user_info({Key? key,required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +15,15 @@ class change_user_info extends StatelessWidget {
     print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ChangeUserInfo(UserNum: userNum)
+        home: ChangeUserInfo(UserNum: userNum, index: index)
     );
   }
 }
 
 class ChangeUserInfo extends StatefulWidget {
-  const ChangeUserInfo({Key? key, this.UserNum}) : super(key: key);
+  const ChangeUserInfo({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<ChangeUserInfo> createState() => _ChangeUserInfoState();
@@ -38,7 +38,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('개인정보 변경', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 회색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,))); // 설정 페이지로 이동
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum, index: widget.index))); // 설정 페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -54,7 +54,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_pw(userNum: widget.UserNum))); // 비밀번호 설정 페이지로 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_pw(userNum: widget.UserNum, index: widget.index))); // 비밀번호 설정 페이지로 이동
                 },
                 child: Row(
                   children: [
@@ -91,7 +91,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
               padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_phone(userNum: widget.UserNum,))); // 비밀번호 설정 페이지로 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_phone(userNum: widget.UserNum, index: widget.index))); // 비밀번호 설정 페이지로 이동
                 },
                 child: Row(
                   children: [
@@ -128,7 +128,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
               padding: EdgeInsets.fromLTRB(0, 20, 0, 20), // 상하20 여백을 줌
               child: OutlinedButton(
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum,))); // 설정 페이지로 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum, index: widget.index))); // 설정 페이지로 이동
                 },child: Text('돌아가기', style: TextStyle(color: Colors.black,),),
               ),
             ),

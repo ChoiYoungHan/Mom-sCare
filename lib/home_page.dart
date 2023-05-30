@@ -10,24 +10,24 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class Home_Page extends StatelessWidget {
-  const Home_Page({Key? key, required this.userNum}) : super(key: key);
+  const Home_Page({Key? key, required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
 
     return MaterialApp(
         debugShowCheckedModeBanner: false, // 우측 상단의 debug 리본 제거
-        home: HomePage(UserNum: userNum)
+        home: HomePage(UserNum: userNum, index: index)
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, this.UserNum}) : super(key: key);
+  const HomePage({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -122,10 +122,11 @@ class _HomePageState extends State<HomePage> {
                                     decoration: BoxDecoration(
                                         border: Border.all(color: Colors.grey, width: 2)
                                     ),
-                                    child: ListView.builder(
+                                    child: PageView.builder(
                                         physics: PageScrollPhysics(),
                                         scrollDirection: Axis.horizontal,
                                         itemCount: b_babyname.length,
+                                        controller: PageController(initialPage: widget.index),
                                         itemBuilder: (context, index){
                                           return Row(
                                               mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
@@ -170,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                               padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                               child: InkWell(
                                 onTap: (){
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => baby_add(userNum: widget.UserNum)));
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => baby_add(userNum: widget.UserNum, index: widget.index)));
                                 },
                                 child: Container( // 상자 위젯
                                   width: MediaQuery.of(context).size.width * 0.95, // 화면 가로 길이의 95%만큼 너비를 줌
@@ -200,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                       child: InkWell(
                                         onTap: (){
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'baby', week: b_week[0].toString())));
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'baby', week: b_week[0].toString(), index: widget.index)));
                                         },
                                         child: Container( // 상자 위젯
                                             width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
@@ -228,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                       child: InkWell(
                                         onTap: (){
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'moms', week: b_week[0].toString())));
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'moms', week: b_week[0].toString(), index: widget.index)));
                                         },
                                         child: Container( // 상자 위젯
                                             width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
@@ -271,19 +272,19 @@ class _HomePageState extends State<HomePage> {
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index)));
                             },
                             icon: Icon(Icons.event_note_outlined)
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: widget.index)));
                             },
                             icon: Icon(Icons.chat_outlined)
                         ),
                         IconButton(
                             onPressed: (){
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index)));
                             },
                             icon: Icon(Icons.list_alt_outlined)
                         )

@@ -5,22 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Week_Info extends StatelessWidget {
-  const Week_Info({Key? key, required this.userNum, required this.division, required this.week}) : super(key: key);
+  const Week_Info({Key? key, required this.userNum, required this.division, required this.week, this.index}) : super(key: key);
 
-  final userNum, division, week;
+  final userNum, division, week, index;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false, // 우측 상단에 debug 리본 제거
-        home: WeekInfo(userNum: userNum, division: division, week: week)
+        home: WeekInfo(userNum: userNum, division: division, week: week, index: index)
     );
   }
 }
 
 class WeekInfo extends StatefulWidget {
-  const WeekInfo({Key? key, required this.userNum, required this.division, required this.week}) : super(key: key);
-  final userNum, division, week;
+  const WeekInfo({Key? key, required this.userNum, required this.division, required this.week, this.index}) : super(key: key);
+  final userNum, division, week, index;
 
   @override
   State<WeekInfo> createState() => _WeekInfoState();
@@ -186,7 +186,7 @@ class _WeekInfoState extends State<WeekInfo> {
                     backgroundColor: Colors.white,
                     leading: IconButton( // 아이콘 버튼 위젯
                         onPressed: (){ // 뒤로가기 버튼 클릭 시 수행할 동작
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.userNum)));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.userNum, index: widget.index)));
                         },
                         icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
                     ),

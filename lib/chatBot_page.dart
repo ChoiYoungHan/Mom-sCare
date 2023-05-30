@@ -9,22 +9,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class chatBot_page extends StatelessWidget {
-  const chatBot_page({Key? key,required this.userNum}) : super(key: key);
+  const chatBot_page({Key? key,required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ChatBotPage(UserNum: userNum),
+      home: ChatBotPage(UserNum: userNum, index: index)
     );
   }
 }
 class ChatBotPage extends StatefulWidget {
-  const ChatBotPage({Key? key, this.UserNum}) : super(key: key);
+  const ChatBotPage({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<ChatBotPage> createState() => _ChatBotPageState();
@@ -59,7 +59,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('채팅 내역', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 회색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum))); // 마이페이지로 이동
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -86,8 +86,6 @@ class _ChatBotPageState extends State<ChatBotPage> {
                                 setState(() {
                                   chatbotNum = snapshot.data![index]['CHATBOTNO']; // 클릭한 채팅내역의 번호를 입력 받는다
                                 });
-                                //보류
-                                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice_records(userNum: widget.UserNum, noticeNum: chatbotnum,))); // 해당 채팅 내용으로 이동
                               },
                               child: Row(
                                 children: [
@@ -132,25 +130,25 @@ class _ChatBotPageState extends State<ChatBotPage> {
             children: [
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum,))); // 홈페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum, index: widget.index))); // 홈페이지로 화면 이동
                 },
                 icon: Icon(Icons.home_outlined),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum,))); // 캘린더페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index))); // 캘린더페이지로 화면 이동
                 },
                 icon: Icon(Icons.event_note_outlined),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum,))); // 캘린더페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: widget.index))); // 캘린더페이지로 화면 이동
                 },
                 icon: Icon(Icons.chat_outlined, color: Colors.blue),
               ),
               IconButton( // 아이콘 버튼 위젯
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum))); // 마이페이지로 화면 이동
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 화면 이동
                 }, // 현재 위치한 페이지로 화면설정을 하지 않고 버튼 형태만 유지
                 icon: Icon(Icons.list_alt_outlined),
               ),

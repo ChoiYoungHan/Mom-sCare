@@ -12,9 +12,9 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.userNum});
+  const MyApp({super.key, required this.userNum, this.index});
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +24,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       locale: const Locale('ko', 'KR'),
       debugShowCheckedModeBanner: false, // 우측 상단에 출력되는 Debug 리본을 제거
-      home: Calendar_Page(UserNum: userNum)
+      home: Calendar_Page(UserNum: userNum, index: index)
     );
   }
 }
 
 class Calendar_Page extends StatefulWidget {
-  const Calendar_Page({Key? key, this.UserNum}) : super(key: key);
+  const Calendar_Page({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<Calendar_Page> createState() => _Calendar_PageState();
@@ -65,9 +65,9 @@ class _Calendar_PageState extends State<Calendar_Page> {
       var jsonData = jsonDecode(response.body);
 
       if(jsonData['success'] == true){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => print_diary(selectedDate: selectedDate, userNum: widget.UserNum)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => print_diary(selectedDate: selectedDate, userNum: widget.UserNum, index: widget.index)));
       } else if(jsonData['success'] == false) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate, userNum: widget.UserNum)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate, userNum: widget.UserNum, index: widget.index)));
       }
 
     } else {
@@ -86,7 +86,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
             actions: [ // 상단바의 우측에 출력
               IconButton( // 아이콘 버튼 위젯
                   onPressed: (){ // 아이콘을 클릭할 경우에 동작할 코드
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Time_Line(userNum: widget.UserNum)));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Time_Line(userNum: widget.UserNum, index: widget.index)));
                   },
                   icon: Icon(Icons.view_timeline_outlined, color: Colors.orange) // 타임라인 아이콘, 색상은 주황
               )
@@ -145,7 +145,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
                     children: [
                       IconButton( // 아이콘 버튼 위젯
                           onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum), settings: RouteSettings(arguments: widget.UserNum)));
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum, index: widget.index)));
                           },
                           icon: Icon(Icons.home_outlined) // 홈 아이콘
                       ),
@@ -157,13 +157,13 @@ class _Calendar_PageState extends State<Calendar_Page> {
                       ),
                       IconButton( // 아이콘 버튼 위젯
                           onPressed: (){ // 버튼 클릭 시 동작할 코드 작성                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: widget.index)));
                           },
                           icon: Icon(Icons.chat_outlined) // 채팅 아이콘
                       ),
                       IconButton( // 아이콘 버튼 위젯
                           onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum)));
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index)));
                           },
                           icon: Icon(Icons.list_alt_outlined) // 리스트 아이콘
                       )

@@ -6,9 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class notice_records extends StatelessWidget {
-  const notice_records({Key? key,required this.userNum, required this.noticeNum }) : super(key: key);
+  const notice_records({Key? key,required this.userNum, required this.noticeNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
   final noticeNum;
 
   @override
@@ -19,15 +19,15 @@ class notice_records extends StatelessWidget {
     print(noticeNum);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: NoticeRecords(UserNum: userNum, NoticeNum: noticeNum,),
+      home: NoticeRecords(UserNum: userNum, NoticeNum: noticeNum, index: index)
     );
   }
 }
 
 class NoticeRecords extends StatefulWidget {
-  const NoticeRecords({Key? key, this.UserNum, this.NoticeNum}) : super(key: key);
+  const NoticeRecords({Key? key, this.UserNum, this.NoticeNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
   final NoticeNum;
 
   @override
@@ -72,7 +72,7 @@ class _NoticeRecordsState extends State<NoticeRecords> {
             backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
             title: Text('공지사항', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
             leading: IconButton(onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum))); // 공지사항 페이지로 이동
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum, index: widget.index))); // 공지사항 페이지로 이동
             }, icon: Icon(Icons.arrow_back, color: Colors.black,),
             )
         ),

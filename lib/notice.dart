@@ -8,9 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class notice extends StatelessWidget {
-  const notice({Key? key,required this.userNum}) : super(key: key);
+  const notice({Key? key,required this.userNum, this.index}) : super(key: key);
 
-  final userNum;
+  final userNum, index;
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +18,15 @@ class notice extends StatelessWidget {
     print(userNum);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Notice(UserNum: userNum,),
+      home: Notice(UserNum: userNum, index: index),
     );
   }
 }
 
 class Notice extends StatefulWidget {
-  const Notice({Key? key, this.UserNum}) : super(key: key);
+  const Notice({Key? key, this.UserNum, this.index}) : super(key: key);
 
-  final UserNum;
+  final UserNum, index;
 
   @override
   State<Notice> createState() => _NoticeState();
@@ -59,7 +59,7 @@ class _NoticeState extends State<Notice> {
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
           title: Text('공지사항', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 회색으로 설정
           leading: IconButton(onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum))); // 마이페이지로 이동
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
           }, icon: Icon(Icons.arrow_back, color: Colors.black,),
           )
       ),
@@ -86,7 +86,7 @@ class _NoticeState extends State<Notice> {
                                 setState(() {
                                   noticeNum = snapshot.data![index]['NOTICENO']; // 클릭한 공지사항의 번호를 입력 받는다
                                 });
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice_records(userNum: widget.UserNum, noticeNum: noticeNum,))); // 공지내용으로 이동
+                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice_records(userNum: widget.UserNum, noticeNum: noticeNum, index: widget.index))); // 공지내용으로 이동
                               },
                               child: Row(
                                 children: [
