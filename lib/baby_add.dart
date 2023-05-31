@@ -16,7 +16,7 @@ class baby_add extends StatelessWidget {
     print(userNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: BabyAdd(UserNum: userNum,index: index)
+        home: BabyAdd(UserNum: userNum, index: index)
     );
   }
 }

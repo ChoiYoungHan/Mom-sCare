@@ -13,11 +13,10 @@ class edit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("edit 페이지");
-    print(userNum);
+    print('edit 페이지에서 받은 ' + index.toString());
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Edit(UserNum: userNum,index: index)
+        home: Edit(UserNum: userNum, index: index)
     );
   }
 }
@@ -34,139 +33,146 @@ class Edit extends StatefulWidget {
 class _EditState extends State<Edit> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-          backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-          title: Text('설정', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
-          leading: IconButton(onPressed: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
-          }, icon: Icon(Icons.arrow_back, color: Colors.black,),
-          )
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(),flex: 3, // 상단 여백을 위해 영역 비율 3
-          ),
-          Expanded(
-            child: Container(
-                height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
-                width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
-                padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
-                child: OutlinedButton(
-                    onPressed: (){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum, index: widget.index))); // 개인정보 변경페이지로 이동
-                    },
-                    child: Row(
-                      children: [
-                        Expanded( // 상자 위젯
-                          child: Padding(
-                              padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                              child: Image.asset(('assets/edit.png')) // 버튼 왼쪽 이미지
-                          )
-                          ,flex: 2,), // 영역비율 2 부여
-                        Expanded(
-                          child: Container(),flex: 1, // 아이콘과 텍스트 사이 영역 1부여
-                        ),
-                        Expanded(
-                          child:Text('개인정보 변경',style: TextStyle(color: Colors.black),)
-                          ,flex: 5,), // 영역 비율 5 부여
-                        Expanded(
-                            child: Container(),flex:2 // 중간 공백 비율 2 부여
-                        ),
-                        Expanded(
-                            child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
-                        )
-                      ],
-                    )
-                )
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index)));
+
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+            automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+            backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
+            title: Text('설정', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
+            leading: IconButton(onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
+            }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+            )
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Container(),flex: 3, // 상단 여백을 위해 영역 비율 3
             ),
-            flex: 2,),
-          Expanded(
-            child: Container(
-                height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
-                width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
-                padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
-                child: OutlinedButton(
-                    onPressed: (){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum, index: widget.index))); // 문의하기 페이지로 이동
-                    },
-                    child: Row(
-                      children: [
-                        Expanded( // 상자 위젯
-                          child: Padding(
-                              padding: EdgeInsets.all(10), // 모든 여백 5 부여
-                              child: Image.asset(('assets/question-mark.png')) // 버튼 왼쪽 이미지
+            Expanded(
+              child: Container(
+                  height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
+                  width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
+                  padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
+                  child: OutlinedButton(
+                      onPressed: (){
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum, index: widget.index))); // 개인정보 변경페이지로 이동
+                      },
+                      child: Row(
+                        children: [
+                          Expanded( // 상자 위젯
+                            child: Padding(
+                                padding: EdgeInsets.all(5), // 모든 여백 5 부여
+                                child: Image.asset(('assets/edit.png')) // 버튼 왼쪽 이미지
+                            )
+                            ,flex: 2,), // 영역비율 2 부여
+                          Expanded(
+                            child: Container(),flex: 1, // 아이콘과 텍스트 사이 영역 1부여
+                          ),
+                          Expanded(
+                            child:Text('개인정보 변경',style: TextStyle(color: Colors.black),)
+                            ,flex: 5,), // 영역 비율 5 부여
+                          Expanded(
+                              child: Container(),flex:2 // 중간 공백 비율 2 부여
+                          ),
+                          Expanded(
+                              child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                           )
-                          ,flex: 2,), // 영역비율 2 부여
-                        Expanded(
-                          child: Container(),flex: 1, // 아이콘과 텍스트 사이 영역 1부여
-                        ),
-                        Expanded(
-                          child:Text('문의 하기',style: TextStyle(color: Colors.black),)
-                          ,flex: 5,), // 영역 비율 5 부여
-                        Expanded(
-                            child: Container(),flex:2 // 중간 공백 비율 2 부여
-                        ),
-                        Expanded(
-                            child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
-                        )
-                      ],
-                    )
-                )
-            ),
-            flex: 2,),
-          Expanded(
-            child: Container(
-                height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
-                width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
-                padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
-                child: OutlinedButton(
-                    onPressed: (){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => delete_user(userNum: widget.UserNum, index: widget.index))); // 회원탈퇴 페이지로 이동
-                    },
-                    child: Row(
-                      children: [
-                        Expanded( // 상자 위젯
-                          child: Padding(
-                              padding: EdgeInsets.all(15), // 모든 여백 15 부여
-                              child: Image.asset(('assets/x.png')) // 버튼 왼쪽 이미지
-                          )
-                          ,flex: 2,), // 영역비율 2 부여
-                        Expanded(
-                          child: Container(),flex: 1, // 아이콘과 텍스트 사이 영역 1부여
-                        ),
-                        Expanded(
-                          child:Text('회원 탈퇴',style: TextStyle(color: Colors.black),)
-                          ,flex: 5,), // 영역 비율 5 부여
-                        Expanded(
-                            child: Container(),flex:2 // 중간 공백 비율 2 부여
-                        ),
-                        Expanded(
-                            child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
-                        )
-                      ],
-                    )
-                )
-            ),
-            flex: 2,),// 영역 비율 2 부여
-          Expanded(
-            child: Container(
-              height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
-              width: MediaQuery.of(context).size.width*0.4,
-              padding: EdgeInsets.fromLTRB(0, 70, 0, 70), // 상하80 여백을 줌
-              child: OutlinedButton(
-                onPressed: (){
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
-                }, child: Text('돌아가기', style: TextStyle(color: Colors.black,),),
+                        ],
+                      )
+                  )
               ),
-            ),
-            flex: 4,),
-          Expanded(
-            child: Container(),flex: 2,
-          )
-        ],
+              flex: 2,),
+            Expanded(
+              child: Container(
+                  height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
+                  width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
+                  padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
+                  child: OutlinedButton(
+                      onPressed: (){
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum, index: widget.index))); // 문의하기 페이지로 이동
+                      },
+                      child: Row(
+                        children: [
+                          Expanded( // 상자 위젯
+                            child: Padding(
+                                padding: EdgeInsets.all(10), // 모든 여백 5 부여
+                                child: Image.asset(('assets/question-mark.png')) // 버튼 왼쪽 이미지
+                            )
+                            ,flex: 2,), // 영역비율 2 부여
+                          Expanded(
+                            child: Container(),flex: 1, // 아이콘과 텍스트 사이 영역 1부여
+                          ),
+                          Expanded(
+                            child:Text('문의 하기',style: TextStyle(color: Colors.black),)
+                            ,flex: 5,), // 영역 비율 5 부여
+                          Expanded(
+                              child: Container(),flex:2 // 중간 공백 비율 2 부여
+                          ),
+                          Expanded(
+                              child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
+                          )
+                        ],
+                      )
+                  )
+              ),
+              flex: 2,),
+            Expanded(
+              child: Container(
+                  height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
+                  width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
+                  padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
+                  child: OutlinedButton(
+                      onPressed: (){
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => delete_user(userNum: widget.UserNum, index: widget.index))); // 회원탈퇴 페이지로 이동
+                      },
+                      child: Row(
+                        children: [
+                          Expanded( // 상자 위젯
+                            child: Padding(
+                                padding: EdgeInsets.all(15), // 모든 여백 15 부여
+                                child: Image.asset(('assets/x.png')) // 버튼 왼쪽 이미지
+                            )
+                            ,flex: 2,), // 영역비율 2 부여
+                          Expanded(
+                            child: Container(),flex: 1, // 아이콘과 텍스트 사이 영역 1부여
+                          ),
+                          Expanded(
+                            child:Text('회원 탈퇴',style: TextStyle(color: Colors.black),)
+                            ,flex: 5,), // 영역 비율 5 부여
+                          Expanded(
+                              child: Container(),flex:2 // 중간 공백 비율 2 부여
+                          ),
+                          Expanded(
+                              child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
+                          )
+                        ],
+                      )
+                  )
+              ),
+              flex: 2,),// 영역 비율 2 부여
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
+                width: MediaQuery.of(context).size.width*0.4,
+                padding: EdgeInsets.fromLTRB(0, 70, 0, 70), // 상하80 여백을 줌
+                child: OutlinedButton(
+                  onPressed: (){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
+                  }, child: Text('돌아가기', style: TextStyle(color: Colors.black,),),
+                ),
+              ),
+              flex: 4,),
+            Expanded(
+              child: Container(),flex: 2,
+            )
+          ],
+        ),
       ),
     );
   }

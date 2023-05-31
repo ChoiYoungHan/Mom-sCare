@@ -173,178 +173,185 @@ class _WeekInfoState extends State<WeekInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: widget.division == 'moms' ? receiveMomInfo() : receiveBabyInfo(),
-        builder: (context, snapshot){
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(
-                child: CircularProgressIndicator()
-            );
-          } else {
-            return Scaffold( // 상 중 하를 나누는 위젯
-                appBar: AppBar( // 상단 바
-                    backgroundColor: Colors.white,
-                    leading: IconButton( // 아이콘 버튼 위젯
-                        onPressed: (){ // 뒤로가기 버튼 클릭 시 수행할 동작
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.userNum, index: widget.index)));
-                        },
-                        icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
-                    ),
-                    title: widget.division == 'moms' ?
-                    Text(widget.week + '주의 엄마는?', style: TextStyle(color: Colors.black)) :
-                    Text(widget.week + '주의 아기는?', style: TextStyle(color: Colors.black))
-                ),
-                body: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        if (widget.week == '1' || widget.week == '2')
-                          Center(
-                            child: Text(widget.week + '주차의 정보는 표기되지 않습니다.'),
-                          )
-                        else if (widget.division == 'moms')
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(4, 5, 0, 0),
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    '엄마의 변화',
-                                    style: TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.userNum, index: widget.index)));
+
+        return false;
+      },
+      child: FutureBuilder(
+          future: widget.division == 'moms' ? receiveMomInfo() : receiveBabyInfo(),
+          builder: (context, snapshot){
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Center(
+                  child: CircularProgressIndicator()
+              );
+            } else {
+              return Scaffold( // 상 중 하를 나누는 위젯
+                  appBar: AppBar( // 상단 바
+                      backgroundColor: Colors.white,
+                      leading: IconButton( // 아이콘 버튼 위젯
+                          onPressed: (){ // 뒤로가기 버튼 클릭 시 수행할 동작
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.userNum, index: widget.index)));
+                          },
+                          icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
+                      ),
+                      title: widget.division == 'moms' ?
+                      Text(widget.week + '주의 엄마는?', style: TextStyle(color: Colors.black)) :
+                      Text(widget.week + '주의 아기는?', style: TextStyle(color: Colors.black))
+                  ),
+                  body: SafeArea(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          if (widget.week == '1' || widget.week == '2')
+                            Center(
+                              child: Text(widget.week + '주차의 정보는 표기되지 않습니다.'),
+                            )
+                          else if (widget.division == 'moms')
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(4, 5, 0, 0),
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '엄마의 변화',
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              ListView.builder(
-                                physics: NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: moms_evenIndex.length,
-                                itemBuilder: (context, index) {
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: moms_evenIndex.length,
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                          child: Text(
+                                            moms_evenIndex[index],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(5),
+                                          child: Text(
+                                            moms_oddIndex[index],
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                                if (todo_info.isNotEmpty)
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                        child: Text(
-                                          moms_evenIndex[index],
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 17,
+                                        padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
+                                        child: Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            '엄마와 아빠가 해야할 일',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.all(5),
-                                        child: Text(
-                                          moms_oddIndex[index],
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
+                                      ListView.builder(
+                                        physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: todo_evenIndex.length,
+                                        itemBuilder: (context, index) {
+                                          return Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                                child: Text(
+                                                  todo_evenIndex[index],
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.all(5),
+                                                child: Text(
+                                                  todo_oddIndex[index],
+                                                  style: TextStyle(
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        },
                                       ),
                                     ],
-                                  );
-                                },
-                              ),
-                              if (todo_info.isNotEmpty)
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
+                                  ),
+                              ],
+                            )
+                          else
+                            ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: baby_evenIndex.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                      child: Container(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          '엄마와 아빠가 해야할 일',
-                                          style: TextStyle(
-                                            color: Colors.blue,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                                      child: Text(
+                                        baby_evenIndex[index],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17,
                                         ),
                                       ),
                                     ),
-                                    ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: todo_evenIndex.length,
-                                      itemBuilder: (context, index) {
-                                        return Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                              child: Text(
-                                                todo_evenIndex[index],
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.all(5),
-                                              child: Text(
-                                                todo_oddIndex[index],
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      },
+                                    Padding(
+                                      padding: EdgeInsets.all(5),
+                                      child: Text(
+                                        baby_oddIndex[index],
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                        ),
+                                      ),
                                     ),
                                   ],
-                                ),
-                            ],
-                          )
-                        else
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: baby_evenIndex.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                                    child: Text(
-                                      baby_evenIndex[index],
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(5),
-                                    child: Text(
-                                      baby_oddIndex[index],
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                      ],
+                                );
+                              },
+                            ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
+                  )
 
-            );
+              );
+            }
           }
-        }
+      ),
     );
   }
 }

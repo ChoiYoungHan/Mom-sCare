@@ -54,78 +54,85 @@ class _QuestionAddState extends State<QuestionAdd> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
-        backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-        title: Text('문의하기', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
-        leading: IconButton(onPressed: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum, index: widget.index))); // 개인정보 변경 페이지로 이동
-        }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum, index: widget.index)));
+
+        return false;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
+          backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
+          title: Text('문의하기', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
+          leading: IconButton(onPressed: () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum, index: widget.index))); // 개인정보 변경 페이지로 이동
+          }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+          ),
+          actions: [
+            TextButton(
+                onPressed: (){
+                  inquire_add(); // 문의 추가하는 함수
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum, index: widget.index))); // 문의사항 페이지로 이동
+                }, child: Text('보내기', style: TextStyle(color: Colors.black, fontSize: 20),))
+          ],
         ),
-        actions: [
-          TextButton(
-              onPressed: (){
-                inquire_add(); // 문의 추가하는 함수
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => question(userNum: widget.UserNum, index: widget.index))); // 문의사항 페이지로 이동
-              }, child: Text('보내기', style: TextStyle(color: Colors.black, fontSize: 20),))
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(),flex: 3, // 상단 여백 1 부여
-          ),
-          Expanded(
-              child: Row(
-                children: [
-                  Expanded(child: Container(),flex: 2,),
-                  Expanded(
-                    child: Text('제목',style: TextStyle(color: Colors.black, fontSize: 30,fontWeight: FontWeight.bold),),
-                    flex: 11,)
-                ],
-              )
-          ),
-          Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.width*0.7,
-              child: TextField(
-                controller: title,
-                maxLength: 15,
-                maxLines: 1, // 한줄 만 입력받도록 설정
-                textAlign: TextAlign.left, // 좌측 정렬
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black)
-                    ),
-                    hintText: ('제목을 입력하세요')
-                ),
-              ),
+        body: Column(
+          children: [
+            Expanded(
+              child: Container(),flex: 3, // 상단 여백 1 부여
             ),
-            flex: 2,), // 여백 1 부여
-          Expanded(
-            child: SizedBox(
+            Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: Container(),flex: 2,),
+                    Expanded(
+                      child: Text('제목',style: TextStyle(color: Colors.black, fontSize: 30,fontWeight: FontWeight.bold),),
+                      flex: 11,)
+                  ],
+                )
+            ),
+            Expanded(
+              child: Container(
                 width: MediaQuery.of(context).size.width*0.7,
-                height: MediaQuery.of(context).size.height*0.7,
                 child: TextField(
-                  maxLength: 100,
-                  controller: contents,
-                  maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
+                  controller: title,
+                  maxLength: 15,
+                  maxLines: 1, // 한줄 만 입력받도록 설정
                   textAlign: TextAlign.left, // 좌측 정렬
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)
                       ),
-                      hintText: ('내용을 입력하세요')
+                      hintText: ('제목을 입력하세요')
                   ),
-                )
-            )
-            ,flex: 5,),// 여백 5 부여
-          Expanded(child: Container(),flex: 3,)
-        ],
+                ),
+              ),
+              flex: 2,), // 여백 1 부여
+            Expanded(
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width*0.7,
+                  height: MediaQuery.of(context).size.height*0.7,
+                  child: TextField(
+                    maxLength: 100,
+                    controller: contents,
+                    maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
+                    textAlign: TextAlign.left, // 좌측 정렬
+                    style: TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)
+                        ),
+                        hintText: ('내용을 입력하세요')
+                    ),
+                  )
+              )
+              ,flex: 5,),// 여백 5 부여
+            Expanded(child: Container(),flex: 3,)
+          ],
+        ),
       ),
     );
   }

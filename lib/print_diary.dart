@@ -117,111 +117,118 @@ class _printdiary_PageState extends State<printdiary_Page> {
 
     _controller.text = _content;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false, // 화면이 밀려 올라가는 것을 방지
-      appBar: AppBar(
-          backgroundColor: Colors.white, // 상단바 배경 흰색
-          leading: IconButton(
-              onPressed: (){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum, index: widget.index)));
-              },
-              icon: Icon(Icons.arrow_back, color: Colors.grey)
-          ),
-          title: Text(
-              '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일', style: TextStyle(color: Colors.grey) // 받아온 날짜 출력 & 글자 색은 회색
-          ),
-          actions: [
-            IconButton(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index)));
+
+        return false;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false, // 화면이 밀려 올라가는 것을 방지
+        appBar: AppBar(
+            backgroundColor: Colors.white, // 상단바 배경 흰색
+            leading: IconButton(
                 onPressed: (){
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context){
-                        return AlertDialog(
-                            title: Center(child: FittedBox(child: Text('일기를 삭제하시겠습니까?', style: TextStyle(color: Colors.grey)))),
-                            actions: [
-                              TextButton(
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('취소')
-                              ),
-                              TextButton(
-                                  onPressed: (){
-                                    deleteDiary();
-                                  },
-                                  child: Text('확인')
-                              )
-                            ]
-                        );
-                      }
-                  );
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Calendar_Page(UserNum: widget.UserNum, index: widget.index)));
                 },
-                icon: Icon(Icons.delete_forever_outlined, color: Colors.orange)
-            )
-          ]
-      ),
-      body: SafeArea(
-          child: GestureDetector(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(child: Container(
-                    padding: EdgeInsets.all(5),
-                    child: TextField(
-                        controller: _controller,
-                        maxLines: null,
-                        enabled: false,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey)
-                            )
-                        )
-                    ),
-                  ), flex: 8),
-                  FutureBuilder<Response>(
-                      future: receiveData(),
-                      builder: (context, snapshot){
-                        if(snapshot.hasData){
-                          return Expanded(child: Container(
-                              padding: EdgeInsets.all(5), // 네 면의 여백을 5만큼 줌
-                              width: MediaQuery.of(context).size.width * 0.97,
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: imageList.length,
-                                  itemBuilder: (context, index){
-                                    return GestureDetector(
-                                      onTap: (){
-                                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: imageList, Index: index)));
-                                      },
-                                      child: Container(
-                                          margin: EdgeInsets.all(3),
-                                          width: MediaQuery.of(context).size.width * 0.3,
-                                          height: MediaQuery.of(context).size.width * 0.3,
-                                          child: Image.network('http://182.219.226.49/image/' + imageList[index], fit: BoxFit.cover)
-                                      ),
-                                    );
-                                  }
-                              )
-                          ), flex: 2);
-                        } else {
-                          return Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width * 0.97,
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              child: Center(
-                                  child: CircularProgressIndicator()
-                              ),
-                            ),
-                            flex: 2,
+                icon: Icon(Icons.arrow_back, color: Colors.grey)
+            ),
+            title: Text(
+                '${widget.selectedDate.year}년 ${widget.selectedDate.month}월 ${widget.selectedDate.day}일', style: TextStyle(color: Colors.grey) // 받아온 날짜 출력 & 글자 색은 회색
+            ),
+            actions: [
+              IconButton(
+                  onPressed: (){
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context){
+                          return AlertDialog(
+                              title: Center(child: FittedBox(child: Text('일기를 삭제하시겠습니까?', style: TextStyle(color: Colors.grey)))),
+                              actions: [
+                                TextButton(
+                                    onPressed: (){
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('취소')
+                                ),
+                                TextButton(
+                                    onPressed: (){
+                                      deleteDiary();
+                                    },
+                                    child: Text('확인')
+                                )
+                              ]
                           );
                         }
-                      }
-                  )
-                ],
+                    );
+                  },
+                  icon: Icon(Icons.delete_forever_outlined, color: Colors.orange)
               )
-          )
+            ]
+        ),
+        body: SafeArea(
+            child: GestureDetector(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(child: Container(
+                      padding: EdgeInsets.all(5),
+                      child: TextField(
+                          controller: _controller,
+                          maxLines: null,
+                          enabled: false,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey)
+                              )
+                          )
+                      ),
+                    ), flex: 8),
+                    FutureBuilder<Response>(
+                        future: receiveData(),
+                        builder: (context, snapshot){
+                          if(snapshot.hasData){
+                            return Expanded(child: Container(
+                                padding: EdgeInsets.all(5), // 네 면의 여백을 5만큼 줌
+                                width: MediaQuery.of(context).size.width * 0.97,
+                                height: MediaQuery.of(context).size.height * 0.3,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: imageList.length,
+                                    itemBuilder: (context, index){
+                                      return GestureDetector(
+                                        onTap: (){
+                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: imageList, Index: index)));
+                                        },
+                                        child: Container(
+                                            margin: EdgeInsets.all(3),
+                                            width: MediaQuery.of(context).size.width * 0.3,
+                                            height: MediaQuery.of(context).size.width * 0.3,
+                                            child: Image.network('http://182.219.226.49/image/' + imageList[index], fit: BoxFit.cover)
+                                        ),
+                                      );
+                                    }
+                                )
+                            ), flex: 2);
+                          } else {
+                            return Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                width: MediaQuery.of(context).size.width * 0.97,
+                                height: MediaQuery.of(context).size.height * 0.3,
+                                child: Center(
+                                    child: CircularProgressIndicator()
+                                ),
+                              ),
+                              flex: 2,
+                            );
+                          }
+                        }
+                    )
+                  ],
+                )
+            )
+        ),
       ),
     );
   }

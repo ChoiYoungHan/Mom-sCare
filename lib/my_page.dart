@@ -78,6 +78,8 @@ class _MyPageState extends State<MyPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    print('my페이지에서 받아온 index는 ' + widget.index.toString() + ' 입니다.');
     return WillPopScope(
       onWillPop: () async {
         await showDialog(
@@ -212,7 +214,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: (){
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
-                                    builder: (context) => edit(userNum: widget.UserNum, index: baby_index),
+                                    builder: (context) => edit(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index),
                                   ),
                                 );                             }, // 버튼을 눌렀을 때 실행될 함수 지정
                               child: Text('설정', style: TextStyle(color: Colors.black),)

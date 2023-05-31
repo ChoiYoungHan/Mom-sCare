@@ -15,13 +15,9 @@ class baby_info extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("baby_info 페이지");
-    print(userNum);
-    print("베이비넘");
-    print(babyNum);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: BabyInfo(UserNum: userNum, BabyNum: babyNum)
+        home: BabyInfo(UserNum: userNum, BabyNum: babyNum, index: index)
     );
   }
 }
@@ -67,13 +63,9 @@ class _BabyInfoState extends State<BabyInfo> {
     print(babies);
     if(response.statusCode == 200){
       var jsonData = jsonDecode(response.body);
-      print(jsonData);
       return 1;
     } else{
-      print(response.statusCode.toString());
-      print("응애");
       return 0;
-      throw Exception('Fail'); // 오류 발생시 예외발생(return에 null반환이 안되게 해서 해줘야함)
     }
   }
 
@@ -88,7 +80,6 @@ class _BabyInfoState extends State<BabyInfo> {
     final response = await http.post(uri, headers: header, body: body);
 
     if(response.statusCode == 200){
-      print('성공');
       return 1;
     }else{
       return 0;
@@ -105,7 +96,6 @@ class _BabyInfoState extends State<BabyInfo> {
     final response = await http.post(uri, headers: header, body: body);
 
     if(response.statusCode == 200){
-      print('성공');
       return 1;
     }else{
       return 0;
@@ -113,6 +103,7 @@ class _BabyInfoState extends State<BabyInfo> {
   }
 
   Future popup(String editValue) {
+
     TextEditingController edit=TextEditingController();
 
     return showGeneralDialog(
@@ -175,6 +166,9 @@ class _BabyInfoState extends State<BabyInfo> {
 
   @override
   Widget build(BuildContext context) {
+
+    print('babyinfo에서 받아온 인덱스는 ' + widget.index.toString());
+
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index)));
