@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "mom-s-care-hgrt",
+  "private_key_id": "4b04ef4e57799b5f8949308ee90f5b865eda2f8f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCl6iHMcr6coaGF\nvWg+2KX5QS+a6lUplsullO18Hnyz6d5Hj5mgi4DbjOYT35tM5+azTS/+4aIorpHI\nP928u00bEZelRnDwXJh8IPVmAs6oUk/o3qzvKND/pGwyOIOt3NB0HNgbK8lUH0Bw\noNL3PaL95qKuMsBY0gE0SbCUSFmYeddTfTholeaY/88+wRwTor+8n3fzoBUoRdxT\n0cFVTvCGK29gsP4CAw43TJoZi9nvZ6hg+8Wd+LyQdI3ZLfzIOE0QJ8od+D0ECEEP\ncyz8tvRLRB2C8q9MSUF3MxG6pQXKVnbHvh6/29t3sLGDLJHmUov6nGL/ZbtA8JLl\nHbOUDYpPAgMBAAECggEAK87xArNPijsRU6dp9aIt3O0t3Tk/qF4VQpDazhmcssKv\nOvT7Sw1axl3jSF8T+hAHddONNz8rmpNRke7vJQzNtLaF9JFvc7/3UVtAgKGAIKiv\nSd02C2YbHU00dmQ+vLMf5XDSTQZYQBqKYNLOMZM4TNNPpDBpYmp8/+nvMpAR/DTO\n3hdTCOAEPm1kTl6lbj2bCYNeyuYP675x93HOyhPm1U5pFM3g2lvYGD9wWCruu7hB\nCIbFGyxtgUY2X08r6xloXA82ueLJL4yhmYFlK3T5EqCrZ+6w6+877Z1rAKkxQ/oz\nkMfHokfCoAA4X+yLAmrVh3K39BplrExo5Dfsl9UHAQKBgQDSsMHClSTbkpeynSx1\nOPkCTfkycf1DqnZAKFSJKeqAPicCBPCZObeFCJR40/yiTu9ab5Q2ThTui+q+dKDP\ngE3AiE2YQ9QTSFix/xDRb/pzFqyAMz1XjB3yVv9gusJsk3nmZgWB1bbd3bHE9pMT\nUKagUYXAvi/5kD5w+xQoBtxxAQKBgQDJmE6iiZFZ3p/BYuR5kmbpfnF7iXMFqEsg\nyneSdT9s/JKPh2xtzZpnC1qldeMGnreRCy+KfXgcQIB+x+Q2i5X3PTdgfPv5eH6v\naKEpipbRJHiEcQAe0nWe3efVkZoBlvhiF5G+T5KXmf+CnaSv3vSFqQLCfj6CriwY\n9GNn24urTwKBgDARc6NZM5eE0mdFxKbZ4LXN5FTF/Oo7Mc9hZCgHECFCDNRBHENZ\nD62iT31hn/nH2IPhgQcCuXPTKDNbmHS+6P5MGqfqka/0iYfSkZu22IT5X1HAXvZi\nWVK41nrTIRh0bRNLo2YDxDzKH4y4VMXLWLiq4MEgowFlD1nnbqnTJugBAoGBALJo\nXxcLJh5hngJYUZihjwAPDcFll+ymzq4bYIy1xMbgE5iAId5e+ck9zB/oX11Jc20i\neBVZCsX983m/z2DSUYq3m12B3sEd+QelUhNgei5m111mX9PnL37EJdrk+2VyxSiS\ncUH6S+JswCpI9ylJ6B6tvyp+7TVbjN0c0yhjrIyTAoGAXmm6hWh7vVAifVbhqg11\nK+sldLCOx6Ldb6It/giv2cUxtmyRasd5Q0I6QTm27YdHW2gal8Lbm7DiY+nC82gc\nlRgIRnXDRGG5orRaxA8DRirAEYw90goSVaqDs5fYq3h0V3p2caQfhOvfSCzCBnlq\ndEfSAnb4y7beyevIcB6RohA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "mom-scare@mom-s-care-hgrt.iam.gserviceaccount.com",
+  "client_id": "118344079126209935661",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mom-scare%40mom-s-care-hgrt.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

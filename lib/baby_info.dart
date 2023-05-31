@@ -173,355 +173,361 @@ class _BabyInfoState extends State<BabyInfo> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
-        title: Text('아기 정보', style: TextStyle(color: Colors.black)), // 상단 바 글자색을 검정색으로 설정
-        leading: IconButton(onPressed: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
-        }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index)));
+
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
+          title: Text('아기 정보', style: TextStyle(color: Colors.black)), // 상단 바 글자색을 검정색으로 설정
+          leading: IconButton(onPressed: () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
+          }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+          ),
         ),
-      ),
-      body: FutureBuilder(
-        future: baby_info_(),
-        builder: (context,snapshot){
-          if(snapshot.hasData){
-            return Column(
-              children: [
-                Expanded(
-                    child: Column( // 가로 위젯
-                      children: [
-                        Expanded(
-                          child: Container(),flex: 3, // 위 여백을 위해 영역 비율 3
-                        ),
-                        Expanded(
-                          child: Container( // 상자 위젯
-                              height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
-                              width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
-                              padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
-                              child: OutlinedButton( // 테두리만 있는 버튼
-                                  onPressed: (){
-                                    popup('아기 이름');
-                                  }, // 버튼을 눌렀을 때 실행될 함수 지정
-                                  child: Row(
-                                    children: [
-                                      Expanded( // 상자 위젯
-                                        child: Padding(
-                                            padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                                            child: Image.asset(('assets/baby_babyInfo.png')) // 버튼 왼쪽 이미지
+        body: FutureBuilder(
+          future: baby_info_(),
+          builder: (context,snapshot){
+            if(snapshot.hasData){
+              return Column(
+                children: [
+                  Expanded(
+                      child: Column( // 가로 위젯
+                        children: [
+                          Expanded(
+                            child: Container(),flex: 3, // 위 여백을 위해 영역 비율 3
+                          ),
+                          Expanded(
+                            child: Container( // 상자 위젯
+                                height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
+                                width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
+                                padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
+                                child: OutlinedButton( // 테두리만 있는 버튼
+                                    onPressed: (){
+                                      popup('아기 이름');
+                                    }, // 버튼을 눌렀을 때 실행될 함수 지정
+                                    child: Row(
+                                      children: [
+                                        Expanded( // 상자 위젯
+                                          child: Padding(
+                                              padding: EdgeInsets.all(5), // 모든 여백 5 부여
+                                              child: Image.asset(('assets/baby_babyInfo.png')) // 버튼 왼쪽 이미지
+                                          )
+                                          ,flex: 1,), // 영역비율 1 부여
+                                        Expanded(
+                                          child:Text('아기 이름',style: TextStyle(color: Colors.black),)
+                                          ,flex: 2,), // 영역 비율 2 부여
+                                        Expanded(
+                                            child: Container(),flex:2 // 중간 공백 비율 2 부여
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                                fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                                child :Text('${babies}',style: TextStyle(color: Colors.black),)),
+                                          ) // 설정된 아기의 정보
+                                          ,flex: 2,), // 영역 비율 2 부여
+                                        Expanded(
+                                            child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
                                         )
-                                        ,flex: 1,), // 영역비율 1 부여
-                                      Expanded(
-                                        child:Text('아기 이름',style: TextStyle(color: Colors.black),)
-                                        ,flex: 2,), // 영역 비율 2 부여
-                                      Expanded(
-                                          child: Container(),flex:2 // 중간 공백 비율 2 부여
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                                              child :Text('${babies}',style: TextStyle(color: Colors.black),)),
-                                        ) // 설정된 아기의 정보
-                                        ,flex: 2,), // 영역 비율 2 부여
-                                      Expanded(
-                                          child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
-                                      )
-                                    ],
-                                  )
-                              )
-                          )
-                          ,flex: 2,), // 영역 비율 2 부여
-                        Expanded(
-                          child: Container(
-                              height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
-                              width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
-                              padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
-                              child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
-                                  onPressed: (){
-                                    showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime.now(),
-                                      lastDate: DateTime(2030),
-                                    ).then((selectedDate){
-                                      var a=selectedDate.toString().split(" ")[0];
-                                      babies_birth=a;
-                                      print(babies_birth);
-                                    });
-                                    if(babies_birth=='null')babies_birth='-';
-                                  }, // 버튼을 눌렀을 때 실행될 함수 지정
-                                  child: Row(
-                                    children: [
-                                      Expanded( // 상자 위젯
-                                        child: Padding(
-                                            padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                                            child: Image.asset(('assets/due_babyInfo.png')) // 버튼 왼쪽 이미지
-                                        )
-                                        ,flex: 1,), // 영역비율 1 부여
-                                      Expanded(
-                                        child:Text('출산 예정일',style: TextStyle(color: Colors.black),)
-                                        ,flex: 2,), // 영역 비율 2 부여
-                                      Expanded(
-                                          child: Container(),flex:1 // 중간 공백 비율 2 부여
-                                      ),
-                                      Expanded(
-                                        child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                            fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                                            child :Text(babies_birth,style: TextStyle(color: Colors.black),)) // 설정된 출산 예정일의 정보
-                                        ,flex: 2,), // 영역 비율 2 부여
-                                      Expanded(
-                                          child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
-                                      )
-                                    ],
-                                  )
-                              )
-                          )
-                          ,flex: 2,), // 영역 비율 2 부여
-                        Expanded(
-                          child: Container(
-                              height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
-                              width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
-                              padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
-                              child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
-                                  onPressed: (){
-                                    popup('엄마 이름');
-                                  }, // 버튼을 눌렀을 때 실행될 함수 지정
-                                  child: Row(
-                                    children: [
-                                      Expanded( // 상자 위젯
-                                        child: Padding(
-                                            padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                                            child: Image.asset(('assets/mother_babyInfo.png')) // 버튼 왼쪽 이미지
-                                        )
-                                        ,flex: 1,), // 영역비율 1 부여
-                                      Expanded(
-                                        child:Text('엄마 이름',style: TextStyle(color: Colors.black),)
-                                        ,flex: 2,), // 영역 비율 2 부여
-                                      Expanded(
-                                          child: Container(),flex:2 // 중간 공백 비율 2 부여
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                                              child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)),
-                                        ) // 설정된 엄마의 정보
-                                        ,flex: 2,), // 영역 비율 2 부여
-                                      Expanded(
-                                          child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
-                                      )
-                                    ],
-                                  )
-                              )
-                          )
-                          ,flex: 2,), // 영역 비율 2 부여
-                        Expanded(
-                          child: Container(
-                              height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
-                              width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
-                              padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
-                              child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
-                                  onPressed: (){
-                                    popup('아빠 이름');
-                                  }, // 버튼을 눌렀을 때 실행될 함수 지정
-                                  child: Row(
-                                    children: [
-                                      Expanded( // 상자 위젯
-                                        child: Padding(
-                                            padding: EdgeInsets.all(5), // 모든 여백 5 부여
-                                            child: Image.asset(('assets/father_babyInfo.png')) // 버튼 왼쪽 이미지
-                                        )
-                                        ,flex: 1,), // 영역비율 1 부여
-                                      Expanded(
-                                        child:Text('아빠 이름',style: TextStyle(color: Colors.black),)
-                                        ,flex: 2,), // 영역 비율 2 부여
-                                      Expanded(
-                                          child: Container(),flex:2 // 중간 공백 비율 2 부여
-                                      ),
-                                      Expanded(
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                                              child :Text('${babies_father}',style: TextStyle(color: Colors.black),)),
-                                        ) // 설정된 아빠의 정보
-                                        ,flex: 2,), // 영역 비율 2 부여
-                                      Expanded(
-                                          child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
-                                      )
-                                    ],
-                                  )
-                              )
-                          )
-                          ,flex: 2,) // 영역 비율 2 부여
-                      ],
-                    )
-                    ,flex: 10),// 위젯이 차지할 영역 비율 10
-                Expanded(
-                    child: Row( // 로우 위젯
-                      children: [
-                        Expanded(
-                          child: Container(),flex: 1, // 좌측 여백을 위해 영역 비율 1 부여
-                        ),
-                        Expanded(
+                                      ],
+                                    )
+                                )
+                            )
+                            ,flex: 2,), // 영역 비율 2 부여
+                          Expanded(
                             child: Container(
-                                height: MediaQuery.of(context).size.width*0.8, // 위젯의 높이를 화면 너비*0.8로 설정
-                                padding: EdgeInsets.fromLTRB(0, 60, 40, 60), // 우측40 상하60 여백을 줌
+                                height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
+                                width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
+                                padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                                 child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
                                     onPressed: (){
-                                      showDialog(
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime.now(),
+                                        lastDate: DateTime(2030),
+                                      ).then((selectedDate){
+                                        var a=selectedDate.toString().split(" ")[0];
+                                        babies_birth=a;
+                                        print(babies_birth);
+                                      });
+                                      if(babies_birth=='null')babies_birth='-';
+                                    }, // 버튼을 눌렀을 때 실행될 함수 지정
+                                    child: Row(
+                                      children: [
+                                        Expanded( // 상자 위젯
+                                          child: Padding(
+                                              padding: EdgeInsets.all(5), // 모든 여백 5 부여
+                                              child: Image.asset(('assets/due_babyInfo.png')) // 버튼 왼쪽 이미지
+                                          )
+                                          ,flex: 1,), // 영역비율 1 부여
+                                        Expanded(
+                                          child:Text('출산 예정일',style: TextStyle(color: Colors.black),)
+                                          ,flex: 2,), // 영역 비율 2 부여
+                                        Expanded(
+                                            child: Container(),flex:1 // 중간 공백 비율 2 부여
+                                        ),
+                                        Expanded(
+                                          child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                              fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                              child :Text(babies_birth,style: TextStyle(color: Colors.black),)) // 설정된 출산 예정일의 정보
+                                          ,flex: 2,), // 영역 비율 2 부여
+                                        Expanded(
+                                            child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
+                                        )
+                                      ],
+                                    )
+                                )
+                            )
+                            ,flex: 2,), // 영역 비율 2 부여
+                          Expanded(
+                            child: Container(
+                                height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
+                                width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
+                                padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
+                                child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
+                                    onPressed: (){
+                                      popup('엄마 이름');
+                                    }, // 버튼을 눌렀을 때 실행될 함수 지정
+                                    child: Row(
+                                      children: [
+                                        Expanded( // 상자 위젯
+                                          child: Padding(
+                                              padding: EdgeInsets.all(5), // 모든 여백 5 부여
+                                              child: Image.asset(('assets/mother_babyInfo.png')) // 버튼 왼쪽 이미지
+                                          )
+                                          ,flex: 1,), // 영역비율 1 부여
+                                        Expanded(
+                                          child:Text('엄마 이름',style: TextStyle(color: Colors.black),)
+                                          ,flex: 2,), // 영역 비율 2 부여
+                                        Expanded(
+                                            child: Container(),flex:2 // 중간 공백 비율 2 부여
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                                fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                                child :Text('${babies_mother}',style: TextStyle(color: Colors.black),)),
+                                          ) // 설정된 엄마의 정보
+                                          ,flex: 2,), // 영역 비율 2 부여
+                                        Expanded(
+                                            child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
+                                        )
+                                      ],
+                                    )
+                                )
+                            )
+                            ,flex: 2,), // 영역 비율 2 부여
+                          Expanded(
+                            child: Container(
+                                height: MediaQuery.of(context).size.width, // 위젯의 높이를 화면 너비로 동일설정
+                                width: MediaQuery.of(context).size.width*0.77, // 위젯의 너비를 화면 너비*0.77로 동일설정
+                                padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
+                                child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
+                                    onPressed: (){
+                                      popup('아빠 이름');
+                                    }, // 버튼을 눌렀을 때 실행될 함수 지정
+                                    child: Row(
+                                      children: [
+                                        Expanded( // 상자 위젯
+                                          child: Padding(
+                                              padding: EdgeInsets.all(5), // 모든 여백 5 부여
+                                              child: Image.asset(('assets/father_babyInfo.png')) // 버튼 왼쪽 이미지
+                                          )
+                                          ,flex: 1,), // 영역비율 1 부여
+                                        Expanded(
+                                          child:Text('아빠 이름',style: TextStyle(color: Colors.black),)
+                                          ,flex: 2,), // 영역 비율 2 부여
+                                        Expanded(
+                                            child: Container(),flex:2 // 중간 공백 비율 2 부여
+                                        ),
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                                fit: BoxFit.scaleDown, // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                                child :Text('${babies_father}',style: TextStyle(color: Colors.black),)),
+                                          ) // 설정된 아빠의 정보
+                                          ,flex: 2,), // 영역 비율 2 부여
+                                        Expanded(
+                                            child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)
+                                        )
+                                      ],
+                                    )
+                                )
+                            )
+                            ,flex: 2,) // 영역 비율 2 부여
+                        ],
+                      )
+                      ,flex: 10),// 위젯이 차지할 영역 비율 10
+                  Expanded(
+                      child: Row( // 로우 위젯
+                        children: [
+                          Expanded(
+                            child: Container(),flex: 1, // 좌측 여백을 위해 영역 비율 1 부여
+                          ),
+                          Expanded(
+                              child: Container(
+                                  height: MediaQuery.of(context).size.width*0.8, // 위젯의 높이를 화면 너비*0.8로 설정
+                                  padding: EdgeInsets.fromLTRB(0, 60, 40, 60), // 우측40 상하60 여백을 줌
+                                  child: OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
+                                      onPressed: (){
+                                        showDialog(
+                                            context: context,
+                                            barrierColor: Colors.grey.withOpacity(0.6),
+                                            builder: (BuildContext context){
+                                              return  AlertDialog(
+                                                title: Text(''), // 상단 여백
+                                                content: Text('정말로 삭제하시겠습니까?',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                                actions: [
+                                                  OutlinedButton(
+                                                    onPressed: (){
+                                                      Navigator.of(context).pop(); // 팝업 닫기
+                                                    }, child: Text('아니오',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                                  ),
+                                                  OutlinedButton(
+                                                    onPressed: () async{
+                                                      await baby_delete()==1?
+                                                      showDialog(
+                                                          context: context,
+                                                          barrierColor: Colors.grey.withOpacity(0.6),
+                                                          builder: (BuildContext context){
+                                                            return AlertDialog(
+                                                              title: Text(''),
+                                                              content: Text('아이가 삭제되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                                              actions: [
+                                                                OutlinedButton(
+                                                                    onPressed: (){
+                                                                      Navigator.of(context).pop();
+                                                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
+                                                                    },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
+                                                                )
+                                                              ],
+                                                            );
+                                                          }
+                                                      ):
+                                                      showDialog(
+                                                          context: context,
+                                                          barrierColor: Colors.grey.withOpacity(0.6),
+                                                          builder: (BuildContext context){
+                                                            return AlertDialog(
+                                                              title: Text(''),
+                                                              content: Text('오류 발생',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                                              actions: [
+                                                                OutlinedButton(
+                                                                    onPressed: (){
+                                                                      Navigator.of(context).pop();
+                                                                    },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
+                                                                )
+                                                              ],
+                                                            );
+                                                          }
+                                                      );
+                                                    }, child: Text('네',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                                  )
+                                                ],
+                                              );
+                                            }
+                                        );
+                                      }, // 버튼을 눌렀을 때 실행될 함수 지정
+                                      child: Text('삭제', style: TextStyle(color: Colors.black),)
+                                  )
+                              ),
+                              flex:3), // 영역 비율 3 부여
+                          Expanded(
+                              child: Container(
+                                height: MediaQuery.of(context).size.width*0.8, // 위젯의 높이를 화면 너비*0.8로 설정
+                                padding: EdgeInsets.fromLTRB(40, 60, 0, 60), // 좌측40 상하60 여백을 줌
+                                child: (babies != baby[0]['BABYNAME'] && babies_birth != baby[0]['EXPECTEDDATE'] && babies_mother != baby[0]['MOMNAME'] && babies_father != baby[0]['DADNAME']) ? // 기존 정보와 같은지 다른지 판별
+                                OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
+                                    onPressed: () async {
+                                      await baby_modify()==1? // 아이 정보를 수정할 때 나오는 팝업이 return이 느려 await 할당
+                                      showDialog( // 팝업 위젯
                                           context: context,
                                           barrierColor: Colors.grey.withOpacity(0.6),
                                           builder: (BuildContext context){
                                             return  AlertDialog(
                                               title: Text(''), // 상단 여백
-                                              content: Text('정말로 삭제하시겠습니까?',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                              content: Text('아이가 정보가 저장되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
                                               actions: [
                                                 OutlinedButton(
                                                   onPressed: (){
                                                     Navigator.of(context).pop(); // 팝업 닫기
-                                                  }, child: Text('아니오',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                                                ),
+                                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
+                                                  }, child: Text('확인', style: TextStyle(color: Colors.black),),
+                                                )
+                                              ],
+                                            );
+                                          }
+                                      ):
+                                      showDialog( // 팝업 위젯
+                                          context: context,
+                                          barrierColor: Colors.grey.withOpacity(0.6),
+                                          builder: (BuildContext context){
+                                            return  AlertDialog(
+                                              title: Text(''), // 상단 여백
+                                              content: Text('오류 발생',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                              actions: [
                                                 OutlinedButton(
-                                                  onPressed: () async{
-                                                    await baby_delete()==1?
-                                                    showDialog(
-                                                        context: context,
-                                                        barrierColor: Colors.grey.withOpacity(0.6),
-                                                        builder: (BuildContext context){
-                                                          return AlertDialog(
-                                                            title: Text(''),
-                                                            content: Text('아이가 삭제되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                                                            actions: [
-                                                              OutlinedButton(
-                                                                  onPressed: (){
-                                                                    Navigator.of(context).pop();
-                                                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
-                                                                  },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
-                                                              )
-                                                            ],
-                                                          );
-                                                        }
-                                                    ):
-                                                    showDialog(
-                                                        context: context,
-                                                        barrierColor: Colors.grey.withOpacity(0.6),
-                                                        builder: (BuildContext context){
-                                                          return AlertDialog(
-                                                            title: Text(''),
-                                                            content: Text('오류 발생',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                                                            actions: [
-                                                              OutlinedButton(
-                                                                  onPressed: (){
-                                                                    Navigator.of(context).pop();
-                                                                  },child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
-                                                              )
-                                                            ],
-                                                          );
-                                                        }
-                                                    );
-                                                  }, child: Text('네',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                                  onPressed: (){
+                                                    Navigator.of(context).pop(); // 팝업 닫기
+                                                  }, child: Text('확인', style: TextStyle(color: Colors.black),),
                                                 )
                                               ],
                                             );
                                           }
                                       );
                                     }, // 버튼을 눌렀을 때 실행될 함수 지정
-                                    child: Text('삭제', style: TextStyle(color: Colors.black),)
-                                )
-                            ),
-                            flex:3), // 영역 비율 3 부여
-                        Expanded(
-                            child: Container(
-                              height: MediaQuery.of(context).size.width*0.8, // 위젯의 높이를 화면 너비*0.8로 설정
-                              padding: EdgeInsets.fromLTRB(40, 60, 0, 60), // 좌측40 상하60 여백을 줌
-                              child: (babies != baby[0]['BABYNAME'] && babies_birth != baby[0]['EXPECTEDDATE'] && babies_mother != baby[0]['MOMNAME'] && babies_father != baby[0]['DADNAME']) ? // 기존 정보와 같은지 다른지 판별
-                              OutlinedButton( // 버튼을 눌렀을 때 실행될 함수 지정
-                                  onPressed: () async {
-                                    await baby_modify()==1? // 아이 정보를 수정할 때 나오는 팝업이 return이 느려 await 할당
-                                    showDialog( // 팝업 위젯
+                                    child: Text('확인', style: TextStyle(color: Colors.black),)
+                                ):
+                                OutlinedButton(
+                                  onPressed: (){
+                                    showDialog(
                                         context: context,
                                         barrierColor: Colors.grey.withOpacity(0.6),
                                         builder: (BuildContext context){
-                                          return  AlertDialog(
-                                            title: Text(''), // 상단 여백
-                                            content: Text('아이가 정보가 저장되었습니다',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
+                                          return AlertDialog(
+                                            title: Text(''),
+                                            content: Text('등록 정보를 전부 입력해 주세요',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
                                             actions: [
                                               OutlinedButton(
-                                                onPressed: (){
-                                                  Navigator.of(context).pop(); // 팝업 닫기
-                                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
-                                                }, child: Text('확인', style: TextStyle(color: Colors.black),),
-                                              )
-                                            ],
-                                          );
-                                        }
-                                    ):
-                                    showDialog( // 팝업 위젯
-                                        context: context,
-                                        barrierColor: Colors.grey.withOpacity(0.6),
-                                        builder: (BuildContext context){
-                                          return  AlertDialog(
-                                            title: Text(''), // 상단 여백
-                                            content: Text('오류 발생',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                                            actions: [
-                                              OutlinedButton(
-                                                onPressed: (){
-                                                  Navigator.of(context).pop(); // 팝업 닫기
-                                                }, child: Text('확인', style: TextStyle(color: Colors.black),),
+                                                  onPressed: (){
+                                                    Navigator.of(context).pop();
+                                                  }, child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
                                               )
                                             ],
                                           );
                                         }
                                     );
-                                  }, // 버튼을 눌렀을 때 실행될 함수 지정
-                                  child: Text('확인', style: TextStyle(color: Colors.black),)
-                              ):
-                              OutlinedButton(
-                                onPressed: (){
-                                  showDialog(
-                                      context: context,
-                                      barrierColor: Colors.grey.withOpacity(0.6),
-                                      builder: (BuildContext context){
-                                        return AlertDialog(
-                                          title: Text(''),
-                                          content: Text('등록 정보를 전부 입력해 주세요',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,),
-                                          actions: [
-                                            OutlinedButton(
-                                                onPressed: (){
-                                                  Navigator.of(context).pop();
-                                                }, child: Text('확인',style: TextStyle(color: Color(0xFF835529)),textAlign: TextAlign.center,)
-                                            )
-                                          ],
-                                        );
-                                      }
-                                  );
-                                }, child: Text('확인', style: TextStyle(color: Colors.black),),
+                                  }, child: Text('확인', style: TextStyle(color: Colors.black),),
+                                ),
                               ),
-                            ),
-                            flex:3), // 영역 비율 3 부여
-                        Expanded(
-                          child: Container(),flex: 1, // 아래 여백을 위해 영역 비율 1 부여
-                        )
-                      ],
-                    )
-                    ,flex: 5), // Column 에서 위젯이 차지할 영역 비율 5
-                Expanded(
-                  child: Container(),flex: 2, // Column 에서 아래 여백을 위해 영역 비율 2 부여
-                )
-              ],
-            );
-          }else if(snapshot.hasError){
-            return Center(child: Text('아이를 선택하지 않았습니다!',style: TextStyle(color: Colors.black),));
-          }
-          return Center(child: const CircularProgressIndicator(color: Colors.grey,),); // 데이터를 불러오는 동안 보여주는 화면 (버퍼링 위젯)
-        },
+                              flex:3), // 영역 비율 3 부여
+                          Expanded(
+                            child: Container(),flex: 1, // 아래 여백을 위해 영역 비율 1 부여
+                          )
+                        ],
+                      )
+                      ,flex: 5), // Column 에서 위젯이 차지할 영역 비율 5
+                  Expanded(
+                    child: Container(),flex: 2, // Column 에서 아래 여백을 위해 영역 비율 2 부여
+                  )
+                ],
+              );
+            }else if(snapshot.hasError){
+              return Center(child: Text('아이를 선택하지 않았습니다!',style: TextStyle(color: Colors.black),));
+            }
+            return Center(child: const CircularProgressIndicator(color: Colors.grey,),); // 데이터를 불러오는 동안 보여주는 화면 (버퍼링 위젯)
+          },
+        ),
       ),
     );
   }
