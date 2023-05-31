@@ -106,6 +106,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
               ElevatedButton(
                 child: Text('확인'),
                 onPressed: () {
+                  deleteDiary();
                   Navigator.of(context).pop(); // 팝업 닫기
                 },
               ),
@@ -126,6 +127,22 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
     }
   }
 
+  Future<void> deleteDiary() async {
+    final uri = Uri.parse('http://182.219.226.49/moms/diary/delete');
+    final headers = {'Content-Type' : 'application/json'};
+
+    final clientNum = widget.UserNum;
+    final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
+
+    final body = jsonEncode({'clientNum': clientNum, 'diary_date': Date});
+    final response = await http.post(uri, headers: headers, body: body);
+
+    if(response.statusCode == 200){
+
+    } else {
+
+    }
+  }
 
   Future<void> UploadContent() async {
     final uri = Uri.parse('http://182.219.226.49/moms/diary/register');

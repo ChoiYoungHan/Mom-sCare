@@ -7,6 +7,7 @@ import 'package:care_application/my_page.dart';
 import 'package:care_application/print_diary.dart';
 import 'package:care_application/timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -67,7 +68,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
       if(jsonData['success'] == true){
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => print_diary(selectedDate: selectedDate, userNum: widget.UserNum, index: widget.index)));
       } else if(jsonData['success'] == false) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate, userNum: widget.UserNum, index: widget.index)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate, userNum: widget.UserNum)));
       }
 
     } else {
@@ -95,6 +96,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
                     child: Text('예'),
                     onPressed: () {
                       Navigator.of(context).pop(true); // 다이얼로그를 닫고 뒤로 이동합니다.
+                      SystemNavigator.pop();
                     },
                   ),
                 ],

@@ -7,6 +7,7 @@ import 'package:care_application/my_page.dart';
 import 'package:care_application/week_info.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 
 class Home_Page extends StatelessWidget {
@@ -117,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text('예'),
                     onPressed: () {
                       Navigator.of(context).pop(true); // 다이얼로그를 닫고 뒤로 이동합니다.
+                      SystemNavigator.pop();
                     },
                   ),
                 ],

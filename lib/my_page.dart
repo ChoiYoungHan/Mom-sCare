@@ -98,6 +98,7 @@ class _MyPageState extends State<MyPage> {
                   child: Text('예'),
                   onPressed: () {
                     Navigator.of(context).pop(true); // 다이얼로그를 닫고 뒤로 이동합니다.
+                    SystemNavigator.pop();
                   },
                 ),
               ],

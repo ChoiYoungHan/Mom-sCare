@@ -7,6 +7,7 @@ import 'package:care_application/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'find_ID.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
@@ -122,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text('예'),
                     onPressed: () {
                       Navigator.of(context).pop(true); // 다이얼로그를 닫고 뒤로 이동합니다.
+                      SystemNavigator.pop();
                     },
                   ),
                 ],

@@ -39,6 +39,8 @@ class _printdiary_PageState extends State<printdiary_Page> {
 
   List<String> imageList = [];
 
+  bool receive = true;
+
   Future<Response> receiveData() async {
     final uri = Uri.parse('http://182.219.226.49/moms/diary');
     final headers = {'Content-Type': 'application/json'};
@@ -51,34 +53,37 @@ class _printdiary_PageState extends State<printdiary_Page> {
     final body = jsonEncode({'clientNum': ClientNum, 'diary_date': diary_date});
     final response = await http.post(uri, headers: headers, body: body);
 
-    if(response.statusCode == 200){
-
+    if (response.statusCode == 200) {
       var jsonData = jsonDecode(response.body);
 
-      if(jsonData['success'] == true){
+      if (jsonData['success'] == true) {
         print(utf8.decode(jsonData['content'].runes.toList()));
-        print(utf8.decode(jsonData['imageURL'].runes.toList()));
-        // http://182.219.226.49/image/
 
         _content = utf8.decode(jsonData['content'].runes.toList());
-
         _controller.text = _content;
 
-        imageList.clear();
-        imageList.addAll(utf8.decode(jsonData['imageURL'].runes.toList()).split('/'));
-        imageList.removeLast();
+        if (jsonData.containsKey('imageURL')) {
+          print(utf8.decode(jsonData['imageURL'].runes.toList()));
 
-        print(imageList);
+          imageList.clear();
+          imageList.addAll(utf8.decode(jsonData['imageURL'].runes.toList()).split('/'));
+          imageList.removeLast();
 
+          print(imageList);
+
+          receive = false;
+        } else {
+
+        }
       } else {
-
+        // 처리 실패 시의 동작 추가
       }
-
     } else {
-
+      // 요청 실패 시의 동작 추가
     }
     return response;
   }
+
 
   Future<void> deleteDiary() async {
     final uri = Uri.parse('http://182.219.226.49/moms/diary/delete');
@@ -114,9 +119,6 @@ class _printdiary_PageState extends State<printdiary_Page> {
 
   @override
   Widget build(BuildContext context) {
-
-    _controller.text = _content;
-
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index)));
@@ -211,7 +213,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
                                 )
                             ), flex: 2);
                           } else {
-                            return Expanded(
+                            return receive == false ? Expanded(
                               child: Container(
                                 padding: EdgeInsets.all(5),
                                 width: MediaQuery.of(context).size.width * 0.97,
@@ -221,7 +223,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
                                 ),
                               ),
                               flex: 2,
-                            );
+                            ) : Container() ;
                           }
                         }
                     )
