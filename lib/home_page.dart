@@ -157,6 +157,7 @@ class _HomePageState extends State<HomePage> {
                                           itemCount: b_babyname.length,
                                           controller: PageController(initialPage: widget.index),
                                           itemBuilder: (context, index){
+                                            var currentWeek = b_week[index];
                                             currentIndex = index;
                                             return Row(
                                                 mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
@@ -213,10 +214,13 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         Padding( // 여백을 주기 위해 사용하는 위젯
                                           padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
-                                          child: Image.asset('assets/baby.png', // 이미지를 불러옴
-                                              width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%만큼 너비를 줌
-                                              height: MediaQuery.of(context).size.height * 0.23, // 화면 세로 길이의 20%만큼 높이를 줌
-                                              color: Colors.grey // 색상은 회색
+                                          child: FittedBox(
+                                            fit: BoxFit.contain, // 이미지를 부모 위젯에 맞게 조절
+                                            child: Image.asset('assets/baby.png', // 이미지를 불러옴
+                                                width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%만큼 너비를 줌
+                                                height: MediaQuery.of(context).size.height * 0.18, // 화면 세로 길이의 20%만큼 높이를 줌
+                                                color: Colors.grey // 색상은 회색
+                                            ),
                                           ),
                                         ),
                                         Text('아기 등록하기', style: TextStyle(color: Colors.grey, fontSize: 20, fontWeight: FontWeight.bold)) // 색상은 회색, 크기 20, 볼드체

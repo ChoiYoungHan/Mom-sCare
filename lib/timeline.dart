@@ -50,9 +50,6 @@ class _TimeLineState extends State<TimeLine> {
 
       var jsonData = jsonDecode(response.body);
 
-      if(jsonData['success']==false){
-        print('저장값 없음');
-      }
       Diary_Date.clear();
       Image_URL.clear();
       jsonData.forEach((element){
@@ -101,7 +98,10 @@ class _TimeLineState extends State<TimeLine> {
                   body: SafeArea( // MediaQuery를 통해 앱의 실제 화면 크기를 계산하고 이를 영역으로 삼아 내용을 표시
                       child: Padding( // 여백을 주기 위해 사용하는 위젯
                         padding: EdgeInsets.all(5), // 모든 면의 여백을 5만큼 줌
-                        child: Container( // 상자 위젯
+                        child: Diary_Date.isEmpty ? Center(
+                          child: Text('다이어리에 등록된 이미지가 없습니다.')
+                        )
+                        : Container( // 상자 위젯
                             child: ListView.builder( // 리스트뷰 위젯
                                 itemCount: Diary_Date.length, // 리스트아이템 개수
                                 itemBuilder: (context, index){
@@ -153,7 +153,7 @@ class _TimeLineState extends State<TimeLine> {
                                                           final urls = url[index];
                                                           return GestureDetector(
                                                             onTap: (){
-                                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: url, Index: index)));
+                                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: url, Index: index)));
                                                             },
                                                             child: Container( // 상자 위젯
                                                                 margin: EdgeInsets.all(2), // 모든 면의 마진을 2만큼 줌

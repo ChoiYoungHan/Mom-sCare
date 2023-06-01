@@ -84,8 +84,19 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
 
     String link = 'http://182.219.226.49/upload/images';
 
-    final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
+    final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day.toString().padLeft(2, "0")}';
     final Client_Num = widget.UserNum;
+
+    if (imageList.isEmpty) {
+      // imageList가 비어있을 경우에는 요청을 수행하지 않고 바로 처리합니다.
+      print('No images to upload');
+      Navigator.of(context, rootNavigator: true).pop(); // 모달 닫기
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => print_diary(selectedDate: widget.selectedDate, userNum: widget.UserNum, index: widget.index),
+      ));
+      return;
+    }
+
 
     var request = http.MultipartRequest('POST', Uri.parse(link));
     request.fields.addAll({'diary_date': Date, 'clientNum': Client_Num.toString()});
@@ -145,22 +156,44 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
   }
 
   Future<void> UploadContent() async {
-    final uri = Uri.parse('http://182.219.226.49/moms/diary/register');
-    final headers = {'Content-Type' : 'application/json'};
 
-    final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
-    final Client_Num = widget.UserNum;
-    final Content = inputDiary.text;
-
-    // clientNum, diary_date, content
-    final body = jsonEncode({'diary_date': Date, 'clientNum': Client_Num, 'content': Content});
-    final response = await http.post(uri, headers: headers, body: body);
-
-    if(response.statusCode == 200){
-      DiaryUpload(context);
+    if(inputDiary.text.isEmpty){
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('공백오류'),
+          content: Text('다이어리 내용을 작성해주세요.'),
+          actions: [
+            ElevatedButton(
+              child: Text('확인'),
+              onPressed: () {
+                deleteDiary();
+                Navigator.of(context).pop(); // 팝업 닫기
+              },
+            ),
+          ],
+        );
+      });
     } else {
+      final uri = Uri.parse('http://182.219.226.49/moms/diary/register');
+      final headers = {'Content-Type' : 'application/json'};
 
+      final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
+      final Client_Num = widget.UserNum;
+      final Content = inputDiary.text;
+
+      // clientNum, diary_date, content
+      final body = jsonEncode({'diary_date': Date, 'clientNum': Client_Num, 'content': Content});
+      final response = await http.post(uri, headers: headers, body: body);
+
+      if(response.statusCode == 200){
+        DiaryUpload(context);
+      } else {
+
+      }
     }
+
   }
 
 

@@ -200,7 +200,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
                                     itemBuilder: (context, index){
                                       return GestureDetector(
                                         onTap: (){
-                                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: imageList, Index: index)));
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => FullscreenImagePage(imageUrl: imageList, Index: index)));
                                         },
                                         child: Container(
                                             margin: EdgeInsets.all(3),

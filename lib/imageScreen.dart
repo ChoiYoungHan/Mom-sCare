@@ -24,35 +24,42 @@ class _FullscreenImagePageState extends State<FullscreenImagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
-              icon: Icon(Icons.arrow_back, color: Colors.grey)
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop();
+
+        return false;
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            leading: IconButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(Icons.arrow_back, color: Colors.grey)
+            ),
           ),
-        ),
-        body: PageView.builder(
-          controller: controller,
-          itemCount: widget.imageUrl.length,
-          onPageChanged: (int index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-                child: CachedNetworkImage(
-                    imageUrl: 'http://182.219.226.49/image/' + widget.imageUrl[index],
-                    fit: BoxFit.contain,
-                    placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => Icon(Icons.error)
-                )
-            );
-          },
-        )
+          body: PageView.builder(
+            controller: controller,
+            itemCount: widget.imageUrl.length,
+            onPageChanged: (int index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                  child: CachedNetworkImage(
+                      imageUrl: 'http://182.219.226.49/image/' + widget.imageUrl[index],
+                      fit: BoxFit.contain,
+                      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) => Icon(Icons.error)
+                  )
+              );
+            },
+          )
+      ),
     );
   }
 }

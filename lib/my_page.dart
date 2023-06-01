@@ -126,10 +126,10 @@ class _MyPageState extends State<MyPage> {
                         itemCount: snapshot.data!.length, // 데이터의 길이만큼을 카운트함
                         itemBuilder: (context, index){
                           return Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                            padding: const EdgeInsets.fromLTRB(5,10,5,0),
                             child: Container(
-                              width: 50, // 너비 120
-                              height: 50, // 높이 50
+                              width: 100, // 너비 120
+                              height: 40, // 높이 50
                               child: OutlinedButton(
                                   onPressed: (){
                                     setState(() {
@@ -143,15 +143,16 @@ class _MyPageState extends State<MyPage> {
                                     children: [
                                       Expanded(
                                         //child: Text('${snapshot.data![index]['TITLE']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.left), // 문의 내용이 적힌 버튼,
-                                        child: Image.asset('assets/baby_babyInfo.png'),
-                                        flex: 2,),
-                                      Expanded(
-                                        child: Container(),flex: 1,
-                                      ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Image.asset('assets/baby_babyInfo.png'),
+                                        ),
+                                        flex: 2),
                                       Expanded(
                                         //child: Container(),
                                         child: Text('${snapshot.data![index]['BABYNAME']}',style: TextStyle(color: Colors.black),textAlign: TextAlign.right), // 아이의 이름
-                                        flex: 1,),
+                                        flex: 1
+                                      )
                                     ],
                                   )
                               ),
@@ -166,7 +167,6 @@ class _MyPageState extends State<MyPage> {
                   },
                 )
                 ,flex: 2), // 위젯이 차지할 영역 비율 2
-            Expanded(child:Container(),flex:1),
             Expanded(
                 child: Row( // 가로 위젯
                   children: [
