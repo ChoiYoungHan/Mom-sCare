@@ -89,9 +89,8 @@ class _NoticeState extends State<Notice> {
                             height: 50,
                             child: OutlinedButton(
                                 onPressed: (){
-                                  setState(() {
-                                    noticeNum = snapshot.data![index]['NOTICENO']; // 클릭한 공지사항의 번호를 입력 받는다
-                                  });
+                                  noticeNum = snapshot.data![index]['NOTICENO']; // 클릭한 공지사항의 번호를 입력 받는다
+                                  print('noticeNum은 ' + noticeNum.toString());
                                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice_records(userNum: widget.UserNum, noticeNum: noticeNum, index: widget.index))); // 공지내용으로 이동
                                 },
                                 child: Row(

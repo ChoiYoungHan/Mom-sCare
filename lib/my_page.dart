@@ -45,6 +45,8 @@ class _MyPageState extends State<MyPage> {
   var baby_num;
   var baby_index;
 
+  var info_babynum;
+
   bool selectedButton = false;
 
   final List<String> babies = <String>['A','B','C','D','E','F','G','H','I']; // 추후 받아올 아이 정보
@@ -78,7 +80,6 @@ class _MyPageState extends State<MyPage> {
 
   @override
   Widget build(BuildContext context) {
-
     print('my페이지에서 받아온 index는 ' + widget.index.toString() + ' 입니다.');
     return WillPopScope(
       onWillPop: () async {
@@ -125,6 +126,7 @@ class _MyPageState extends State<MyPage> {
                         scrollDirection: Axis.horizontal, // 리스트뷰를 가로로 함
                         itemCount: snapshot.data!.length, // 데이터의 길이만큼을 카운트함
                         itemBuilder: (context, index){
+                          (index == widget.index) && !selectedButton ? info_babynum = snapshot.data![index]['BABYNO'] : null;
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(5,10,5,0),
                             child: Container(
@@ -139,6 +141,7 @@ class _MyPageState extends State<MyPage> {
                                       selectedButton = true;
                                     });
                                   },
+                                  style: (index == widget.index) && !selectedButton ? ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)) : (baby_index == index ? ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue)) : null),
                                   child: Column(
                                     children: [
                                       Expanded(
@@ -178,7 +181,7 @@ class _MyPageState extends State<MyPage> {
                                 onPressed: (){
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                      builder: (context) => baby_info(userNum: widget.UserNum, babyNum: baby_num, index: selectedButton == true ? baby_index : widget.index),
+                                      builder: (context) => baby_info(userNum: widget.UserNum, babyNum: selectedButton ? baby_num : info_babynum, index: selectedButton == true ? baby_index : widget.index),
                                     ),
                                   );                              }, // 버튼을 눌렀을 때 실행될 함수 지정
                                 child: Text('아기 정보', style: TextStyle(color: Colors.black),)

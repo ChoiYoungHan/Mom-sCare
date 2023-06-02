@@ -43,6 +43,8 @@ class _NoticeRecordsState extends State<NoticeRecords> {
     final uri = Uri.parse('http://182.219.226.49/moms/notice-info');
     final headers = {'Content-Type': 'application/json'};
 
+    print(widget.NoticeNum);
+
     final noticeNum=widget.NoticeNum;
 
     final body = jsonEncode({'noticeNo': noticeNum});
@@ -79,7 +81,7 @@ class _NoticeRecordsState extends State<NoticeRecords> {
               title: Text('공지사항', style: TextStyle(color: Colors.grey)), // 상단 바 글자색을 검정색으로 설정
               leading: IconButton(onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => notice(userNum: widget.UserNum, index: widget.index))); // 공지사항 페이지로 이동
-              }, icon: Icon(Icons.arrow_back, color: Colors.black,),
+              }, icon: Icon(Icons.arrow_back, color: Colors.black),
               )
           ),
           body: FutureBuilder(
@@ -89,29 +91,29 @@ class _NoticeRecordsState extends State<NoticeRecords> {
                 return Column(
                   children: [
                     Expanded(
-                      child: Container(), flex: 1,
+                      child: Container(), flex: 1
                     ),
                     Expanded(
                       child: Row(
                         children: [
                           Expanded(
-                            child: Container(), flex: 1,
+                            child: Container(), flex: 1
                           ),
                           Expanded(
                             child: Container(
-                                child: Text('${Notice_Title}',style: TextStyle(fontSize: 30),)
+                                child: FittedBox(child: Text('${Notice_Title}',style: TextStyle(fontSize: 30)))
                             ),
                             flex: 1,),
                           Expanded(
-                            child: Container(), flex: 2,
+                            child: Container(), flex: 2
                           ),
                           Expanded(
                             child: Container(
-                                child: Text('${date_}')
+                                child: FittedBox(child: Text('${date_}'))
                             ),
                             flex: 1,),
                           Expanded(
-                            child: Container(), flex: 1,
+                            child: Container(), flex: 1
                           ),
                         ],
                       ),
@@ -135,8 +137,8 @@ class _NoticeRecordsState extends State<NoticeRecords> {
                     ),
                   ],
                 );
-              }else if(snapshot.hasError){
-                return Center(child: Text('아이를 등록해주세요',style: TextStyle(color: Colors.black),));
+              } else if(snapshot.hasError){
+                return Center(child: Text('등록된 공지사항이 없습니다.',style: TextStyle(color: Colors.black),));
               }
               return Center(child: const CircularProgressIndicator(color: Colors.grey,),); // 데이터를 불러오는 동안 보여주는 화면 (버퍼링 위젯)
             },
