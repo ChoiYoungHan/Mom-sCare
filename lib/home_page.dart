@@ -36,7 +36,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  var babyname, week, dday, exist, currentIndex;
+  var babyname, week, dday, exist, currentIndex, currentWeek;
 
   List<String> b_babyname = [];
   List<String> b_expectteddate = [];
@@ -152,14 +152,86 @@ class _HomePageState extends State<HomePage> {
                                           border: Border.all(color: Colors.grey, width: 2)
                                       ),
                                       child: PageView.builder(
-                                          physics: PageScrollPhysics(),
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: b_babyname.length,
-                                          controller: PageController(initialPage: widget.index),
-                                          itemBuilder: (context, index){
-                                            var currentWeek = b_week[index];
-                                            currentIndex = index;
-                                            return Row(
+                                        physics: PageScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: b_babyname.length,
+                                        controller: PageController(initialPage: widget.index),
+                                        itemBuilder: (context, index){
+                                          currentWeek = b_week[index];
+                                          currentIndex = index;
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                                height: 28,
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: [Color(0xFF3366FF).withOpacity(0.3), Color(0xFF00CCFF).withOpacity(0.3)],
+                                                    begin: Alignment.topLeft,
+                                                    end: Alignment.bottomRight,
+                                                  ),
+                                                ),
+                                                child: Center(
+                                                  child: Expanded(
+                                                    child: FittedBox(
+                                                      child: RichText(
+                                                        text: TextSpan(
+                                                          text: '이번주는 임신 ',
+                                                          style: TextStyle(color: Colors.grey, fontSize: 18),
+                                                          children: <TextSpan>[
+                                                            TextSpan(
+                                                              text: '$currentWeek주차',
+                                                              style: TextStyle(color: Colors.blue, fontSize: 20)
+                                                            ),
+                                                            TextSpan(
+                                                              text: ' 입니다.',
+                                                              style: TextStyle(color: Colors.grey, fontSize: 18)
+                                                            )
+                                                          ]
+                                                        )
+                                                      ),
+                                                    ),
+                                                  )
+                                                )
+                                              ),
+                                              Expanded(
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.all(15),
+                                                      child: Image.asset('assets/newborn.png',
+                                                        width: MediaQuery.of(context).size.width * 0.37,
+                                                        height: MediaQuery.of(context).size.height * 0.45
+                                                      )
+                                                    ),
+                                                    Expanded(
+                                                      child: Container(
+                                                        child: Padding(
+                                                          padding: EdgeInsets.all(5),
+                                                          child: Column(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Expanded(child: FittedBox(child: Text(b_babyname[index].toString() + '님과', style: TextStyle(color: Colors.grey, fontSize: 23)))),
+                                                              SizedBox(height: 2),
+                                                              Expanded(child: FittedBox(child: Text('만남까지', style: TextStyle(color: Colors.grey, fontSize: 23)))),
+                                                              SizedBox(height: 2),
+                                                              Expanded(child: FittedBox(child: Text(b_dday[index].toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 25)))),
+                                                              SizedBox(height: 2),
+                                                              Expanded(child: FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 23)))),
+                                                            ]
+                                                          )
+                                                        )
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              )
+                                            ]
+                                          );
+                                          /*
+                                             Row(
                                                 mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
                                                 children: [
                                                   Padding( // 여백을 주기 위해 사용하는 위젯
@@ -193,6 +265,7 @@ class _HomePageState extends State<HomePage> {
                                                   )
                                                 ]
                                             );
+                                            */
                                           }
                                       )
                                   )
@@ -235,7 +308,7 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                         child: InkWell(
                                           onTap: (){
-                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'baby', week: b_week[0].toString(), index: currentIndex)));
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'baby', week: currentWeek, index: currentIndex)));
                                           },
                                           child: Container( // 상자 위젯
                                               width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌
@@ -263,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                                         padding: EdgeInsets.all(10), // 모든 면의 여백을 10만큼 줌
                                         child: InkWell(
                                           onTap: (){
-                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'moms', week: b_week[0].toString(), index: currentIndex)));
+                                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Week_Info(userNum: widget.UserNum, division: 'moms', week: currentWeek, index: currentIndex)));
                                           },
                                           child: Container( // 상자 위젯
                                               width: MediaQuery.of(context).size.width * 0.45, // 화면 가로 길이의 45%만큼 너비를 줌

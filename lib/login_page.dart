@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:care_application/chatBot.dart';
@@ -56,7 +57,28 @@ class _LoginPageState extends State<LoginPage> {
     final id = inputID.text;
     final pw = inputPW.text;
     final body = jsonEncode({'id': id, 'pw': pw});
-    final response = await http.post(uri, headers: headers, body: body);
+    final response = await http.post(uri, headers: headers, body: body).timeout(Duration(seconds: 20), onTimeout: (){
+      Navigator.of(context, rootNavigator: true).pop();
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('요청 실패'),
+            content: Text('서버와의 연결에 실패하였습니다.'),
+            actions: [
+              ElevatedButton(
+                child: Text('확인'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // 팝업 닫기
+                }
+              )
+            ]
+          );
+        }
+      );
+      throw TimeoutException('업로드 요청이 시간 초과되었습니다.');
+    });
 
     if(response.statusCode == 200){
 

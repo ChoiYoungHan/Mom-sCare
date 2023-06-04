@@ -44,6 +44,37 @@ class _ChatBotState extends State<ChatBot> {
 
   bool ButtonEnabled = true;
 
+  @override
+  void initState(){
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Center(child: Text('챗봇 사용법')),
+            content: Text('<주차별 질문 예시>\n1. N주차의 아기(태아)의 정보를 알고 싶어\n2. N주차의 엄마(산모)의 정보를 알고 싶어'),
+            actions: [
+              Center(
+                child: TextButton(
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('확인', style: TextStyle(color: Colors.black)),
+                  style: ButtonStyle(
+                    minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
+                  )
+                ),
+              )
+            ]
+          );
+        }
+      );
+    });
+  }
+
   void _sendMessage() async {
 
     setState(() {
