@@ -213,13 +213,13 @@ class _HomePageState extends State<HomePage> {
                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                              Expanded(child: FittedBox(child: Text(b_babyname[index].toString() + '님과', style: TextStyle(color: Colors.grey, fontSize: 23)))),
+                                                              Expanded(child: FittedBox(child: Text(b_babyname[index].toString() + '님과', style: TextStyle(color: Colors.grey, fontSize: 18)))),
                                                               SizedBox(height: 2),
-                                                              Expanded(child: FittedBox(child: Text('만남까지', style: TextStyle(color: Colors.grey, fontSize: 23)))),
+                                                              Expanded(child: FittedBox(child: Text('만남까지', style: TextStyle(color: Colors.grey, fontSize: 18)))),
                                                               SizedBox(height: 2),
-                                                              Expanded(child: FittedBox(child: Text(b_dday[index].toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 25)))),
+                                                              Expanded(child: FittedBox(child: Text(b_dday[index].toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 20)))),
                                                               SizedBox(height: 2),
-                                                              Expanded(child: FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 23)))),
+                                                              Expanded(child: FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 18)))),
                                                             ]
                                                           )
                                                         )
@@ -230,43 +230,7 @@ class _HomePageState extends State<HomePage> {
                                               )
                                             ]
                                           );
-                                          /*
-                                             Row(
-                                                mainAxisSize: MainAxisSize.max, // 남은 영역을 모두 사용
-                                                children: [
-                                                  Padding( // 여백을 주기 위해 사용하는 위젯
-                                                      padding: EdgeInsets.all(20), // 모든 면의 여백을 20만큼 줌
-                                                      child: Image.asset('assets/newborn.png', // 이미지 가져오기
-                                                          width: MediaQuery.of(context).size.width * 0.38, // 화면 가로 길이의 38%를 너비로 설정
-                                                          height: MediaQuery.of(context).size.height * 0.45 // 화면 세로 길이의 45%를 높이로 설정
-                                                      )
-                                                  ),
-                                                  Padding( // 여백을 주기 위해 사용하는 위젯
-                                                      padding: EdgeInsets.all(5), // 모든 면의 여백을 5만큼 줌
-                                                      child: Container( // 상자 위젯
-                                                          width: MediaQuery.of(context).size.width * 0.422, // 화면 가로 길이의 42%를 너비로 설정
-                                                          child: Padding( // 여백을 주기 위해 사용하는 위젯
-                                                              padding: EdgeInsets.all(5), // 모든 면의 여백을 5만큼 줌
-                                                              child: Column( // 세로 정렬
-                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                  children: [
-                                                                    FittedBox(child: Text(b_babyname[index].toString() + '님과', style: TextStyle(color: Colors.grey, fontSize: 25))),
-                                                                    SizedBox(height: 5),
-                                                                    FittedBox(child: Text('만남까지', style: TextStyle(color: Colors.grey, fontSize: 25))),
-                                                                    SizedBox(height: 5),
-                                                                    FittedBox(child: Text(b_dday[index].toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 30))),
-                                                                    SizedBox(height: 5),
-                                                                    FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 25))),
-                                                                  ]
-                                                              )
-                                                          )
-                                                      )
-                                                  )
-                                                ]
-                                            );
-                                            */
-                                          }
+                                        }
                                       )
                                   )
                               )

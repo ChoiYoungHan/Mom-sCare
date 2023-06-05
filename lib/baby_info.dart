@@ -33,6 +33,7 @@ List<String> printContent = [];
 class _BabyInfoState extends State<BabyInfo> {
 
   Future<void> _loadData() async {
+
     // 비동기 함수 실행
     await baby_info(); // 함수 실행이 완료될 때까지 기다림
 

@@ -184,7 +184,7 @@ class _WeekInfoState extends State<WeekInfo> {
           builder: (context, snapshot){
             if(snapshot.connectionState == ConnectionState.waiting){
               return Center(
-                  child: CircularProgressIndicator()
+                child: CircularProgressIndicator()
               );
             } else {
               return Scaffold( // 상 중 하를 나누는 위젯

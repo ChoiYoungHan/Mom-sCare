@@ -269,6 +269,7 @@ class _FindPWState extends State<FindPW> {
                             TextField( // 텍스트 필드 위젯
                                 enabled: _Field,
                                 controller: inputPhone, // 입력받은 값은 변수 inputPhone에 저장
+                                keyboardType: TextInputType.number,
                                 decoration: InputDecoration( // 디자인
                                     hintText: '전화번호를 입력해주세요.',
                                     border: OutlineInputBorder( // 모서리에 테두리를 줄 것임
@@ -318,6 +319,7 @@ class _FindPWState extends State<FindPW> {
                                     visible: _checkField,
                                     child: TextField(
                                       controller: inputEmailCheck,
+                                      keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                           hintText: '인증번호를 입력해주세요.',
                                           border: OutlineInputBorder(

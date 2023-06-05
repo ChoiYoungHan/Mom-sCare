@@ -91,11 +91,13 @@ class _FindIDState extends State<FindID> {
           _emailAuth = false;
         });
       } else {
+        Navigator.of(context, rootNavigator: true).pop();
         Popup(context, '일치하는 회원정보가 없습니다.');
       }
 
     } else {
-
+      Navigator.of(context, rootNavigator: true).pop();
+      Popup(context, '일치하는 회원정보가 없습니다.');
     }
   }
 
@@ -248,6 +250,7 @@ class _FindIDState extends State<FindID> {
                         TextField( // 텍스트 필드 위젯
                             enabled: _Field, // 텍스트 필드 위젯 활성화 여부 결정
                             controller: inputPhone, // 입력받은 값은 변수 inputPhone에 저장
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration( // 디자인
                                 hintText: '전화번호를 입력해주세요.',
                                 border: OutlineInputBorder( // 모서리에 테두리를 줄 것임
@@ -297,6 +300,7 @@ class _FindIDState extends State<FindID> {
                                 visible: _checkField,
                                 child: TextField(
                                   controller: inputEmailCheck,
+                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       hintText: '인증번호를 입력해주세요.',
                                       border: OutlineInputBorder(
@@ -329,7 +333,7 @@ class _FindIDState extends State<FindID> {
                             onPressed: (){ // 인증메일 발송 버튼 클릭 시 동작할 코드 작성
                               if(inputName.text == '' || inputPhone.text == '' || inputEmail.text == ''){
                                 Popup(context, '공백없이 입력해주세요.');
-                              } else if(!inputEmail.text.contains('@') && !inputEmail.text.contains('.')){
+                              } else if(!inputEmail.text.contains('@') || !inputEmail.text.contains('.')){
                                 Popup(context, '이메일 형식이 올바르지 않습니다.');
                               } else {
                                 sendEmail();
