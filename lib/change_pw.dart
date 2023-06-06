@@ -46,8 +46,8 @@ class _ChangePwState extends State<ChangePw> {
     final pw_now = PW1.text;
     final pw_change = PW2.text;
     final body = jsonEncode({'clientNum': user_num,'pw': pw_now, 'changepw': pw_change}); // 입력값 받아와야함
+    print("실행함");
     final response = await http.post(uri, headers: headers, body: body);
-    print("실행했음");
     if(response.statusCode == 200){
       print('성공');
       return 1;
@@ -56,36 +56,16 @@ class _ChangePwState extends State<ChangePw> {
     }
   }
 
-  Future Epopup(String message, int check) async {
-    var change_check;
-    if(check == 3) {
-      print(change_check);
-      change_check = await change_password();
-
-      print(change_check);
-      print("뭐자");
-    }
+  Future Epopup(String message) {
       return showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text(""),
-              content: Text(change_check == 1 ? "현재 비밀번호가 일치하지 않습니다" : message),
+              content: Text(message),
               actions: [
                 OutlinedButton(
                     onPressed: () {
-                      if (change_check == 1) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) =>
-                                change_user_info(userNum: widget.UserNum,
-                                    index: widget.index)));
-                        return;
-                      }
-                      else if (change_check == 0) {
-                        print("오류");
-                        Navigator.of(context).pop();
-                        return;
-                      }
                       Navigator.of(context).pop();
                     },
                     child: Text("확인", style: TextStyle(color: Colors.black)))
@@ -94,6 +74,30 @@ class _ChangePwState extends State<ChangePw> {
           }
       );
   }
+
+  Future popup(String messages) async {
+    var change_check = await change_password();
+    return showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text(""),
+            content: Text(change_check == 1 ? messages : "현재 비밀번호가 일치하지 않습니다"),
+            actions: [
+              OutlinedButton(
+                onPressed:(){
+                  if(change_check==1)
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum, index: widget.index))); // 개인정보 변경 페이지로 이동
+                  else
+                    Navigator.of(context).pop();
+                }, child: Text("확인",style: TextStyle(color: Colors.black))
+              )
+            ],
+          );
+        }
+    );
+
+  }
   var check = 0;
 
   @override
@@ -101,7 +105,6 @@ class _ChangePwState extends State<ChangePw> {
     return WillPopScope(
       onWillPop: () async {
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => change_user_info(userNum: widget.UserNum, index: widget.index)));
-
         return false;
       },
       child: Scaffold(
@@ -120,7 +123,7 @@ class _ChangePwState extends State<ChangePw> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.fromLTRB(0,40,0,20),
-                  child: Text("빈칸에 맞에 비밀번호를 입력해주세요",style: TextStyle(color: Colors.black,fontSize: 20)),
+                  child: Text("빈칸에 맞게 비밀번호를 입력해주세요",style: TextStyle(color: Colors.black,fontSize: 20)),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0,5,0,0),
@@ -194,13 +197,13 @@ class _ChangePwState extends State<ChangePw> {
                           if(check==2&&PW1.text!=PW2.text)
                             check = 3;
                           if(check == 0)
-                            Epopup("빈칸 없이 입력해주세요",check);
+                            Epopup("빈칸 없이 입력해주세요");
                           else if(check == 1)
-                            Epopup("변경할 비밀번호와 재입력한 비밀번호가 일치하지 않습니다",check);
+                            Epopup("변경할 비밀번호와 재입력한 비밀번호가 일치하지 않습니다");
                           else if(check == 2)
-                            Epopup("현재 비밀번호와 변경할 비밀번호가 일치하지 않습니다",check);
+                            Epopup("현재 비밀번호와 변경할 비밀번호를 다르게 입력해주세요");
                           else if(check == 3) {
-                            Epopup("비밀변호 변경이 완료되었습니다.",check);
+                            popup("비밀변호 변경이 완료되었습니다.");
                           }
                         },child: Text("확인",style: TextStyle(color: Colors.black))
                     ),
