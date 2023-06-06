@@ -140,9 +140,12 @@ class _BabyInfoState extends State<BabyInfo> {
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          content: TextField(
-            controller: edit,
-            decoration: InputDecoration(hintText: '이름을 입력해주세요.')
+          content: FocusScope(
+            child: TextFormField(
+                autofocus: true,
+              controller: edit,
+              decoration: InputDecoration(hintText: '이름을 입력해주세요.')
+            ),
           ),
           actions: [
             OutlinedButton(

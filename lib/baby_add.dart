@@ -69,23 +69,26 @@ class _BabyAddState extends State<BabyAdd> {
         builder: (BuildContext context){
           return AlertDialog(
             title: Text(edit_value,style: TextStyle(color: Color(0xFF835529)),),backgroundColor: Color(0xFFFFE7BA),
-            content: TextField(
-              maxLength: 15,
-              controller: edit,
-              maxLines: 1, // 한 줄 이상의 텍스트를 입력받지 못하도록 설정
-              textAlign: TextAlign.right, // 오른쪽 성렬
-              style: TextStyle(color:  Color(0xFF835529)),
-              decoration: InputDecoration(
-                  hintText: '${edit_value}을 입력 해주세요',
-                  hintStyle: TextStyle(color: Color(0xFF835529).withOpacity(0.8)),
-                  border: OutlineInputBorder( // 테두리 색상 입히기
-                      borderSide: BorderSide(color: Color(0xFF835529)),
-                      borderRadius: BorderRadius.circular(10) // 각 모서리 둥글게
-                  ),
-                  focusedBorder: OutlineInputBorder( // 텍스트 필드 포커스 시 색변환
-                      borderRadius: BorderRadius.circular(10), // 포커스 시 각 모서리 둥글게
-                      borderSide: BorderSide(color: Color(0xFF835529))
-                  )
+            content: FocusScope(
+              child: TextFormField(
+                autofocus: true,
+                maxLength: 15,
+                controller: edit,
+                maxLines: 1, // 한 줄 이상의 텍스트를 입력받지 못하도록 설정
+                textAlign: TextAlign.right, // 오른쪽 성렬
+                style: TextStyle(color:  Color(0xFF835529)),
+                decoration: InputDecoration(
+                    hintText: '${edit_value}을 입력 해주세요',
+                    hintStyle: TextStyle(color: Color(0xFF835529).withOpacity(0.8)),
+                    border: OutlineInputBorder( // 테두리 색상 입히기
+                        borderSide: BorderSide(color: Color(0xFF835529)),
+                        borderRadius: BorderRadius.circular(10) // 각 모서리 둥글게
+                    ),
+                    focusedBorder: OutlineInputBorder( // 텍스트 필드 포커스 시 색변환
+                        borderRadius: BorderRadius.circular(10), // 포커스 시 각 모서리 둥글게
+                        borderSide: BorderSide(color: Color(0xFF835529))
+                    )
+                ),
               ),
             ),
             actions: [
@@ -126,6 +129,7 @@ class _BabyAddState extends State<BabyAdd> {
         return false;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
             automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
             backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
