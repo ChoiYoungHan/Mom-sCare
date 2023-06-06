@@ -46,33 +46,44 @@ class _ChangePwState extends State<ChangePw> {
     final pw_now = PW1.text;
     final pw_change = PW2.text;
     final body = jsonEncode({'clientNum': user_num,'pw': pw_now, 'changepw': pw_change}); // 입력값 받아와야함
-    print("실행함");
+
     final response = await http.post(uri, headers: headers, body: body);
+
     if(response.statusCode == 200){
-      print('성공');
-      return 1;
+      var jsonData = jsonDecode(response.body);
+
+      print('jsonData'+ jsonData.toString());
+
+      if(jsonData['success'] == false){
+
+        return 0;
+      } else {
+        return 1;
+      }
+
     } else{
+      print('실패');
       return 0;
     }
   }
 
   Future Epopup(String message) {
-      return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(""),
-              content: Text(message),
-              actions: [
-                OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text("확인", style: TextStyle(color: Colors.black)))
-              ],
-            );
-          }
-      );
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(""),
+          content: Text(message),
+          actions: [
+            OutlinedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("확인", style: TextStyle(color: Colors.black)))
+          ],
+        );
+      }
+    );
   }
 
   Future popup(String messages) async {
@@ -188,8 +199,8 @@ class _ChangePwState extends State<ChangePw> {
                     width: 150,
                     height: 50,
                     child: OutlinedButton(
-                        onPressed: (){
-                          print(check);
+                        onPressed: () {
+                          check = 0;
                           if(PW1.text!=""&&PW2.text!=""&&PW3.text!="")
                             check = 1;
                           if(check==1&&PW2.text==PW3.text)
