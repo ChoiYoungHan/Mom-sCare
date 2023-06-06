@@ -203,7 +203,28 @@ class _LoginPageState extends State<LoginPage> {
                             child: ElevatedButton( // 버튼 위젯
                                 onPressed: () async { // 버튼을 누를 시 동작할 코드 작성
                                   if(inputID.text == '' || inputPW.text == ''){
-                                    Popup(context, '공백 없이 입력해주세요.');
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                            content: Container(
+                                                height: 25,
+                                                child: Center(child: FittedBox(child: Text('공백없이 입력해주세요.', style: TextStyle(color: Colors.grey, fontSize: 17))))
+                                            ),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: (){
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Text('확인'),
+                                                  style: ButtonStyle(
+                                                      minimumSize: MaterialStateProperty.all(Size(double.infinity, 50))
+                                                  )
+                                              )
+                                            ]
+                                        );
+                                      }
+                                    );
                                   } else {
                                     sendData();
                                   }
