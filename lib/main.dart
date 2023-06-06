@@ -70,7 +70,7 @@ class _Calendar_PageState extends State<Calendar_Page> {
       if(jsonData['success'] == true){
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => print_diary(selectedDate: selectedDate, userNum: widget.UserNum, index: widget.index)));
       } else if(jsonData['success'] == false) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate, userNum: widget.UserNum)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => input_diary(selectedDate: selectedDate, userNum: widget.UserNum, index: widget.index)));
       }
 
     } else {

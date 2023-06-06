@@ -46,7 +46,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
     final headers = {'Content-Type': 'application/json'};
 
     final ClientNum = widget.UserNum;
-    final diary_date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
+    final diary_date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day.toString().padLeft(2, "0")}';
 
     print(ClientNum + '//' + diary_date);
 

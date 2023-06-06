@@ -179,7 +179,7 @@ class _inputdiary_PageState extends State<inputdiary_Page> {
       final uri = Uri.parse('http://182.219.226.49/moms/diary/register');
       final headers = {'Content-Type' : 'application/json'};
 
-      final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
+      final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day.toString().padLeft(2, "0")}';
       final Client_Num = widget.UserNum;
       final Content = inputDiary.text;
 

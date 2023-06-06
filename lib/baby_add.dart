@@ -333,7 +333,7 @@ class _BabyAddState extends State<BabyAdd> {
                               OutlinedButton(
                                 onPressed: (){
                                   Navigator.of(context).pop(); // 팝업 닫기
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: 0))); // 마이페이지로 이동
                                 }, child: Text('확인'),
                               )
                             ],
