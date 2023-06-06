@@ -130,6 +130,9 @@ class _Calendar_PageState extends State<Calendar_Page> {
                   firstDay: DateTime.utc(2020, 01, 01), // 달력에서 사용할 수 있는 첫 번째 날짜
                   lastDay: DateTime.utc(2123, 12, 31), // 달력에서 사용할 수 있는 마지막 날짜
                   focusedDay: selectedDate ?? DateTime.now(), // 달력에서 현재 표시되어야 하는 월을 결정하는 현재 목표 날짜
+                  onFormatChanged: (format){
+
+                  },
 
                   // 선택한 날짜 정보를 selectedDay 매개변수로 전달받은 뒤, selectedDate 필드에 저장한다.
                   onDaySelected: (selectedDay, focusedDay) {

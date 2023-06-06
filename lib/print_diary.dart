@@ -90,7 +90,7 @@ class _printdiary_PageState extends State<printdiary_Page> {
     final headers = {'Content-Type' : 'application/json'};
 
     final clientNum = widget.UserNum;
-    final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day}';
+    final Date = '${widget.selectedDate.year}-${widget.selectedDate.month.toString().padLeft(2, "0")}-${widget.selectedDate.day.toString().padLeft(2, "0")}';
 
     final body = jsonEncode({'clientNum': clientNum, 'diary_date': Date});
     final response = await http.post(uri, headers: headers, body: body);
