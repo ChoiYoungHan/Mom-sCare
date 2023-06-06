@@ -142,7 +142,7 @@ class _BabyInfoState extends State<BabyInfo> {
         return AlertDialog(
           content: FocusScope(
             child: TextFormField(
-                autofocus: true,
+              autofocus: true,
               controller: edit,
               decoration: InputDecoration(hintText: '이름을 입력해주세요.')
             ),

@@ -93,55 +93,65 @@ class _QuestionRecordsState extends State<QuestionRecords> {
                       Expanded(
                         child: Container(), flex: 1,
                       ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Container(), flex: 2,
-                            ),
-                            Expanded(
-                              child: Container(
-                                  child: Align(alignment:Alignment.centerLeft,child: FittedBox(fit: BoxFit.scaleDown,child: Text('${inquire[0]['TITLE']}',style: TextStyle(fontSize: 30),)))
-                              ),
-                              flex: 5,),
-                            Expanded(
-                              child: Container(), flex: 1,
-                            ),
-                            Expanded(
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Container(),flex: 1,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                          child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text('${inquire[0]['INQUIRE_DATE']}', )
-                                          )
-                                      ),flex: 3,
-                                    )
-                                  ],
-                                ),
-                              flex: 2,),
-                            Expanded(
-                              child: Container(), flex: 2,
-                            ),
-                          ],
-                        ),
-                        flex: 1,),
+                      Padding(
+                        padding:EdgeInsets.fromLTRB(20, 0, 20, 10),
+                        child: Align(alignment:Alignment.center,child: FittedBox(fit: BoxFit.scaleDown,child: Text('${inquire[0]['TITLE']}',style: TextStyle(fontSize: 30),)))
+                      ),
+                      Padding(
+                          padding:EdgeInsets.fromLTRB(0, 0, 60, 20),
+                          child: Align(alignment:Alignment.centerRight,child: FittedBox(fit: BoxFit.scaleDown,child: Text('${inquire[0]['INQUIRE_DATE']}',style: TextStyle(fontSize: 15),)))
+                      ),
+                      // Expanded(
+                      //   child: Row(
+                      //     children: [
+                      //       Expanded(
+                      //         child: Container(), flex: 2,
+                      //       ),
+                      //       Expanded(
+                      //         child: Container(
+                      //             child: Align(alignment:Alignment.centerLeft,child: FittedBox(fit: BoxFit.scaleDown,child: Text('${inquire[0]['TITLE']}',style: TextStyle(fontSize: 30),)))
+                      //         ),
+                      //         flex: 5,),
+                      //       Expanded(
+                      //         child: Container(), flex: 1,
+                      //       ),
+                      //       Expanded(
+                      //           child: Column(
+                      //             children: [
+                      //               Expanded(
+                      //                 child: Container(),flex: 1,
+                      //               ),
+                      //               Expanded(
+                      //                 child: Container(
+                      //                     child: FittedBox(
+                      //                         fit: BoxFit.scaleDown,
+                      //                         child: Text('${inquire[0]['INQUIRE_DATE']}', )
+                      //                     )
+                      //                 ),flex: 3,
+                      //               )
+                      //             ],
+                      //           ),
+                      //         flex: 2,),
+                      //       Expanded(
+                      //         child: Container(), flex: 2,
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   flex: 1,),
                       Expanded(
                         child: Container(
                             width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정
                             decoration: BoxDecoration(
                                 border: Border.all(
                                     width:1
-                                )
+                                ),borderRadius: BorderRadius.circular(10)
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(10),
-                              child: Text('${inquire[0]['CONTENT']}'),
-                            )
+                              child: SingleChildScrollView(
+                                child: Text('${inquire[0]['CONTENT']}'),
+                              )
+                            ),
                         ),
                         flex: 2,),
                       Expanded(
@@ -153,11 +163,13 @@ class _QuestionRecordsState extends State<QuestionRecords> {
                             decoration: BoxDecoration(
                                 border: Border.all(
                                     width:1
-                                )
+                                ),borderRadius: BorderRadius.circular(10)
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(10),
-                              child: Text('${inquire[0]['REPLY']}'),
+                              child: SingleChildScrollView(
+                                  child: Text('${inquire[0]['REPLY']}')
+                              ),
                             )
                         ),
                         flex: 2,),

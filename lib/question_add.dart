@@ -61,7 +61,7 @@ class _QuestionAddState extends State<QuestionAdd> {
         return false;
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
           backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
@@ -78,60 +78,70 @@ class _QuestionAddState extends State<QuestionAdd> {
                 }, child: Text('보내기', style: TextStyle(color: Colors.black, fontSize: 20),))
           ],
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Container(),flex: 3, // 상단 여백 1 부여
-            ),
-            Expanded(
-                child: Row(
-                  children: [
-                    Expanded(child: Container(),flex: 2,),
-                    Expanded(
-                      child: Text('제목',style: TextStyle(color: Colors.black, fontSize: 30,fontWeight: FontWeight.bold),),
-                      flex: 11,)
-                  ],
-                )
-            ),
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width*0.7,
-                child: TextField(
-                  controller: title,
-                  maxLength: 15,
-                  maxLines: 1, // 한줄 만 입력받도록 설정
-                  textAlign: TextAlign.left, // 좌측 정렬
-                  style: TextStyle(color: Colors.black),
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)
-                      ),
-                      hintText: ('제목을 입력하세요')
-                  ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(60, 30, 0, 10),
+                  child: Container(
+                    width: 130,
+                      height: 100,
+                      child: Image.asset(('assets/document.png'))
+                  ),  // 상단 여백 1 부여
                 ),
-              ),
-              flex: 2,), // 여백 1 부여
-            Expanded(
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width*0.7,
-                  height: MediaQuery.of(context).size.height*0.7,
-                  child: TextField(
-                    maxLength: 100,
-                    controller: contents,
-                    maxLines: null, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
-                    textAlign: TextAlign.left, // 좌측 정렬
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black)
-                        ),
-                        hintText: ('내용을 입력하세요')
+                Padding(
+                    padding: EdgeInsets.fromLTRB(60, 0, 0, 20),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: Text("문의사항을 내용을 작성해주세요!",style: TextStyle(fontSize: 20,),textAlign: TextAlign.center,),
+                    )
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(60, 0, 0, 20),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width*0.7,
+                    child: TextField(
+                      controller: title,
+                      maxLength: 15,
+                      maxLines: 1, // 한줄 만 입력받도록 설정
+                      textAlign: TextAlign.left, // 좌측 정렬
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(color: Colors.black)
+                          ),
+                          hintText: ('제목을 입력하세요')
+                      ),
                     ),
+                  ),
+                ), // 여백 1 부여
+                Padding(
+                    padding: EdgeInsets.fromLTRB(60, 0, 0, 20),
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width*0.7,
+                      height: MediaQuery.of(context).size.height*0.7,
+                      child: TextField(
+                        maxLength: 1000,
+                        controller: contents,
+                        maxLines: 5, // maxLines를 null로 주어 글의 양에 맞게 세로 길이가 변하도록 함
+                        textAlign: TextAlign.left, // 좌측 정렬
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                            // contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 100),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: BorderSide(color: Colors.black)
+                            ),
+                            hintText: ('내용을 입력하세요')
+                        ),
+                      )
                   )
-              )
-              ,flex: 5,),// 여백 5 부여
-            Expanded(child: Container(),flex: 3,)
-          ],
+                 ),//// 여백 5 부여
+              ],
+            ),
+          ),
         ),
       ),
     );

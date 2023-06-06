@@ -160,7 +160,7 @@ class _EditState extends State<Edit> {
               child: Container(
                 height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
                 width: MediaQuery.of(context).size.width*0.4,
-                padding: EdgeInsets.fromLTRB(0, 70, 0, 70), // 상하80 여백을 줌
+                padding: EdgeInsets.fromLTRB(0, 50, 0, 50), // 상하80 여백을 줌
                 child: OutlinedButton(
                   onPressed: (){
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index))); // 마이페이지로 이동
