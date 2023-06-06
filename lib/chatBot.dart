@@ -230,7 +230,30 @@ class _ChatBotState extends State<ChatBot> {
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                       foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                     ),
-                    onPressed: ButtonEnabled ? _sendMessage : null,
+                    onPressed: (){
+                      if(_textController.text.isEmpty){
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context){
+                            return AlertDialog(
+                              title: Text('오류 메시지'),
+                              content: Text('공백없이 입력해주세요.'),
+                              actions: [
+                                TextButton(
+                                  onPressed: (){
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('확인', style: TextStyle(color: Colors.black))
+                                )
+                              ]
+                            );
+                          }
+                        );
+                      } else if (ButtonEnabled){
+                        _sendMessage();
+                      }
+
+                    },
                     child: Text('전송'),
                   ),
                 ],
@@ -264,7 +287,13 @@ class _ChatBotState extends State<ChatBot> {
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => MyPage(UserNum: widget.UserNum, index: widget.index))); // 수정: my_page -> MyPage
+                    PageRouteBuilder(
+                      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+                        return MyPage(UserNum: widget.UserNum, index: widget.index);
+                      },
+                      transitionDuration: Duration(milliseconds: 0),
+                    ),
+                  );
                 },
                 icon: Icon(Icons.list_alt_outlined),
               ),

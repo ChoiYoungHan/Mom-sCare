@@ -37,7 +37,17 @@ class _WeekInfoState extends State<WeekInfo> {
   List<String> todo_evenIndex = [];
   List<String> todo_oddIndex = [];
 
+  bool check = true;
+
   Future<void> receiveBabyInfo() async {
+    if(widget.week == null){
+      check = false;
+
+      setState(() {
+
+      });
+    }
+
     final uri = Uri.parse('http://182.219.226.49/moms/week-info-baby');
     final headers = {'Content-Type': 'application/json'};
 
@@ -83,6 +93,13 @@ class _WeekInfoState extends State<WeekInfo> {
   }
 
   Future<void> receiveMomInfo() async {
+    if(widget.week == null){
+      check = false;
+
+      setState(() {
+
+      });
+    }
     final uri = Uri.parse('http://182.219.226.49/moms/week-info-moms');
     final headers = {'Content-Type': 'application/json'};
 
@@ -120,6 +137,7 @@ class _WeekInfoState extends State<WeekInfo> {
           moms_oddIndex.add(moms_info[i]);
         }
       }
+
       await receiveTodo();
 
     } else {
@@ -187,7 +205,7 @@ class _WeekInfoState extends State<WeekInfo> {
                 child: CircularProgressIndicator()
               );
             } else {
-              return Scaffold( // 상 중 하를 나누는 위젯
+              return check ? Scaffold( // 상 중 하를 나누는 위젯
                   appBar: AppBar( // 상단 바
                       backgroundColor: Colors.white,
                       leading: IconButton( // 아이콘 버튼 위젯
@@ -348,6 +366,24 @@ class _WeekInfoState extends State<WeekInfo> {
                     ),
                   )
 
+              ) : Scaffold(
+                appBar: AppBar( // 상단 바
+                  backgroundColor: Colors.white,
+                  leading: IconButton( // 아이콘 버튼 위젯
+                    onPressed: (){ // 뒤로가기 버튼 클릭 시 수행할 동작
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.userNum, index: widget.index)));
+                    },
+                    icon: Icon(Icons.arrow_back, color: Colors.grey) // 뒤로가기 버튼, 회색
+                  )
+                ),
+                body: Center(
+                  child: Text(
+                    '아기를 먼저 등록해주세요.',
+                    style: TextStyle(
+                      color: Colors.black
+                    )
+                  ),
+                )
               );
             }
           }

@@ -83,10 +83,7 @@ class _ChangePwState extends State<ChangePw> {
               child: Column(
                 children: [
                   Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                        child: Text('현재 비밀번호', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
-                      )
+                      child: Text('현재 비밀번호', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, )
                   ),
                   Expanded(
                     child: Padding(
@@ -114,10 +111,7 @@ class _ChangePwState extends State<ChangePw> {
               child: Column(
                 children: [
                   Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                        child: Text('비밀번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
-                      )
+                      child: Text('비밀번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, )
                   ),
                   Expanded(
                     child: Padding(
@@ -145,10 +139,7 @@ class _ChangePwState extends State<ChangePw> {
               child: Column(
                 children: [
                   Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                        child: Text('비밀번호 재입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
-                      )
+                      child: Text('비밀번호 재입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, )
                   ),
                   Expanded(
                     child: Padding(
@@ -178,17 +169,41 @@ class _ChangePwState extends State<ChangePw> {
                 child: Container(
                   height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
                   width: MediaQuery.of(context).size.width*0.4,
-                  child: PW2.text==PW3.text?
+                  child: (PW2.text == PW3.text) == PW1.text ?
+                      OutlinedButton(
+                        onPressed: (){
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context){
+                              return AlertDialog(
+                                title: Text(''),
+                                content: Text('현재 비밀번호와 변경할 비밀번호가 일치합니다.'),
+                                actions: [
+                                  OutlinedButton(
+                                    onPressed: (){
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('확인', style: TextStyle(color: Colors.black))
+                                  )
+                                ]
+                              );
+                            }
+                          );
+                        },
+                        child: Text('확인', style: TextStyle(color: Colors.black))
+                      ) :
+
+                  PW2.text == PW3.text?
                   OutlinedButton(
                     onPressed: () async {
-                      await change_password()==1?
+                      await change_password() == 1 ?
                       showDialog(
                           context: context,
                           barrierColor: Colors.grey.withOpacity(0.6),
                           builder: (BuildContext context){
                             return AlertDialog(
                               title: Text(''),
-                              content: Text('삭제가 완료되었습니다'),
+                              content: Text('변경이 완료되었습니다'),
                               actions: [
                                 OutlinedButton(
                                   onPressed: (){
@@ -220,7 +235,7 @@ class _ChangePwState extends State<ChangePw> {
                       );
                     },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
                   )
-                      :
+                      : ((PW1.text == PW2.text) == PW3.text) ?
                   OutlinedButton(
                     onPressed: (){
                       showDialog(
@@ -229,7 +244,7 @@ class _ChangePwState extends State<ChangePw> {
                           builder: (BuildContext context){
                             return AlertDialog(
                               title: Text(''),
-                              content: Text('변경할 비밀번호가 일치하지 않습니다'),
+                              content: Text('현재 비밀번호와 변경할 비밀번호가 일치합니다.'),
                               actions: [
                                 OutlinedButton(
                                   onPressed: (){
@@ -240,9 +255,29 @@ class _ChangePwState extends State<ChangePw> {
                             );
                           }
                       );
-                    },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
+                    },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25))
+                  ) :
+                  OutlinedButton(
+                      onPressed: (){
+                        showDialog(
+                            context: context,
+                            barrierColor: Colors.grey.withOpacity(0.6),
+                            builder: (BuildContext context){
+                              return AlertDialog(
+                                title: Text(''),
+                                content: Text('변경할 비밀번호를 다시 확인해주세요.'),
+                                actions: [
+                                  OutlinedButton(
+                                    onPressed: (){
+                                      Navigator.of(context).pop();
+                                    },child: Text('확인',style: TextStyle(color: Colors.black),),
+                                  )
+                                ],
+                              );
+                            }
+                        );
+                      },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25))
                   )
-                  ,
                 ),
               ),
               flex: 2,),

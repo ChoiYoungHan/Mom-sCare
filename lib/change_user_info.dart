@@ -39,6 +39,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
         return false;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
             automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
             backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정

@@ -36,10 +36,10 @@ class _BabyAddState extends State<BabyAdd> {
   var babies_birth='_';
   var babies_mother='_';
   var babies_father='_';
+
   TextEditingController input_babies = TextEditingController(); // 받아올 아이 이름
   TextEditingController input_babies_mother = TextEditingController(); // 받아올 엄마 이름
   TextEditingController input_babies_father = TextEditingController(); // 받아올 아빠 이름
-
 
   Future baby_add() async{ // 아이 추가 함수
     final uri = Uri.parse('http://182.219.226.49/moms/baby/register');
@@ -186,11 +186,14 @@ class _BabyAddState extends State<BabyAdd> {
                   padding: EdgeInsets.all(10), // 네 면의 여백을 10만큼 줌
                   child: OutlinedButton(
                       onPressed: (){
+                        final DateTime today = DateTime.now();
+                        final DateTime lastDay = today.add(Duration(days: 280));
+
                         showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime.now(),
-                          lastDate: DateTime(2030),
+                          lastDate: lastDay
                         ).then((selectedDate){
                           setState(() {
                             babies_birth=selectedDate.toString().split(" ")[0];
@@ -213,9 +216,12 @@ class _BabyAddState extends State<BabyAdd> {
                               child: Container(),flex:1 // 중간 공백 비율 2 부여
                           ),
                           Expanded(
-                            child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
-                                fit: BoxFit.scaleDown,  // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
-                                child :Text(babies_birth,style: TextStyle(color: Colors.black),)) // 입력받은 날짜의 정보
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: FittedBox( // 위젯 크기에 따라 텍스트의 크기 자동 조절
+                                  fit: BoxFit.scaleDown,  // 텍스트가 위젯 크기를 넘어가면 텍스트의 크기를 줄이는 방식
+                                  child :Text(babies_birth,style: TextStyle(color: Colors.black),)),
+                            ) // 입력받은 날짜의 정보
                             ,flex: 2,), // 영역 비율 1 부여
                           Expanded(
                               child: Icon(Icons.arrow_outward_outlined, color: (Colors.black),)

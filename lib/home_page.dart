@@ -163,7 +163,7 @@ class _HomePageState extends State<HomePage> {
                                             children: [
                                               Container(
                                                 padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                                height: 28,
+                                                width: double.infinity, height: 28,
                                                 decoration: BoxDecoration(
                                                   gradient: LinearGradient(
                                                     colors: [Color(0xFF3366FF).withOpacity(0.3), Color(0xFF00CCFF).withOpacity(0.3)],
@@ -171,27 +171,23 @@ class _HomePageState extends State<HomePage> {
                                                     end: Alignment.bottomRight,
                                                   ),
                                                 ),
-                                                child: Center(
-                                                  child: Expanded(
-                                                    child: FittedBox(
-                                                      child: RichText(
-                                                        text: TextSpan(
-                                                          text: '이번주는 임신 ',
-                                                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                                                          children: <TextSpan>[
-                                                            TextSpan(
-                                                              text: '$currentWeek주차',
-                                                              style: TextStyle(color: Colors.blue, fontSize: 20)
-                                                            ),
-                                                            TextSpan(
-                                                              text: ' 입니다.',
-                                                              style: TextStyle(color: Colors.grey, fontSize: 18)
-                                                            )
-                                                          ]
+                                                child: FittedBox(
+                                                  child: RichText(
+                                                    text: TextSpan(
+                                                      text: '이번주는 임신 ',
+                                                      style: TextStyle(color: Colors.grey, fontSize: 18),
+                                                      children: <TextSpan>[
+                                                        TextSpan(
+                                                          text: '$currentWeek주차',
+                                                          style: TextStyle(color: Colors.blue, fontSize: 20)
+                                                        ),
+                                                        TextSpan(
+                                                          text: ' 입니다.',
+                                                          style: TextStyle(color: Colors.grey, fontSize: 18)
                                                         )
-                                                      ),
-                                                    ),
-                                                  )
+                                                      ]
+                                                    )
+                                                  ),
                                                 )
                                               ),
                                               Expanded(

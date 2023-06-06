@@ -32,15 +32,26 @@ List<String> printContent = [];
 
 class _BabyInfoState extends State<BabyInfo> {
 
+  bool checkData = true;
+
   Future<void> _loadData() async {
 
-    // 비동기 함수 실행
-    await baby_info(); // 함수 실행이 완료될 때까지 기다림
+    if(widget.babyNum == null){
+      checkData = false;
 
-    // 함수 실행이 완료된 후에 페이지를 빌드
-    setState(() {
-      // 상태 업데이트 및 페이지 재빌드
-    });
+      setState(() {
+
+      });
+    } else {
+      // 비동기 함수 실행
+      await baby_info(); // 함수 실행이 완료될 때까지 기다림
+
+      // 함수 실행이 완료된 후에 페이지를 빌드
+      setState(() {
+
+      });
+    }
+
   }
 
   @override
@@ -176,7 +187,7 @@ class _BabyInfoState extends State<BabyInfo> {
 
         return false;
       },
-      child: Scaffold(
+      child: checkData ? Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -321,6 +332,24 @@ class _BabyInfoState extends State<BabyInfo> {
                 ),
               )
             ]
+          )
+        )
+      ) : Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            onPressed: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.userNum, index: widget.index)));
+            },
+            icon: Icon(Icons.arrow_back, color: Colors.grey)
+          ),
+        ),
+        body: Center(
+          child: Text(
+            '등록된 아기 정보가 없습니다.',
+            style: TextStyle(
+              color: Colors.black
+            )
           )
         )
       )

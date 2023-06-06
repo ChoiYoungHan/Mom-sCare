@@ -63,6 +63,7 @@ class _ChangePhoneState extends State<ChangePhone> {
         return false;
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
             automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
             backgroundColor: Colors.white, // 상단 바 배경색을 흰색으로 설정
@@ -78,10 +79,7 @@ class _ChangePhoneState extends State<ChangePhone> {
               child: Container(),flex: 4, // 상단 여백 4 부여
             ),
             Expanded(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(0,65,0,0), // 텍스트의 상단 여백 65 부여
-                child: Text('전화번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
-              ),
+              child: Text('전화번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, ),
               flex: 2,), // 영역비율 2 부여
             Expanded(
               child: Padding(
