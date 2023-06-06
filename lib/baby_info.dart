@@ -32,7 +32,7 @@ List<String> printContent = [];
 
 class _BabyInfoState extends State<BabyInfo> {
 
-  bool checkData = true;
+  bool checkData = true, Loading = true;
 
   Future<void> _loadData() async {
 
@@ -43,12 +43,17 @@ class _BabyInfoState extends State<BabyInfo> {
 
       });
     } else {
+
+      setState(() {
+        Loading = true;
+      });
+
       // 비동기 함수 실행
       await baby_info(); // 함수 실행이 완료될 때까지 기다림
 
       // 함수 실행이 완료된 후에 페이지를 빌드
       setState(() {
-
+        Loading = false;
       });
     }
 
@@ -199,7 +204,12 @@ class _BabyInfoState extends State<BabyInfo> {
             icon: Icon(Icons.arrow_back, color: Colors.black)
           ),
         ),
-        body: SafeArea(
+        body: Loading ?
+          Center(
+            child: CircularProgressIndicator()
+          )
+            :
+        SafeArea(
           child: Column(
             children: [
               Container(

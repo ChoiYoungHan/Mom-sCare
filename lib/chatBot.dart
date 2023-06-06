@@ -269,14 +269,26 @@ class _ChatBotState extends State<ChatBot> {
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomePage(UserNum: widget.UserNum, index: widget.index)));
+                    PageRouteBuilder(
+                      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                        return Home_Page(userNum: widget.UserNum, index: widget.index);
+                      },
+                      transitionDuration: Duration(milliseconds: 0)
+                    )
+                  );
                 },
                 icon: Icon(Icons.home_outlined),
               ),
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: widget.index)));
+                    PageRouteBuilder(
+                      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                        return MyApp(userNum: widget.UserNum, index: widget.index);
+                      },
+                      transitionDuration: Duration(milliseconds: 0)
+                    )
+                  );
                 },
                 icon: Icon(Icons.event_note_outlined),
               ),

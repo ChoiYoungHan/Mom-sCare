@@ -176,7 +176,14 @@ class _Calendar_PageState extends State<Calendar_Page> {
                       children: [
                         IconButton( // 아이콘 버튼 위젯
                             onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum, index: widget.index)));
+                              Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                                        return Home_Page(userNum: widget.UserNum, index: widget.index);
+                                      },
+                                      transitionDuration: Duration(milliseconds: 0)
+                                  )
+                              );
                             },
                             icon: Icon(Icons.home_outlined) // 홈 아이콘
                         ),
@@ -188,13 +195,27 @@ class _Calendar_PageState extends State<Calendar_Page> {
                         ),
                         IconButton( // 아이콘 버튼 위젯
                             onPressed: (){ // 버튼 클릭 시 동작할 코드 작성                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum)));
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: widget.index)));
+                              Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                                        return chatBot(userNum: widget.UserNum, index: widget.index);
+                                      },
+                                      transitionDuration: Duration(milliseconds: 0)
+                                  )
+                              );
                             },
                             icon: Icon(Icons.chat_outlined) // 채팅 아이콘
                         ),
                         IconButton( // 아이콘 버튼 위젯
                             onPressed: (){ // 버튼 클릭 시 동작할 코드 작성
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: widget.index)));
+                              Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                                        return my_page(userNum: widget.UserNum, index: widget.index);
+                                      },
+                                      transitionDuration: Duration(milliseconds: 0)
+                                  )
+                              );
                             },
                             icon: Icon(Icons.list_alt_outlined) // 리스트 아이콘
                         )

@@ -339,19 +339,40 @@ class _HomePageState extends State<HomePage> {
                           ),
                           IconButton(
                               onPressed: (){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: currentIndex)));
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                                      return MyApp(userNum: widget.UserNum, index: widget.index);
+                                    },
+                                    transitionDuration: Duration(milliseconds: 0)
+                                  )
+                                );
                               },
                               icon: Icon(Icons.event_note_outlined)
                           ),
                           IconButton(
                               onPressed: (){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: currentIndex)));
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                                      return MyApp(userNum: widget.UserNum, index: widget.index);
+                                    },
+                                    transitionDuration: Duration(milliseconds: 0)
+                                  )
+                                );
                               },
                               icon: Icon(Icons.chat_outlined)
                           ),
                           IconButton(
                               onPressed: (){
-                                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => my_page(userNum: widget.UserNum, index: currentIndex)));
+                                Navigator.of(context).pushReplacement(
+                                  PageRouteBuilder(
+                                    pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                                      return my_page(userNum: widget.UserNum, index: widget.index);
+                                    },
+                                    transitionDuration: Duration(milliseconds: 0)
+                                  )
+                                );
                               },
                               icon: Icon(Icons.list_alt_outlined)
                           )

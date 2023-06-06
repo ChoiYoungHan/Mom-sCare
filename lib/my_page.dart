@@ -278,19 +278,40 @@ class _MyPageState extends State<MyPage> {
               children: [
                 IconButton( // 아이콘 버튼 위젯
                   onPressed: (){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home_Page(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index))); // 홈페이지로 화면 이동
+                    Navigator.of(context).pushReplacement(
+                        PageRouteBuilder(
+                            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                              return Home_Page(userNum: widget.UserNum, index: widget.index);
+                            },
+                            transitionDuration: Duration(milliseconds: 0)
+                        )
+                    );
                   },
                   icon: Icon(Icons.home_outlined),
                 ),
                 IconButton( // 아이콘 버튼 위젯
                   onPressed: (){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyApp(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index))); // 캘린더페이지로 화면 이동
+                    Navigator.of(context).pushReplacement(
+                        PageRouteBuilder(
+                            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                              return MyApp(userNum: widget.UserNum, index: widget.index);
+                            },
+                            transitionDuration: Duration(milliseconds: 0)
+                        )
+                    );
                   },
                   icon: Icon(Icons.event_note_outlined),
                 ),
                 IconButton( // 아이콘 버튼 위젯
                   onPressed: (){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => chatBot(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index))); // 챗봇페이지로 화면 이동
+                    Navigator.of(context).pushReplacement(
+                        PageRouteBuilder(
+                            pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
+                              return chatBot(userNum: widget.UserNum, index: widget.index);
+                            },
+                            transitionDuration: Duration(milliseconds: 0)
+                        )
+                    );
                   },
                   icon: Icon(Icons.chat_outlined),
                 ),
