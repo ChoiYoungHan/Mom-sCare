@@ -45,9 +45,9 @@ class _ChangePwState extends State<ChangePw> {
     final user_num = widget.UserNum; // 유저번호
     final pw_now = PW1.text;
     final pw_change = PW2.text;
-
     final body = jsonEncode({'clientNum': user_num,'pw': pw_now, 'changepw': pw_change}); // 입력값 받아와야함
     final response = await http.post(uri, headers: headers, body: body);
+    print("실행했음");
     if(response.statusCode == 200){
       print('성공');
       return 1;
@@ -55,6 +55,46 @@ class _ChangePwState extends State<ChangePw> {
       return 0;
     }
   }
+
+  Future Epopup(String message, int check) async {
+    var change_check;
+    if(check == 3) {
+      print(change_check);
+      change_check = await change_password();
+
+      print(change_check);
+      print("뭐자");
+    }
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(""),
+              content: Text(change_check == 1 ? "현재 비밀번호가 일치하지 않습니다" : message),
+              actions: [
+                OutlinedButton(
+                    onPressed: () {
+                      if (change_check == 1) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) =>
+                                change_user_info(userNum: widget.UserNum,
+                                    index: widget.index)));
+                        return;
+                      }
+                      else if (change_check == 0) {
+                        print("오류");
+                        Navigator.of(context).pop();
+                        return;
+                      }
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("확인", style: TextStyle(color: Colors.black)))
+              ],
+            );
+          }
+      );
+  }
+  var check = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -74,217 +114,101 @@ class _ChangePwState extends State<ChangePw> {
             }, icon: Icon(Icons.arrow_back, color: Colors.black,),
             )
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Container(),flex: 2,
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Text('현재 비밀번호', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, )
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(100,0,100,0),
-                      child: TextField(
-                        obscureText: true,
-                        controller: PW1,
-                        textAlign: TextAlign.right,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black)
-                            )
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              flex: 3,),
-            Expanded(
-              child: Container(),flex: 2,
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Text('비밀번호 입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, )
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(100,0,100,0),
-                      child: TextField(
-                        obscureText: true,
-                        controller: PW2,
-                        textAlign: TextAlign.right,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black)
-                            )
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              flex: 3,),
-            Expanded(
-              child: Container(),flex: 2,
-            ),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(
-                      child: Text('비밀번호 재입력', style: TextStyle(fontSize: 20,color: Colors.black),textAlign: TextAlign.left, )
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(100,0,100,0),
-                      child: TextField(
-                        obscureText: true,
-                        controller: PW3,
-                        textAlign: TextAlign.right,
-                        style: TextStyle(color: Colors.black),
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.black)
-                            )
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              flex: 3,),
-            Expanded(
-              child: Container(),flex: 2,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  height: MediaQuery.of(context).size.width*0.1, // 위젯의 높이를 화면 너비*0.1로 설정
-                  width: MediaQuery.of(context).size.width*0.4,
-                  child: (PW2.text == PW3.text) == PW1.text ?
-                      OutlinedButton(
-                        onPressed: (){
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context){
-                              return AlertDialog(
-                                title: Text(''),
-                                content: Text('현재 비밀번호와 변경할 비밀번호가 일치합니다.'),
-                                actions: [
-                                  OutlinedButton(
-                                    onPressed: (){
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('확인', style: TextStyle(color: Colors.black))
-                                  )
-                                ]
-                              );
-                            }
-                          );
-                        },
-                        child: Text('확인', style: TextStyle(color: Colors.black))
-                      ) :
-
-                  PW2.text == PW3.text?
-                  OutlinedButton(
-                    onPressed: () async {
-                      await change_password() == 1 ?
-                      showDialog(
-                          context: context,
-                          barrierColor: Colors.grey.withOpacity(0.6),
-                          builder: (BuildContext context){
-                            return AlertDialog(
-                              title: Text(''),
-                              content: Text('변경이 완료되었습니다'),
-                              actions: [
-                                OutlinedButton(
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => edit(userNum: widget.UserNum, index: widget.index)));
-                                  },child: Text('확인',style: TextStyle(color: Colors.black),),
-                                )
-                              ],
-                            );
-                          }
-                      )
-                          :
-                      showDialog(
-                          context: context,
-                          barrierColor: Colors.grey.withOpacity(0.6),
-                          builder: (BuildContext context){
-                            return AlertDialog(
-                              title: Text(''),
-                              content: Text('서버 통신 오류'),
-                              actions: [
-                                OutlinedButton(
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  },child: Text('확인',style: TextStyle(color: Colors.black),),
-                                )
-                              ],
-                            );
-                          }
-                      );
-                    },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25),),
-                  )
-                      : ((PW1.text == PW2.text) == PW3.text) ?
-                  OutlinedButton(
-                    onPressed: (){
-                      showDialog(
-                          context: context,
-                          barrierColor: Colors.grey.withOpacity(0.6),
-                          builder: (BuildContext context){
-                            return AlertDialog(
-                              title: Text(''),
-                              content: Text('현재 비밀번호와 변경할 비밀번호가 일치합니다.'),
-                              actions: [
-                                OutlinedButton(
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  },child: Text('확인',style: TextStyle(color: Colors.black),),
-                                )
-                              ],
-                            );
-                          }
-                      );
-                    },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25))
-                  ) :
-                  OutlinedButton(
-                      onPressed: (){
-                        showDialog(
-                            context: context,
-                            barrierColor: Colors.grey.withOpacity(0.6),
-                            builder: (BuildContext context){
-                              return AlertDialog(
-                                title: Text(''),
-                                content: Text('변경할 비밀번호를 다시 확인해주세요.'),
-                                actions: [
-                                  OutlinedButton(
-                                    onPressed: (){
-                                      Navigator.of(context).pop();
-                                    },child: Text('확인',style: TextStyle(color: Colors.black),),
-                                  )
-                                ],
-                              );
-                            }
-                        );
-                      },child: Text('확인',style: TextStyle(color: Colors.black, fontSize: 25))
-                  )
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0,40,0,20),
+                  child: Text("빈칸에 맞에 비밀번호를 입력해주세요",style: TextStyle(color: Colors.black,fontSize: 20)),
                 ),
-              ),
-              flex: 2,),
-            Expanded(
-              child: Container(),flex: 4,
-            )
-          ],
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0,5,0,0),
+                  child: Text("현재 비밀번호를 입력해주세요",style: TextStyle(color: Colors.black)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(100,5,100,30),
+                  child: TextField(
+                    obscureText: true,
+                    controller: PW1,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                        hintText: "현재 비밀번호",
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)
+                        )
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0,5,0,0),
+                  child: Text("변경할 비밀번호를 입력해주세요",style: TextStyle(color: Colors.black)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(100,5,100,30),
+                  child: TextField(
+                    obscureText: true,
+                    controller: PW2,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                        hintText: "변경할 비밀번호",
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)
+                        )
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0,5,0,0),
+                  child: Text("변경할 비밀번호를 다시 입력해주세요",style: TextStyle(color: Colors.black)),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(100,5,100,0),
+                  child: TextField(
+                    obscureText: true,
+                    controller: PW3,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                        hintText: "변경할 비밀번호 재입력",
+                        border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black)
+                        )
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0,40,0,0),
+                  child: Container(
+                    width: 150,
+                    height: 50,
+                    child: OutlinedButton(
+                        onPressed: (){
+                          print(check);
+                          if(PW1.text!=""&&PW2.text!=""&&PW3.text!="")
+                            check = 1;
+                          if(check==1&&PW2.text==PW3.text)
+                            check = 2;
+                          if(check==2&&PW1.text!=PW2.text)
+                            check = 3;
+                          if(check == 0)
+                            Epopup("빈칸 없이 입력해주세요",check);
+                          else if(check == 1)
+                            Epopup("변경할 비밀번호와 재입력한 비밀번호가 일치하지 않습니다",check);
+                          else if(check == 2)
+                            Epopup("현재 비밀번호와 변경할 비밀번호가 일치하지 않습니다",check);
+                          else if(check == 3) {
+                            Epopup("비밀변호 변경이 완료되었습니다.",check);
+                          }
+                        },child: Text("확인",style: TextStyle(color: Colors.black))
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
