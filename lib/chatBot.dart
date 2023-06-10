@@ -45,7 +45,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   bool ButtonEnabled = true;
 
-  final apiKey = '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';
+  final apiKey = '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';
   final apiUrl = 'https://api.openai.com/v1/completions';
 
   var translate_result = '';
@@ -68,6 +68,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
     Map<String, dynamic> newresponse = jsonDecode(utf8.decode(response.bodyBytes));
 
+    print(newresponse);
+
     return newresponse['choices'][0]['text'];
   }
 
@@ -83,6 +85,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
     if(response.statusCode == 200){
       var dataJson = jsonDecode(response.body);
       translate_result = dataJson['data']['translations'][0]['translatedText'];
+
+      print(translate_result);
 
       String data = await generateText(translate_result);
 
@@ -118,6 +122,8 @@ class _ChatBotPageState extends State<ChatBotPage> {
   }
 
   void _sendMessage() async {
+
+    print('챗봇 입력 성공');
 
     await getTranslation_google_cloud_translation_en(_text.text);
 

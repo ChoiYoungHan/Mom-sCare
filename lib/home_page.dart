@@ -210,13 +210,13 @@ class _HomePageState extends State<HomePage> {
                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                              Expanded(child: FittedBox(child: Text(b_babyname[index].toString() + '님과', style: TextStyle(color: Colors.grey, fontSize: 18)))),
-                                                              SizedBox(height: 2),
-                                                              Expanded(child: FittedBox(child: Text('만남까지', style: TextStyle(color: Colors.grey, fontSize: 18)))),
-                                                              SizedBox(height: 2),
-                                                              Expanded(child: FittedBox(child: Text(b_dday[index].toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 20)))),
-                                                              SizedBox(height: 2),
-                                                              Expanded(child: FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 18)))),
+                                                              FittedBox(child: Text(b_babyname[index].toString() + '님과', style: TextStyle(color: Colors.grey, fontSize: 34))),
+                                                              SizedBox(height: 5),
+                                                              FittedBox(child: Text('만남까지', style: TextStyle(color: Colors.grey, fontSize: 34))),
+                                                              SizedBox(height: 5),
+                                                              FittedBox(child: Text(b_dday[index].toString() + '일', style: TextStyle(color: Colors.blue, fontSize: 38))),
+                                                              SizedBox(height: 5),
+                                                              FittedBox(child: Text('남았습니다.', style: TextStyle(color: Colors.grey, fontSize: 34))),
                                                             ]
                                                           )
                                                         )
@@ -356,7 +356,7 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.of(context).pushReplacement(
                                   PageRouteBuilder(
                                     pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
-                                      return MyApp(userNum: widget.UserNum, index: widget.index);
+                                      return chatBot(userNum: widget.UserNum, index: widget.index);
                                     },
                                     transitionDuration: Duration(milliseconds: 0)
                                   )
