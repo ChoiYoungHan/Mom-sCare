@@ -119,7 +119,7 @@ class _DeleteUserState extends State<DeleteUser> {
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide(color: Colors.black)
                           ),
-                          hintText: ('회원 탈퇴 이유를 알려주세요!\n서비스를 할 때 도움이 됩ㄹㄴ니다(선택)')
+                          hintText: ('회원 탈퇴 이유를 알려주세요!\n서비스를 할 때 도움이 됩니다.ㅛ(선택)')
                       ),
                     ),
                   ),

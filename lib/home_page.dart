@@ -142,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                     child: GestureDetector( // Container와 같이 Gesture를 감지할 수 없는 위젯들에게 Gesture 기능을 부여할 수 있는 위젯
                         child: Column( // 세로 정렬
                             children: [
+                              SizedBox(height: 70),
                               b_babyname.isNotEmpty ?
                               Padding(
                                   padding: EdgeInsets.all(10),
@@ -332,10 +333,10 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 일정 간격을 두고 정렬
                         children: [
                           IconButton(
-                              onPressed: (){
+                            onPressed: (){
 
-                              },
-                              icon: Icon(Icons.home_outlined, color: Colors.blue)
+                            },
+                            icon: Icon(Icons.home_outlined, color: Colors.blue)
                           ),
                           IconButton(
                               onPressed: (){

@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:care_application/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -330,6 +333,11 @@ class _RegisterPageState extends State<RegisterPage> {
                               TextField( // 텍스트 필드 위젯
                                   controller: inputPhone, // 입력받은 값은 변수 inputPhone에 저장
                                   keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(11), // 최대 11자리까지 입력 가능
+                                    PhoneNumberFormatter(), // 핸드폰 번호 포맷터 적용
+                                  ],
                                   decoration: InputDecoration( // 디자인
                                       hintText: '전화번호를 입력해주세요.',
                                       border: OutlineInputBorder( // 모서리에 테두리를 줄 것임
@@ -466,5 +474,31 @@ class _RegisterPageState extends State<RegisterPage> {
           )
       ),
     );
+  }
+}
+
+class PhoneNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    // 핸드폰 번호에 하이픈(-) 추가
+    if (newValue.text.isNotEmpty && newValue.text.length > 3) {
+      final number = newValue.text.replaceAll(RegExp(r'\D'), '');
+      final buffer = StringBuffer();
+      buffer.write(number.substring(0, 3));
+      if (number.length > 3) {
+        buffer.write('-');
+        buffer.write(number.substring(3, min(number.length, 7)));
+      }
+      if (number.length > 7) {
+        buffer.write('-');
+        buffer.write(number.substring(7, min(number.length, 11)));
+      }
+      return TextEditingValue(
+        text: buffer.toString(),
+        selection: TextSelection.collapsed(offset: buffer.length),
+      );
+    }
+    return newValue;
   }
 }

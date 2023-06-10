@@ -39,8 +39,6 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
 
-
-
   var baby_name;
   var baby_num;
   var baby_index;
@@ -281,7 +279,7 @@ class _MyPageState extends State<MyPage> {
                     Navigator.of(context).pushReplacement(
                         PageRouteBuilder(
                             pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
-                              return Home_Page(userNum: widget.UserNum, index: widget.index);
+                              return Home_Page(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index);
                             },
                             transitionDuration: Duration(milliseconds: 0)
                         )
@@ -294,7 +292,7 @@ class _MyPageState extends State<MyPage> {
                     Navigator.of(context).pushReplacement(
                         PageRouteBuilder(
                             pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
-                              return MyApp(userNum: widget.UserNum, index: widget.index);
+                              return MyApp(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index);
                             },
                             transitionDuration: Duration(milliseconds: 0)
                         )
@@ -307,7 +305,7 @@ class _MyPageState extends State<MyPage> {
                     Navigator.of(context).pushReplacement(
                         PageRouteBuilder(
                             pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation){
-                              return chatBot(userNum: widget.UserNum, index: widget.index);
+                              return chatBot(userNum: widget.UserNum, index: selectedButton == true ? baby_index : widget.index);
                             },
                             transitionDuration: Duration(milliseconds: 0)
                         )

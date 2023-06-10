@@ -135,16 +135,31 @@ class _BabyInfoState extends State<BabyInfo> {
     }
   }
 
-  Future popup(int index) async {
+  Future popup(int index, String title) async {
     return showDialog(
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
+          title: Text(title, style: TextStyle(color: Color(0xFF835529))),
           content: FocusScope(
             child: TextFormField(
               autofocus: true,
               controller: edit,
-              decoration: InputDecoration(hintText: '이름을 입력해주세요.')
+              decoration: InputDecoration(
+                hintText: '이름을 입력해주세요.',
+                hintStyle: TextStyle(color: Color(0xFF835529)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Color(0xFF835529))
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Color(0xFF835529))
+                )
+              ),
+              maxLines: 1,
+              textAlign: TextAlign.right,
+              style: TextStyle(color: Color(0xFF835529))
             ),
           ),
           actions: [
@@ -152,7 +167,7 @@ class _BabyInfoState extends State<BabyInfo> {
               onPressed: (){
                 Navigator.of(context).pop();
               },
-              child: Text('취소')
+              child: Text('취소', style: TextStyle(color: Color(0xFF835529)))
             ),
             OutlinedButton(
               onPressed: (){
@@ -179,7 +194,7 @@ class _BabyInfoState extends State<BabyInfo> {
                   Navigator.of(context).pop();
                 }
               },
-              child: Text('확인')
+              child: Text('확인', style: TextStyle(color: Color(0xFF835529)))
             )
           ]
         );
@@ -231,20 +246,27 @@ class _BabyInfoState extends State<BabyInfo> {
                           child: OutlinedButton(
                             onPressed: (){
                               if(index == 1){
+                                var Currentdate = printContent[index];
                                 showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime.now(),
                                   lastDate: DateTime(2030)
                                 ).then((selectedDate){
-                                  var date = selectedDate.toString().split(" ")[0];
-                                  setState(() {
-                                    printContent[1] = date;
-                                  });
-                                  print(date);
+                                  if (selectedDate != null) {
+                                    var date = selectedDate.toString().split(" ")[0];
+                                    setState(() {
+                                      printContent[1] = date;
+                                    });
+                                    print(date);
+                                  } else {
+                                    setState(() {
+                                      printContent[1] = Currentdate;
+                                    });
+                                  }
                                 });
                               } else {
-                                popup(index);
+                                popup(index, title[index].toString());
                               }
 
                             },
@@ -324,10 +346,11 @@ class _BabyInfoState extends State<BabyInfo> {
                               context: context,
                               builder: (BuildContext context){
                                 return AlertDialog(
-                                  content: Text('수정이 완료되었습니다.'),
+                                  title: Text(''),
+                                  content: Text('수정이 완료되었습니다.', style: TextStyle(color: Color(0xFF835529))),
                                   actions: [
-                                    ElevatedButton(
-                                      child: Text('예'),
+                                    OutlinedButton(
+                                      child: Text('예', style: TextStyle(color: Color(0xFF835529))),
                                       onPressed: () {
                                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MyPage(UserNum: widget.userNum, index: widget.index)));
                                       },

@@ -68,7 +68,7 @@ class _BabyAddState extends State<BabyAdd> {
         barrierColor: Colors.grey.withOpacity(0.6),
         builder: (BuildContext context){
           return AlertDialog(
-            title: Text(edit_value,style: TextStyle(color: Color(0xFF835529)),),backgroundColor: Color(0xFFFFE7BA),
+            title: Text(edit_value,style: TextStyle(color: Color(0xFF835529))),
             content: FocusScope(
               child: TextFormField(
                 autofocus: true,
@@ -97,7 +97,7 @@ class _BabyAddState extends State<BabyAdd> {
                     edit.clear(); // 다시 버튼을 눌렀을 때 값 비워두기
                     Navigator.of(context).pop(); // 팝업 닫기
                   },
-                  child: Text('닫기',style: TextStyle(color: Color(0xFF835529),backgroundColor: Color(0xFFFFE7BA)),)
+                  child: Text('닫기',style: TextStyle(color: Color(0xFF835529)))
               ),
               OutlinedButton(
                   onPressed: (){
@@ -112,7 +112,7 @@ class _BabyAddState extends State<BabyAdd> {
                     }
                     Navigator.of(context).pop();
                   },
-                  child: Text('확인',style: TextStyle(color: Color(0xFF835529),backgroundColor: Color(0xFFFFE7BA)),)
+                  child: Text('확인',style: TextStyle(color: Color(0xFF835529)))
               )
             ],
           );
@@ -199,9 +199,17 @@ class _BabyAddState extends State<BabyAdd> {
                           firstDate: DateTime.now(),
                           lastDate: lastDay
                         ).then((selectedDate){
-                          setState(() {
-                            babies_birth=selectedDate.toString().split(" ")[0];
-                          });
+                          if (selectedDate != null) {
+                            var date = selectedDate.toString().split(" ")[0];
+                            setState(() {
+                              babies_birth=selectedDate.toString().split(" ")[0];
+                            });
+                            print(date);
+                          } else {
+                            setState(() {
+                              babies_birth = babies_birth;
+                            });
+                          }
                         });
                         if(babies_birth=='null')babies_birth='-';
                       },
