@@ -121,11 +121,6 @@ class _NoticeRecordsState extends State<NoticeRecords> {
                     Expanded(
                       child: Container(
                           width: MediaQuery.of(context).size.width*0.7, // 위젯의 높이를 화면 너비로 동일설정
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width:1
-                              )
-                          ),
                           child: Padding(
                             padding: const EdgeInsets.all(10), // 모든 여백 10 부여
                             child: Text('${Notice_}'),

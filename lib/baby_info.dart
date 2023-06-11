@@ -234,7 +234,7 @@ class _BabyInfoState extends State<BabyInfo> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.6,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(40, 60, 40, 30),
+                  padding: EdgeInsets.fromLTRB(40, 120, 40, 30),
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: images.length,

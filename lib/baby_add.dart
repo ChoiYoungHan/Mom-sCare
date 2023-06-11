@@ -222,7 +222,9 @@ class _BabyAddState extends State<BabyAdd> {
                             )
                             ,flex: 1,), // 영역비율 1 부여
                           Expanded(
-                            child:Text('출산 예정일',style: TextStyle(color: Colors.black),)
+                            child:FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text('출산 예정일',style: TextStyle(color: Colors.black),))
                             ,flex: 2,), // 영역 비율 2 부여
                           Expanded(
                               child: Container(),flex:1 // 중간 공백 비율 2 부여

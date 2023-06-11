@@ -45,7 +45,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   bool ButtonEnabled = true;
 
-  final apiKey = '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';
+  final apiKey = '';
   final apiUrl = 'https://api.openai.com/v1/completions';
 
   var translate_result = '';
@@ -123,12 +123,18 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   void _sendMessage() async {
 
+
+    var text;
+
     print('챗봇 입력 성공');
+
+    setState(() {
+      _messages.add(ChatMessage(sender: 'user', message: _text.text));
+    });
 
     await getTranslation_google_cloud_translation_en(_text.text);
 
     setState(() {
-      _messages.add(ChatMessage(sender: 'user', message: _text.text));
 
       if(_text.text != null){
         _messages.add(ChatMessage(sender: 'bot', message: translate_result));
