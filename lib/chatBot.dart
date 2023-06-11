@@ -123,25 +123,24 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   void _sendMessage() async {
 
-
-    var text;
+    String text = _text.text;
 
     print('챗봇 입력 성공');
 
     setState(() {
+      ButtonEnabled = false;
       _messages.add(ChatMessage(sender: 'user', message: _text.text));
+      _text.clear();
     });
 
-    await getTranslation_google_cloud_translation_en(_text.text);
+    await getTranslation_google_cloud_translation_en(text);
 
     setState(() {
 
-      if(_text.text != null){
+      if(text != null){
         _messages.add(ChatMessage(sender: 'bot', message: translate_result));
 
       }
-
-      _text.clear();
 
       WidgetsBinding.instance!.addPostFrameCallback((_) {
         _scrollController.animateTo(
