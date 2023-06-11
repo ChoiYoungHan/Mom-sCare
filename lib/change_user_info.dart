@@ -75,7 +75,7 @@ class _ChangeUserInfoState extends State<ChangeUserInfo> {
                         child: Container(),flex: 1, // 아이콘과 텍스트 사이 여백 1부여
                       ),
                       Expanded(
-                        child:Text('비밀정보 변경',style: TextStyle(color: Colors.black),)
+                        child:Text('비밀번호 변경',style: TextStyle(color: Colors.black))
                         ,flex: 5,), // 영역 5 부여
                       Expanded(
                         child: Container(),flex: 2, // 중간 여백 비율2 부여
