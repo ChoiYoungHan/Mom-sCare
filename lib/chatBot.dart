@@ -45,7 +45,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
   bool ButtonEnabled = true;
 
-  final apiKey = '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';
+  final apiKey = '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';
   final apiUrl = 'https://api.openai.com/v1/completions';
 
   var translate_result = '';
